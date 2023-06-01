@@ -50,13 +50,20 @@ disable_handoff() {
   print_green "Handoff-functies van iCloud zijn uitgeschakeld."
 }
 
+# Functie om het opstartgeluid van de Mac uit te schakelen
+disable_boot_sound() {
+  print_green "Het opstartgeluid van de Mac wordt uitgeschakeld..."
+  sudo nvram SystemAudioVolume=" "
+}
+
 # Weergave van het menu
 display_menu() {
   print_green "Menu:"
   print_green "1. Microsoft Office 365 Business installeren"
   print_green "2. Adobe Creative Cloud installeren"
   print_green "3. Handoff-functies van iCloud uitschakelen"
-  print_red "4. Stoppen"
+  print_green "4. Opstartgeluid van de Mac uitschakelen"
+  print_red "9. Stoppen"
 }
 
 # Hoofdscript
@@ -79,14 +86,16 @@ while true; do
       disable_handoff
       ;;
     4)
-      print_red "Het script wordt gestopt."
-      break
+      disable_boot_sound
       ;;
     *)
       if [[ $choice =~ ^[1-4]$ ]]; then
         print_red "Ongeldige optie. Probeer opnieuw."
+      elif [[ $choice == 9 ]]; then
+        print_red "Het script wordt gestopt."
+        break
       else
-        print_red "Ongeldige invoer. Voer een nummer in van 1 tot 4."
+        print_red "Ongeldige invoer. Voer een nummer in van 1 tot 4 of 9 om te stoppen."
       fi
       ;;
   esac
