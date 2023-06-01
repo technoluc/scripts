@@ -2,12 +2,12 @@
 
 # Functie om de tekst in groen te printen
 print_green() {
-  echo -e "\033[32m$1\033[0m"
+  print -P "%F{green}$1%f"
 }
 
 # Functie om de tekst in rood te printen
 print_red() {
-  echo -e "\033[31m$1\033[0m"
+  print -P "%F{red}$1%f"
 }
 
 # Functie om de Microsoft Office 365 Business te installeren
@@ -67,7 +67,7 @@ while true; do
       break
       ;;
     *)
-      if [[ $choice =~ ^[1-4]$ ]]; then
+      if (( choice >= 1 && choice <= 4 )); then
         print_red "Ongeldige optie. Probeer opnieuw."
       else
         print_red "Ongeldige invoer. Voer een nummer in van 1 tot 4."
