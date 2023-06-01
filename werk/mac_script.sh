@@ -70,7 +70,6 @@ while true; do
     botc "2. Adobe Creative Cloud installeren" $COL_GREEN
     botc "3. Verschillende Handoff-functies van iCloud uitschakelen" $COL_GREEN
     botc "4. Stoppen" $COL_RED
-    echo "Keuze:"
     
     read -r choice
 
