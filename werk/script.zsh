@@ -1,5 +1,8 @@
 #!/bin/zsh
 
+# Schakel wildcard matching uit voor het read-commando
+setopt no_nomatch
+
 # Functie om de tekst in groen te printen
 print_green() {
   print -P "%F{green}$1%f"
@@ -45,6 +48,9 @@ display_menu() {
 
 # Hoofdscript
 clear
+
+# Schakel wildcard matching uit
+setopt no_nomatch
 
 while true; do
   display_menu
