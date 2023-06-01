@@ -58,7 +58,7 @@ while true; do
     cecho "3. Verschillende Handoff-functies van iCloud uitschakelen" $green
     cecho "4. Stoppen" $red
 
-    read -p "Selecteer een optie: " choice
+    read -r choice
 
     case $choice in
         1)
