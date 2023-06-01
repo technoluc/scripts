@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/bash
 
 # Functie om de tekst in groen te printen
 print_green() {
@@ -49,7 +49,7 @@ clear
 while true; do
   display_menu
 
-  read -r -p "Voer de gewenste optie in: " choice
+  read -p "Voer de gewenste optie in: " choice </dev/tty
   clear
 
   case $choice in
