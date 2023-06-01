@@ -49,29 +49,26 @@ clear
 while true; do
   display_menu
 
-  print_green "Voer de gewenste optie in: "
-  read -n choice </dev/tty
+  printf "Voer de gewenste optie in: "
+  read -rk1 choice </dev/tty
+  printf "\n"
 
   case $choice in
-    1)
+    [1])
       install_office365
       ;;
-    2)
+    [2])
       install_adobecc
       ;;
-    3)
+    [3])
       disable_handoff
       ;;
-    4)
+    [4])
       print_red "Het script wordt gestopt."
       break
       ;;
     *)
-      if [[ $choice =~ ^[1-4]$ ]]; then
-        print_red "Ongeldige optie. Probeer opnieuw."
-      else
-        print_red "Ongeldige invoer. Voer een nummer in van 1 tot 4."
-      fi
+      print_red "Ongeldige invoer. Voer een nummer in van 1 tot 4."
       ;;
   esac
 
