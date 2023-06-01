@@ -55,7 +55,7 @@ setopt no_nomatch
 while true; do
   display_menu
 
-  read choice?"Voer de gewenste optie in: "
+  read "choice?Voer de gewenste optie in: "
   clear
 
   case $choice in
