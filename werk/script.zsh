@@ -36,7 +36,7 @@ disable_handoff() {
 
 # Weergave van het menu
 display_menu() {
-  echo "Menu:"
+  print_green "Menu:"
   print_green "1. Microsoft Office 365 Business installeren"
   print_green "2. Adobe Creative Cloud installeren"
   print_green "3. Handoff-functies van iCloud uitschakelen"
