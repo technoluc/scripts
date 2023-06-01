@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 
 # Functie om de tekst in groen te printen
 print_green() {
