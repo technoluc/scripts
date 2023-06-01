@@ -49,7 +49,7 @@ clear
 while true; do
   display_menu
 
-  read -r "choice?Voer de gewenste optie in: "
+  read -p "Voer de gewenste optie in: " choice
   clear
 
   case $choice in
