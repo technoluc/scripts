@@ -14,6 +14,15 @@ blue='\033[0;34m'
 magenta='\033[0;35m'
 cyan='\033[0;36m'
 
+ESC_SEQ="\x1b["
+COL_RESET=$ESC_SEQ"39;49;00m"
+COL_RED=$ESC_SEQ"31;01m"
+COL_GREEN=$ESC_SEQ"32;01m"
+COL_YELLOW=$ESC_SEQ"33;01m"
+COL_BLUE=$ESC_SEQ"34;01m"
+COL_MAGENTA=$ESC_SEQ"35;01m"
+COL_CYAN=$ESC_SEQ"36;01m"
+
 # Resets kleur
 reset=`tput sgr0`
 
@@ -22,6 +31,10 @@ reset=`tput sgr0`
 function cecho() {
   echo "${2}${1}${reset}"
   return
+}
+
+function botc() {
+    echo -e "\n$COL_GREEN\[._.]/ - ${2}${1} $COL_RESET"
 }
 
 function ok() {
@@ -52,11 +65,11 @@ bot "Hoi! We gaan wat apps installeren en instellingen aanpassen..."
 
 while true; do
     clear
-    cecho "Menu:" $green
-    cecho "1. Microsoft Office 365 Business installeren" $green
-    cecho "2. Adobe Creative Cloud installeren" $green
-    cecho "3. Verschillende Handoff-functies van iCloud uitschakelen" $green
-    cecho "4. Stoppen" $red
+    botc "Menu:" $COL_GREEN
+    botc "1. Microsoft Office 365 Business installeren" $COL_GREEN
+    botc "2. Adobe Creative Cloud installeren" $COL_GREEN
+    botc "3. Verschillende Handoff-functies van iCloud uitschakelen" $COL_GREEN
+    botc "4. Stoppen" $COL_RED
 
     read -r choice
 
