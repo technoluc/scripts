@@ -15,17 +15,14 @@ install_office365() {
   print_green "Microsoft Office 365 Business wordt geïnstalleerd..."
   # Download de nieuwste versie van Office 365 Business
     /usr/bin/curl --location --silent "https://go.microsoft.com/fwlink/?linkid=2009112" -o "O365BusinessPro.pkg"
-
     # Installeer Office 365 Business
     /usr/sbin/installer -pkg "O365BusinessPro.pkg" -target /
-
     # Controleer of de installatie is geslaagd
     if [ $? -eq 0 ]; then
         print_green "Microsoft Office 365 Business is succesvol geïnstalleerd."
     else
         print_red "Er is een fout opgetreden tijdens de installatie van Office 365 Business."
     fi
-
     # Verwijder het installatiepakket
     rm "O365BusinessPro.pkg"
   sleep 2
