@@ -49,8 +49,8 @@ clear
 while true; do
   display_menu
 
-  read -p "Voer de gewenste optie in: " choice </dev/tty
-  clear
+  print_green "Voer de gewenste optie in: "
+  read choice
 
   case $choice in
     1)
