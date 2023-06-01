@@ -13,17 +13,33 @@ print_red() {
 # Functie om de Microsoft Office 365 Business te installeren
 install_office365() {
   print_green "Microsoft Office 365 Business wordt geïnstalleerd..."
-  # Voeg hier de installatielogica voor Office 365 Business toe
+  # Download de nieuwste versie van Office 365 Business
+  /usr/bin/curl --location --silent "https://go.microsoft.com/fwlink/?linkid=2009112" -o "O365BusinessPro.pkg"
+  # Installeer Office 365 Business
+  /usr/sbin/installer -pkg "O365BusinessPro.pkg" -target /
   sleep 2
-  print_green "Microsoft Office 365 Business is succesvol geïnstalleerd."
+  # Controleer of de installatie is geslaagd
+  if [ $? -eq 0 ]; then
+      print_green "Office 365 Business is succesvol geïnstalleerd."
+  else
+      print_red "Er is een fout opgetreden tijdens de installatie van Office 365 Business."
+  fi
+  # Verwijder het installatiepakket
+  rm "O365BusinessPro.pkg"
+  sleep 1
 }
 
 # Functie om Adobe Creative Cloud te installeren
 install_adobecc() {
   print_green "Adobe Creative Cloud wordt geïnstalleerd..."
-  # Voeg hier de installatielogica voor Adobe Creative Cloud toe
+  curl -OL https://github.com/Installomator/Installomator/raw/main/Installomator.sh && sudo zsh ./Installomator.sh adobecreativeclouddesktop DEBUG=0
   sleep 2
-  print_green "Adobe Creative Cloud is succesvol geïnstalleerd."
+  if [ $? -eq 0 ]; then
+      print_green "Adobe Creative Cloud is succesvol geïnstalleerd."
+  else
+      print_red "Er is een fout opgetreden tijdens de installatie van Adobe Creative Cloud."
+    fi
+  rm "Installomator.sh"
 }
 
 # Functie om Handoff-functies van iCloud uit te schakelen
