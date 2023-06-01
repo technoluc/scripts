@@ -50,7 +50,7 @@ while true; do
   display_menu
 
   print_green "Voer de gewenste optie in: \c"
-  read -r choice </dev/tty
+  read choice </dev/tty
 
   case $choice in
     1)
