@@ -72,7 +72,7 @@ while true; do
     botc "4. Stoppen" $COL_RED
     botc "Keuze:" $COL_RESET
     
-    read -p "Keuze:" choice
+    read -r choice
 
     case $choice in
         1)
