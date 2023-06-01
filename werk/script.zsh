@@ -49,7 +49,7 @@ clear
 while true; do
   display_menu
 
-  read -p "Voer de gewenste optie in: " choice
+  read "choice?Voer de gewenste optie in: "
   clear
 
   case $choice in
@@ -67,7 +67,7 @@ while true; do
       break
       ;;
     *)
-      if (( choice >= 1 && choice <= 4 )); then
+      if [[ $choice =~ ^[1-4]$ ]]; then
         print_red "Ongeldige optie. Probeer opnieuw."
       else
         print_red "Ongeldige invoer. Voer een nummer in van 1 tot 4."
