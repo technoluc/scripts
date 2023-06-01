@@ -1,16 +1,13 @@
 #!/bin/zsh
 
-# Schakel wildcard matching uit voor het read-commando
-setopt no_nomatch
-
 # Functie om de tekst in groen te printen
 print_green() {
-  print -P "%F{green}$1%f"
+  echo -e "\033[32m$1\033[0m"
 }
 
 # Functie om de tekst in rood te printen
 print_red() {
-  print -P "%F{red}$1%f"
+  echo -e "\033[31m$1\033[0m"
 }
 
 # Functie om de Microsoft Office 365 Business te installeren
@@ -49,13 +46,11 @@ display_menu() {
 # Hoofdscript
 clear
 
-# Schakel wildcard matching uit
-setopt no_nomatch
-
 while true; do
   display_menu
 
-  read "choice?Voer de gewenste optie in: "
+  read -r "Voer de gewenste optie in: " choice
+
   clear
 
   case $choice in
