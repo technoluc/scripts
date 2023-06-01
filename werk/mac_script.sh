@@ -67,8 +67,11 @@ while true; do
       break
       ;;
     *)
-      print_red "Ongeldige optie. Probeer opnieuw."
-      continue
+      if [[ $choice =~ ^[1-4]$ ]]; then
+        print_red "Ongeldige optie. Probeer opnieuw."
+      else
+        print_red "Ongeldige invoer. Voer een nummer in van 1 tot 4."
+      fi
       ;;
   esac
 
