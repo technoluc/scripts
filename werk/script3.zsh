@@ -10,6 +10,12 @@ print_red() {
   echo -e "\033[31m$1\033[0m"
 }
 
+# Functie om de tekst in geel te printen
+print_yellow() {
+  echo -e "\033[33m$1\033[0m"
+}
+
+
 # Functie om de Microsoft Office 365 Business te installeren
 install_office365() {
   print_green "Microsoft Office 365 Business wordt geïnstalleerd..."
@@ -39,7 +45,6 @@ install_adobecc() {
   else
       print_red "Er is een fout opgetreden tijdens de installatie van Adobe Creative Cloud."
     fi
-  rm "Installomator.sh"
 }
 
 # Functie om Handoff-functies van iCloud uit te schakelen
@@ -56,13 +61,36 @@ disable_boot_sound() {
   sudo nvram SystemAudioVolume=" "
 }
 
+# Functie om te controleren of alle bestandsextensies in Finder zichtbaar zijn
+show_extensions=$(defaults read NSGlobalDomain AppleShowAllExtensions)
+
+# Functie om alle bestandsextensies in Finder te laten zien
+show_all_extensions() {
+    defaults write NSGlobalDomain AppleShowAllExtensions -bool true
+    print_green "Alle bestandsextensies worden nu weergegeven in Finder."
+}
+
+# Functie om alle bestandsextensies in Finder te verbergen
+hide_all_extensions() {
+    defaults write NSGlobalDomain AppleShowAllExtensions -bool false
+    print_green "Alle bestandsextensies worden nu verborgen in Finder."
+}
+
 # Weergave van het menu
 display_menu() {
   print_green "Menu:"
+  echo "Installatie:"
   print_green "1. Microsoft Office 365 Business installeren"
   print_green "2. Adobe Creative Cloud installeren"
+  echo "Instellingen:"
   print_green "3. Handoff-functies van iCloud uitschakelen"
   print_green "4. Opstartgeluid van de Mac uitschakelen"
+  show_extensions=$(defaults read NSGlobalDomain AppleShowAllExtensions)
+  if [ "$show_extensions" -eq 1 ]; then
+    print_green "5. Alle bestandsextensies in Finder verbergen"
+  else
+    print_green "5. Alle bestandsextensies in Finder weergeven"
+  fi
   print_red "9. Stoppen"
 }
 
@@ -88,14 +116,21 @@ while true; do
     4)
       disable_boot_sound
       ;;
+    5)
+      if [ "$show_extensions" -eq 1 ]; then
+        hide_all_extensions
+      else
+        show_all_extensions
+      fi
+      ;;
     *)
-      if [[ $choice =~ ^[1-4]$ ]]; then
+      if [[ $choice =~ ^[1-5]$ ]]; then
         print_red "Ongeldige optie. Probeer opnieuw."
       elif [[ $choice == 9 ]]; then
         print_red "Het script wordt gestopt."
         break
       else
-        print_red "Ongeldige invoer. Voer een nummer in van 1 tot 4 of 9 om te stoppen."
+        print_red "Ongeldige invoer. Voer een nummer in van 1 tot 5 of 9 om te stoppen."
       fi
       ;;
   esac
