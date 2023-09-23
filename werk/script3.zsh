@@ -101,7 +101,7 @@ while true; do
   display_menu
 
   echo -n "Voer de gewenste optie in: "
-  read choice </dev/tty
+  read choice   
 
   case $choice in
     1)
