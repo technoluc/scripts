@@ -37,7 +37,7 @@ $configurationXML = "C:\Program Files\OfficeDeploymentTool\config.xml"
 
 # Step 1: Check if OfficeDeploymentTool is installed
 if (Test-Path -Path $odtPath -PathType Container) {
-  Write-Host "Microsoft OfficeDeploymentTool is already installed. Proceed to step 2."
+  Write-Host "Microsoft OfficeDeploymentTool is already installed." -ForegroundColor Green
 }
 else {
   Write-Host "Microsoft OfficeDeploymentTool is not installed."
@@ -84,21 +84,20 @@ foreach ($fileInfo in $requiredFiles) {
       Invoke-WebRequest -Uri $downloadUrl -OutFile $filePath
     }
     else {
-      Write-Host ("You chose not to download $($fileInfo.PrettyName).")
+      Write-Host ("You chose not to download $($fileInfo.PrettyName).") -ForegroundColor Red
     }
   }
   else {
-    Write-Host ("$($fileInfo.PrettyName) is already present in the directory $odtPath.")
+    Write-Host ("$($fileInfo.PrettyName) is already present.") -ForegroundColor Green
   }
 }
 
 
 # Controleer of Office al is geïnstalleerd
 if (Test-Path "C:\Program Files\Microsoft Office") {
-    Write-Host "Microsoft Office is already installed."
-    
-    # Voer hier de actie uit die je wilt ondernemen als Office al is geïnstalleerd
-    # Bijvoorbeeld: Start een ander proces of voer andere taken uit
+    Write-Host "Microsoft Office is already installed." -ForegroundColor Green
+    Write-Host "Run OfficeScrubber.cmd and select [R] Remove all Licenses option." -ForegroundColor Yellow
+    Write-Host "You can skip this step if Office was never installed on the system." -ForegroundColor Yellow
 }
 else {
     # Vraag de gebruiker om bevestiging voordat de configuratie wordt uitgevoerd
@@ -106,10 +105,10 @@ else {
     if ($confirmation -eq 'Y' -or $confirmation -eq 'y' -or $confirmation -eq '') {
         # Voer de configuratie uit als de gebruiker bevestigt of Enter indrukt
         Start-Process -Wait $setupExe -ArgumentList "/configure `"$configurationXML`""
-        Write-Host "After installation completes, execute irm https://massgrave.dev/get | iex to activate."
+        Write-Host "Installation completed, execute irm https://massgrave.dev/get | iex to activate." -ForegroundColor Green
     }
     else {
-        Write-Host "You chose not to install and configure Microsoft Office. Exiting."
+        Write-Host "You chose not to install and configure Microsoft Office. Exiting." -ForegroundColor Red
     }
 }
 
