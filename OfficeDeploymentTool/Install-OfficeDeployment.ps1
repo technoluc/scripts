@@ -1,22 +1,23 @@
+
 <#
 .SYNOPSIS
-This script checks if the OfficeDeploymentTool and the required files are present. 
-If they are missing, the user is prompted to install or download them.
+Dit script controleert of de OfficeDeploymentTool en de vereiste bestanden aanwezig zijn. 
+Als ze ontbreken, wordt de gebruiker gevraagd of ze moeten worden geïnstalleerd of gedownload.
 
 .DESCRIPTION
-This script checks if the "C:\Program Files\OfficeDeploymentTool" directory exists and if the "setup.exe" file is present. 
-If not, the user is prompted to install Microsoft OfficeDeploymentTool using winget. 
-Then it checks if the "activate.cmd," "config.xml," and "install.cmd" files are present. 
-If they are missing, the user is prompted to download them.
+Dit script controleert of de map "C:\Program Files\OfficeDeploymentTool" bestaat en of het bestand "setup.exe" aanwezig is. 
+Als dat niet het geval is, wordt de gebruiker gevraagd om Microsoft OfficeDeploymentTool te installeren via winget. 
+Vervolgens wordt gecontroleerd of de bestanden "activate.cmd", "config.xml" en "install.cmd" aanwezig zijn. 
+Als ze ontbreken, wordt de gebruiker gevraagd of ze moeten worden gedownload.
 
 .NOTES
-File Name: Install-OfficeDeployment.ps1
-Author: TechnoLuc
-Version: 1.0
-Last Updated: 09/29/2023
+Bestandsnaam: Install-OfficeDeployment.ps1
+Auteur: TechnoLuc
+Versie: 1.0
+Laatst bijgewerkt: 29/09/2023
 
 .PARAMETER InstallODT
-Enable this parameter to perform the installation of Microsoft OfficeDeploymentTool.
+Schakel deze parameter in om de installatie van Microsoft OfficeDeploymentTool uit te voeren.
 
 param (
     [switch]$InstallODT
@@ -32,47 +33,55 @@ if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]:
 
 $odtPath = "C:\Program Files\OfficeDeploymentTool"
 
-# Step 1: Check if OfficeDeploymentTool is installed
+# Stap 1: Controleer of OfficeDeploymentTool is geïnstalleerd
 if (-not (Test-Path -Path $odtPath -PathType Container)) {
-  Write-Host "Microsoft OfficeDeploymentTool is not installed."
+  Write-Host "Microsoft OfficeDeploymentTool is niet geïnstalleerd."
     
   $defaultValue = 'Y'
-  if (($result = Read-Host "Do you want to install Microsoft OfficeDeploymentTool? (Y/N, default is $defaultValue)").Trim().ToUpper() -eq '' -or $result -eq 'Y') {
-    Write-Host "Installing Microsoft OfficeDeploymentTool..."
+  if (($result = Read-Host "Wilt u Microsoft OfficeDeploymentTool installeren? (Y/N, standaard is $defaultValue)").Trim().ToUpper() -eq '' -or $result -eq 'Y') {
+    Write-Host "Installeren van Microsoft OfficeDeploymentTool..."
     winget install -h Microsoft.OfficeDeploymentTool
   }
   else {
-    Write-Host "You chose not to install Microsoft OfficeDeploymentTool. Proceed to step 2."
+    Write-Host "U heeft ervoor gekozen om Microsoft OfficeDeploymentTool niet te installeren. Ga naar stap 2."
   }
 }
 
-# Step 2: Check if required files are present
+
+
+
+
+
+
+# Stap 2: Controleer of vereiste bestanden aanwezig zijn
 $requiredFiles = @(
   @{ Name = "activate.cmd"; Url = "https://github.com/technoluc/winutil/raw/main-custom/office/ActivateOffice21.cmd" },
   @{ Name = "install.cmd"; Url = "https://github.com/technoluc/winutil/raw/main-custom/office/deploymentinstall.cmd" },
   @{ Name = "config.xml"; Url = "https://github.com/technoluc/winutil/raw/main-custom/office/deploymentconfig.xml" }
 )
 
-# Now we will download the files
+# Nu gaan we de bestanden downloaden
 foreach ($fileInfo in $requiredFiles) {
   $filePath = Join-Path -Path $odtPath -ChildPath $fileInfo.Name
 
   if (-not (Test-Path -Path $filePath -PathType Leaf)) {
-    Write-Host ($fileInfo.Name + " is missing in the directory " + $odtPath)
+    Write-Host ($fileInfo.Name + " ontbreekt in de map " + $odtPath)
 
     $defaultValue = 'Y'
-    if (($result = Read-Host "Do you want to download " + $fileInfo.Name + "? (Y/N), default is $defaultValue)").Trim().ToUpper() -eq '' -or $result -eq 'Y') {
-      Write-Host ("Downloading " + $fileInfo.Name + "...")
+    if (($result = Read-Host "Wilt u " + $fileInfo.Name + " downloaden? (J/N), standaard is $defaultValue)").Trim().ToUpper() -eq '' -or $result -eq 'Y') {
+      Write-Host ("Downloaden van " + $fileInfo.Name + "...")
       $downloadUrl = $fileInfo.Url
       Invoke-WebRequest -Uri $downloadUrl -OutFile $filePath
     }
     else {
-      Write-Host ("You chose not to download " + $fileInfo.Name + ".")
+      Write-Host ("U heeft ervoor gekozen om " + $fileInfo.Name + " niet te downloaden.")
     }
   }
 }
 
-Write-Host "Please execute install.cmd as Administrator from C:\Program Files\OfficeDeploymentTool. After installation completes, execute irm https://massgrave.dev/get | iex to activate."
-# Wait for user input before closing the script
-Write-Host "Press Enter to close..."
+Write-Host "Please execute install.cmd as Administrator from C:\Program Files\OfficeDeploymentTool. 
+After installation completes execute this commannd to start the activation process:
+irm https://massgrave.dev/get | iex"
+# Wacht op gebruikersinvoer voordat het script wordt afgesloten
+Write-Host "Druk op Enter om af te sluiten..."
 $null = Read-Host
