@@ -93,9 +93,28 @@ foreach ($fileInfo in $requiredFiles) {
 }
 
 
-Start-Process -Wait $setupExe -ArgumentList "/configure `"$configurationXML`""
+# Controleer of Office al is geïnstalleerd
+if (Test-Path "C:\Program Files\Microsoft Office") {
+    Write-Host "Microsoft Office is already installed."
+    
+    # Voer hier de actie uit die je wilt ondernemen als Office al is geïnstalleerd
+    # Bijvoorbeeld: Start een ander proces of voer andere taken uit
+}
+else {
+    # Vraag de gebruiker om bevestiging voordat de configuratie wordt uitgevoerd
+    $confirmation = Read-Host "Microsoft Office is not installed. Do you want to install and configure it now? (Y/N, press Enter for Yes)"
+    if ($confirmation -eq 'Y' -or $confirmation -eq 'y' -or $confirmation -eq '') {
+        # Voer de configuratie uit als de gebruiker bevestigt of Enter indrukt
+        Start-Process -Wait $setupExe -ArgumentList "/configure `"$configurationXML`""
+        Write-Host "After installation completes, execute irm https://massgrave.dev/get | iex to activate."
+    }
+    else {
+        Write-Host "You chose not to install and configure Microsoft Office. Exiting."
+    }
+}
 
-Write-Host "After installation completes, execute irm https://massgrave.dev/get | iex to activate."
+
+
 # Wait for user input before closing the script
 Write-Host "Press Enter to close..."
 $null = Read-Host
