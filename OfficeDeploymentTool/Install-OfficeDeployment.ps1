@@ -24,12 +24,6 @@ param (
 
 #>
 
-if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
-  Write-Output "OfficeUtil needs to be run as Administrator. Attempting to relaunch."
-  Start-Process -Verb runas -FilePath powershell.exe -ArgumentList "iwr -useb https://raw.githubusercontent.com/technoluc/scripts/main/OfficeDeploymentTool/Install-OfficeDeployment.ps1 | iex"
-  break
-}
-
 # Set variables
 $odtPath = "C:\Program Files\OfficeDeploymentTool"
 $setupExe = "C:\Program Files\OfficeDeploymentTool\setup.exe"
@@ -75,15 +69,21 @@ else {
   $defaultValue = 'Y'
   if (($result = Read-Host "Do you want to install Microsoft OfficeDeploymentTool? (Y/N, default is $defaultValue)").Trim().ToUpper() -eq '' -or $result -eq 'Y') {
     Write-Host "Installing Microsoft OfficeDeploymentTool..."
-    # winget install -h Microsoft.OfficeDeploymentTool
-    $URL = $(Get-ODTUri)
-    # Download the Office Deployment Tool (ODT)
-    Invoke-WebRequest -Uri $URL -OutFile $setupExe
-    
+    winget install -h Microsoft.OfficeDeploymentTool
+
+    # Use Get-ODTUri function
+    # $URL = $(Get-ODTUri)
+    # Invoke-WebRequest -Uri $URL -OutFile $setupExe    
   }
   else {
     Write-Host "You chose not to install Microsoft OfficeDeploymentTool. Proceed to step 2."
   }
+}
+
+if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
+  Write-Output "OfficeUtil needs to be run as Administrator. Attempting to relaunch."
+  Start-Process -Verb runas -FilePath powershell.exe -ArgumentList "iwr -useb https://raw.githubusercontent.com/technoluc/scripts/main/OfficeDeploymentTool/Install-OfficeDeployment.ps1 | iex"
+  break
 }
 
 # Step 2: Check if required files are present
