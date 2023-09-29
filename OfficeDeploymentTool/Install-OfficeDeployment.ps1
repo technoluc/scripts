@@ -36,7 +36,10 @@ $setupExe = "C:\Program Files\OfficeDeploymentTool\setup.exe"
 $configurationXML = "C:\Program Files\OfficeDeploymentTool\config.xml"
 
 # Step 1: Check if OfficeDeploymentTool is installed
-if (-not (Test-Path -Path $odtPath -PathType Container)) {
+if (Test-Path -Path $odtPath -PathType Container) {
+  Write-Host "Microsoft OfficeDeploymentTool is already installed. Proceed to step 2."
+}
+else {
   Write-Host "Microsoft OfficeDeploymentTool is not installed."
     
   $defaultValue = 'Y'
@@ -51,27 +54,41 @@ if (-not (Test-Path -Path $odtPath -PathType Container)) {
 
 # Step 2: Check if required files are present
 $requiredFiles = @(
-  @{ Name = "activate.cmd"; Url = "https://github.com/technoluc/winutil/raw/main-custom/office/ActivateOffice21.cmd" },
-  @{ Name = "install.cmd"; Url = "https://github.com/technoluc/winutil/raw/main-custom/office/deploymentinstall.cmd" },
-  @{ Name = "config.xml"; Url = "https://github.com/technoluc/winutil/raw/main-custom/office/deploymentconfig.xml" }
+  @{
+    Name = "activate.cmd";
+    PrettyName = "Activate Office Script";
+    Url = "https://github.com/technoluc/winutil/raw/main-custom/office/ActivateOffice21.cmd"
+  },
+  @{
+    Name = "install.cmd";
+    PrettyName = "Install Office Script";
+    Url = "https://github.com/technoluc/winutil/raw/main-custom/office/deploymentinstall.cmd"
+  },
+  @{
+    Name = "config.xml";
+    PrettyName = "Office Configuration File";
+    Url = "https://github.com/technoluc/winutil/raw/main-custom/office/deploymentconfig.xml"
+  }
 )
 
-# Now we will download the files
 foreach ($fileInfo in $requiredFiles) {
   $filePath = Join-Path -Path $odtPath -ChildPath $fileInfo.Name
 
   if (-not (Test-Path -Path $filePath -PathType Leaf)) {
-    Write-Host ($fileInfo.Name + " is missing in the directory " + $odtPath)
-
     $defaultValue = 'Y'
-    if (($result = Read-Host "Do you want to download " + $fileInfo.Name + "? (Y/N), default is $defaultValue)").Trim().ToUpper() -eq '' -or $result -eq 'Y') {
-      Write-Host ("Downloading " + $fileInfo.Name + "...")
+    $result = Read-Host -Prompt ("Do you want to download $($fileInfo.PrettyName)? (Y/N, default is $defaultValue)")
+
+    if ($result.Trim().ToUpper() -eq '' -or $result -eq 'Y') {
+      Write-Host ("Downloading $($fileInfo.PrettyName)...")
       $downloadUrl = $fileInfo.Url
       Invoke-WebRequest -Uri $downloadUrl -OutFile $filePath
     }
     else {
-      Write-Host ("You chose not to download " + $fileInfo.Name + ".")
+      Write-Host ("You chose not to download $($fileInfo.PrettyName).")
     }
+  }
+  else {
+    Write-Host ("$($fileInfo.PrettyName) is already present in the directory $odtPath.")
   }
 }
 
