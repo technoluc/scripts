@@ -34,7 +34,7 @@ if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]:
 $odtPath = "C:\Program Files\OfficeDeploymentTool"
 $setupExe = "C:\Program Files\OfficeDeploymentTool\setup.exe"
 $configuration21XML = "C:\Program Files\OfficeDeploymentTool\config.xml"
-$configuration365XML = "C:\Program Files\OfficeDeploymentTool\config365.xml"
+$configuration365XML = "config365.xml"
 
 function Get-ODTUri {
   <#
