@@ -71,9 +71,11 @@ if (Test-Path -Path $odtPath -PathType Container) {
 }
 else {
   Write-Host "Microsoft OfficeDeploymentTool is not installed."
-    
-  $defaultValue = 'Y'
-  if (($result = Read-Host "Do you want to install Microsoft OfficeDeploymentTool? (Y/N, default is $defaultValue)").Trim().ToUpper() -eq '' -or $result -eq 'Y') {
+  #$defaultValue = 'Y'
+  #if (($result = Read-Host "Do you want to install Microsoft OfficeDeploymentTool? (Y/N, default is $defaultValue)").Trim().ToUpper() -eq '' -or $result -eq 'Y') {
+  $confirmation = Read-Host "Do you want to install Microsoft OfficeDeploymentTool? (Y/N, press Enter for Yes)"
+  if ($confirmation -eq 'Y' -or $confirmation -eq 'y' -or $confirmation -eq '') {
+  
     Write-Host "Installing Microsoft OfficeDeploymentTool..."
     # winget install -h Microsoft.OfficeDeploymentTool
 
@@ -110,11 +112,14 @@ foreach ($fileInfo in $requiredFiles) {
   $filePath = Join-Path -Path $odtPath -ChildPath $fileInfo.Name
 
   if (-not (Test-Path -Path $filePath -PathType Leaf)) {
-    $defaultValue = 'Y'
-    $result = Read-Host -Prompt ("Do you want to download $($fileInfo.PrettyName)? (Y/N, default is $defaultValue)").Trim().ToUpper()
-
-    if ($result -eq 'Y' -or $result -eq '') {
-      Write-Host ("Downloading $($fileInfo.PrettyName)...")
+    #$defaultValue = 'Y'
+    #$result = Read-Host -Prompt ("Do you want to download $($fileInfo.PrettyName)? (Y/N, default is $defaultValue)").Trim().ToUpper()
+    #if ($result -eq 'Y' -or $result -eq '') {
+    
+    $confirmation = Read-Host "Do you want to download $($fileInfo.PrettyName)? (Y/N, press Enter for Yes)"
+    if ($confirmation -eq 'Y' -or $confirmation -eq 'y' -or $confirmation -eq '') {
+      
+      Write-Host ("Downloading $($fileInfo.PrettyName)...") -ForegroundColor Cyan
       $downloadUrl = $fileInfo.Url
       Invoke-WebRequest -Uri $downloadUrl -OutFile $filePath
     }
