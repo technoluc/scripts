@@ -30,7 +30,10 @@ if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]:
   break
 }
 
+# Set variables
 $odtPath = "C:\Program Files\OfficeDeploymentTool"
+$setupExe = "C:\Program Files\OfficeDeploymentTool\setup.exe"
+$configurationXML = "C:\Program Files\OfficeDeploymentTool\config.xml"
 
 # Step 1: Check if OfficeDeploymentTool is installed
 if (-not (Test-Path -Path $odtPath -PathType Container)) {
@@ -72,7 +75,10 @@ foreach ($fileInfo in $requiredFiles) {
   }
 }
 
-Write-Host "Please execute install.cmd as Administrator from C:\Program Files\OfficeDeploymentTool. After installation completes, execute irm https://massgrave.dev/get | iex to activate."
+
+Start-Process -Wait $setupExe -ArgumentList "/configure `"$configurationXML`""
+
+Write-Host "After installation completes, execute irm https://massgrave.dev/get | iex to activate."
 # Wait for user input before closing the script
 Write-Host "Press Enter to close..."
 $null = Read-Host
