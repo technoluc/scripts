@@ -33,7 +33,8 @@ if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]:
 # Set variables
 $odtPath = "C:\Program Files\OfficeDeploymentTool"
 $setupExe = "C:\Program Files\OfficeDeploymentTool\setup.exe"
-$configurationXML = "C:\Program Files\OfficeDeploymentTool\config.xml"
+$configuration21XML = "C:\Program Files\OfficeDeploymentTool\config.xml"
+$configuration365XML = "C:\Program Files\OfficeDeploymentTool\config365.xml"
 
 function Get-ODTUri {
   <#
@@ -53,15 +54,15 @@ function Get-ODTUri {
 
   $url = "https://www.microsoft.com/en-us/download/confirmation.aspx?id=49117"
   try {
-      $response = Invoke-WebRequest -UseBasicParsing -Uri $url -ErrorAction SilentlyContinue
+    $response = Invoke-WebRequest -UseBasicParsing -Uri $url -ErrorAction SilentlyContinue
   }
   catch {
-      Throw "Failed to connect to ODT: $url with error $_."
-      Break
+    Throw "Failed to connect to ODT: $url with error $_."
+    Break
   }
   finally {
-      $ODTUri = $response.links | Where-Object {$_.outerHTML -like "*click here to download manually*"}
-      Write-Output $ODTUri.href
+    $ODTUri = $response.links | Where-Object { $_.outerHTML -like "*click here to download manually*" }
+    Write-Output $ODTUri.href
   }
 }
 
@@ -92,19 +93,19 @@ else {
 # Step 2: Check if required files are present
 $requiredFiles = @(
   @{
-    Name = "activate.cmd";
+    Name       = "activate.cmd";
     PrettyName = "Activate Office Script";
-    Url = "https://github.com/technoluc/winutil/raw/main-custom/office/ActivateOffice21.cmd"
+    Url        = "https://github.com/technoluc/winutil/raw/main-custom/office/ActivateOffice21.cmd"
   },
   @{
-    Name = "install.cmd";
-    PrettyName = "Install Office Script";
-    Url = "https://github.com/technoluc/winutil/raw/main-custom/office/deploymentinstall.cmd"
+    Name       = "config365.xml";
+    PrettyName = "365 Business Configuration File";
+    Url        = "https://github.com/technoluc/winutil/raw/main-custom/office/config365.cmd"
   },
   @{
-    Name = "config.xml";
+    Name       = "config.xml";
     PrettyName = "Office Configuration File";
-    Url = "https://github.com/technoluc/winutil/raw/main-custom/office/deploymentconfig.xml"
+    Url        = "https://github.com/technoluc/winutil/raw/main-custom/office/deploymentconfig.xml"
   }
 )
 
@@ -135,23 +136,55 @@ foreach ($fileInfo in $requiredFiles) {
 
 # Controleer of Office al is geïnstalleerd
 if (Test-Path "C:\Program Files\Microsoft Office") {
-    Write-Host "Microsoft Office is already installed." -ForegroundColor Green
-    Write-Host "Run OfficeScrubber.cmd and select [R] Remove all Licenses option." -ForegroundColor Yellow
-    Write-Host "You can skip this step if Office was never installed on the system." -ForegroundColor Yellow
+  Write-Host "Microsoft Office is already installed." -ForegroundColor Green
+  Write-Host "Run OfficeScrubber.cmd and select [R] Remove all Licenses option." -ForegroundColor Yellow
+  Write-Host "You can skip this step if Office was never installed on the system." -ForegroundColor Yellow
 }
+# else {
+#     # Vraag de gebruiker om bevestiging voordat de configuratie wordt uitgevoerd
+#     $confirmation = Read-Host "Microsoft Office is not installed. Do you want to install and configure it now? (Y/N, press Enter for Yes)"
+#     if ($confirmation -eq 'Y' -or $confirmation -eq 'y' -or $confirmation -eq '') {
+#         # Voer de configuratie uit als de gebruiker bevestigt of Enter indrukt
+#         Start-Process -Wait $setupExe -ArgumentList "/configure `"$configurationXML`""
+#         Write-Host "Installation completed, execute irm https://massgrave.dev/get | iex to activate." -ForegroundColor Green
+#     }
+#     else {
+#         Write-Host "You chose not to install and configure Microsoft Office. Exiting." -ForegroundColor Red
+#     }
+# }
 else {
-    # Vraag de gebruiker om bevestiging voordat de configuratie wordt uitgevoerd
-    $confirmation = Read-Host "Microsoft Office is not installed. Do you want to install and configure it now? (Y/N, press Enter for Yes)"
-    if ($confirmation -eq 'Y' -or $confirmation -eq 'y' -or $confirmation -eq '') {
-        # Voer de configuratie uit als de gebruiker bevestigt of Enter indrukt
-        Start-Process -Wait $setupExe -ArgumentList "/configure `"$configurationXML`""
-        Write-Host "Installation completed, execute irm https://massgrave.dev/get | iex to activate." -ForegroundColor Green
-    }
-    else {
-        Write-Host "You chose not to install and configure Microsoft Office. Exiting." -ForegroundColor Red
-    }
-}
+  # Vraag de gebruiker om bevestiging voordat de configuratie wordt uitgevoerd
+  $confirmation = Read-Host "Microsoft Office is not installed. Do you want to install and configure it now? (Y/N, press Enter for Yes)"
+  if ($confirmation -eq 'Y' -or $confirmation -eq 'y' -or $confirmation -eq '') {
+    # Prompt en lees een enkele toetsaanslag, inclusief Enter
+    Write-Host "Druk op 'b' voor Office365 Business of 'c' voor Office21ProPlus."
+    $key = $host.UI.RawUI.ReadKey("IncludeKeyDown,NoEcho")
 
+    # Controleer de ingevoerde toets
+    switch ($key.Character) {
+      'b' {
+        Start-Process -Wait $setupExe -ArgumentList "/configure `"$configuration365XML`""
+        Write-Host "Installation completed." -ForegroundColor Green
+        Write-Host "Execute irm https://massgrave.dev/get | iex to activate." -ForegroundColor Green
+      }
+      'c' {
+        Start-Process -Wait $setupExe -ArgumentList "/configure `"$configuration21XML`""
+        Write-Host "Installation completed." -ForegroundColor Green
+        Write-Host "Execute irm https://massgrave.dev/get | iex to activate." -ForegroundColor Green
+          }
+      default {
+        Write-Host "Ongeldige invoer." -ForegroundColor Red
+      }
+    }
+
+    # Voer de configuratie uit als de gebruiker bevestigt of Enter indrukt
+    # Start-Process -Wait $setupExe -ArgumentList "/configure `"$configurationXML`""
+    # Write-Host "Installation completed, execute irm https://massgrave.dev/get | iex to activate." -ForegroundColor Green
+  }
+  else {
+    Write-Host "You chose not to install and configure Microsoft Office. Exiting." -ForegroundColor Red
+  }
+}
 
 
 # Wait for user input before closing the script
