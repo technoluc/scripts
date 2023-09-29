@@ -76,9 +76,9 @@ foreach ($fileInfo in $requiredFiles) {
 
   if (-not (Test-Path -Path $filePath -PathType Leaf)) {
     $defaultValue = 'Y'
-    $result = Read-Host -Prompt ("Do you want to download $($fileInfo.PrettyName)? (Y/N, default is $defaultValue)")
+    $result = Read-Host -Prompt ("Do you want to download $($fileInfo.PrettyName)? (Y/N, default is $defaultValue)").Trim().ToUpper()
 
-    if ($result.Trim().ToUpper() -eq '' -or $result -eq 'Y') {
+    if ($result -eq 'Y' -or $result -eq '') {
       Write-Host ("Downloading $($fileInfo.PrettyName)...")
       $downloadUrl = $fileInfo.Url
       Invoke-WebRequest -Uri $downloadUrl -OutFile $filePath
