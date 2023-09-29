@@ -35,6 +35,36 @@ $odtPath = "C:\Program Files\OfficeDeploymentTool"
 $setupExe = "C:\Program Files\OfficeDeploymentTool\setup.exe"
 $configurationXML = "C:\Program Files\OfficeDeploymentTool\config.xml"
 
+function Get-ODTUri {
+  <#
+      .SYNOPSIS
+          Get Download URL of latest Office 365 Deployment Tool (ODT).
+      .NOTES
+          Author: Bronson Magnan
+          Twitter: @cit_bronson
+          Modified by: Marco Hofmann
+          Twitter: @xenadmin
+      .LINK
+          https://www.meinekleinefarm.net/
+  #>
+  [CmdletBinding()]
+  [OutputType([string])]
+  param ()
+
+  $url = "https://www.microsoft.com/en-us/download/confirmation.aspx?id=49117"
+  try {
+      $response = Invoke-WebRequest -UseBasicParsing -Uri $url -ErrorAction SilentlyContinue
+  }
+  catch {
+      Throw "Failed to connect to ODT: $url with error $_."
+      Break
+  }
+  finally {
+      $ODTUri = $response.links | Where-Object {$_.outerHTML -like "*click here to download manually*"}
+      Write-Output $ODTUri.href
+  }
+}
+
 # Step 1: Check if OfficeDeploymentTool is installed
 if (Test-Path -Path $odtPath -PathType Container) {
   Write-Host "Microsoft OfficeDeploymentTool is already installed." -ForegroundColor Green
@@ -45,7 +75,11 @@ else {
   $defaultValue = 'Y'
   if (($result = Read-Host "Do you want to install Microsoft OfficeDeploymentTool? (Y/N, default is $defaultValue)").Trim().ToUpper() -eq '' -or $result -eq 'Y') {
     Write-Host "Installing Microsoft OfficeDeploymentTool..."
-    winget install -h Microsoft.OfficeDeploymentTool
+    # winget install -h Microsoft.OfficeDeploymentTool
+    $URL = $(Get-ODTUri)
+    # Download the Office Deployment Tool (ODT)
+    Invoke-WebRequest -Uri $URL -OutFile $setupExe
+    
   }
   else {
     Write-Host "You chose not to install Microsoft OfficeDeploymentTool. Proceed to step 2."
