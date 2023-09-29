@@ -100,7 +100,7 @@ $requiredFiles = @(
   @{
     Name       = "config365.xml";
     PrettyName = "365 Business Configuration File";
-    Url        = "https://github.com/technoluc/winutil/raw/main-custom/office/config365.cmd"
+    Url        = "https://github.com/technoluc/winutil/raw/main-custom/office/config365.xml"
   },
   @{
     Name       = "config.xml";
