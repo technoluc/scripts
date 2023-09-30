@@ -177,7 +177,7 @@ else {
         Write-Host "Execute irm https://massgrave.dev/get | iex to activate." -ForegroundColor Green
       }
       'c' {
-        Start-Process -Wait $setupExe -ArgumentList "$UnattendedArgs21"
+        Start-Process -Wait $setupExe -ArgumentList "/configure `"$configuration21XML`""
         Write-Host "Installation completed." -ForegroundColor Green
         Write-Host "Execute irm https://massgrave.dev/get | iex to activate." -ForegroundColor Green
           }
