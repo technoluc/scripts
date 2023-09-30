@@ -126,7 +126,7 @@ foreach ($fileInfo in $requiredFiles) {
 
 
 
-function Execute-CmdFromUrl {
+function Invoke-CmdFromUrl {
   param (
       [string]$Url
   )
@@ -157,7 +157,7 @@ if (Test-Path "C:\Program Files\Microsoft Office") {
   $confirmation = Read-Host "Do you want to run OfficeScrubber? (Y/N, press Enter for Yes)"
   if ($confirmation -eq 'Y' -or $confirmation -eq 'y' -or $confirmation -eq '') {
     # Start-Process -Verb runas -FilePath cmd.exe -ArgumentList "iwr -useb https://raw.githubusercontent.com/technoluc/scripts/main/OfficeDeploymentTool/OfficeScrubber.cmd | iex"
-    Execute-CmdFromUrl -Url "https://raw.githubusercontent.com/technoluc/scripts/main/OfficeDeploymentTool/OfficeScrubber.cmd"
+    # Invoke-CmdFromUrl -Url "https://raw.githubusercontent.com/technoluc/scripts/main/OfficeDeploymentTool/OfficeScrubber.cmd"
 
   }
   else {
