@@ -6,6 +6,11 @@
 ################################################################################################################
 
 Start-Transcript $ENV:TEMP\testmenu.log -Append
+function Banner-MainMenu {
+Clear-Host
+Invoke-WPFFormVariables
+Write-Host "                                Hoofdmenu" -ForegroundColor Green
+}
 Function Invoke-WPFFormVariables {
 
     Write-Host ""
@@ -17,8 +22,9 @@ Function Invoke-WPFFormVariables {
     Write-Host "             \/     \/     \/     \/               \/           \/  "
     Write-Host ""
     Write-Host "                      TechnoLuc's Office Utility                    "
+    Write-Host ""
 }
-function Process-Choice {
+function Process-MainMenu-Choice {
   param (
       [string]$choice
   )
@@ -141,7 +147,7 @@ function Show-MainMenu {
   Write-Host "0. Afsluiten"
   Write-Host ""
   $choice = Read-Host "Selecteer een optie (0-9)"
-  Process-Choice $choice
+  Process-MainMenu-Choice $choice
 }
 function Show-SubMenu1 {
   Clear-Host
