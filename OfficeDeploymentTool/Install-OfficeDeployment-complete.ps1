@@ -1,7 +1,6 @@
 <#
 .SYNOPSIS
-This script checks if the OfficeDeploymentTool and the required files are present. 
-If they are missing, the user is prompted to install or download them.
+A script to download, install and activate Microsoft Office.
 
 .DESCRIPTION
 This script checks if the "C:\Program Files\OfficeDeploymentTool" directory exists and if the "setup.exe" file is present. 
@@ -12,7 +11,7 @@ If they are missing, the user is prompted to download them.
 .NOTES
 File Name: Install-OfficeDeployment.ps1
 Author: TechnoLuc
-Version: 1.0
+Version: 2.0
 Last Updated: 09/30/2023
 
 #>
@@ -22,7 +21,8 @@ Last Updated: 09/30/2023
 ##################################################
 $ScriptUrl = "https://raw.githubusercontent.com/technoluc/scripts/main/OfficeDeploymentTool/Install-OfficeDeployment-complete.ps1"
 $odtPath = "C:\Program Files\OfficeDeploymentTool"
-$odtInstaller = "C:\odtInstaller.exe"
+$OfficeToolPath = "C:\OfficeTool"
+$odtInstaller = "C:\OfficeTool\odtInstaller.exe"
 $setupExe = "C:\Program Files\OfficeDeploymentTool\setup.exe"
 $configuration21XML = "C:\Program Files\OfficeDeploymentTool\config21.xml"
 $configuration365XML = "C:\Program Files\OfficeDeploymentTool\config365.xml"
@@ -30,10 +30,13 @@ $UnattendedArgs21 = "/configure `"$configuration21XML`""
 $UnattendedArgs365 = "/configure `"$configuration365XML`""
 $odtInstallerArgs = "/extract:`"c:\Program Files\OfficeDeploymentTool`" /quiet"
 $ArchiveUrl = "https://github.com/abbodi1406/WHD/raw/master/scripts/OfficeScrubber_11.7z"
-$ScrubberPath = "C:\OfficeScrubber"
+$ScrubberPath = "C:\OfficeTool\OfficeScrubber"
 $ScrubberArchive = "OfficeScrubber_11.7z"
 $ScrubberCmd = "OfficeScrubber.cmd"
 $ScrubberFullPath = Join-Path -Path $ScrubberPath -ChildPath $ScrubberCmd
+$OfficeRemovalToolUrl = "https://raw.githubusercontent.com/technoluc/msoffice-removal-tool/main/msoffice-removal-tool.ps1"
+$OfficeRemovalTool = "msoffice-removal-tool.ps1"
+$OfficeRemovalToolPath = Join-Path -Path $OfficeToolPath -ChildPath $OfficeRemovalTool
 
 # Check if script was run as Administrator, relaunch if not
 if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
@@ -73,30 +76,6 @@ function Get-ODTUri {
   finally {
     $ODTUri = $response.links | Where-Object { $_.outerHTML -like "*click here to download manually*" }
     Write-Output $ODTUri.href
-  }
-}
-
-function Invoke-Cmd {
-  param (
-    [string]$Url
-  )
-
-  # Tijdelijk pad voor het opslaan van het CMD-bestand
-  $tempFile = [System.IO.Path]::GetTempFileName() + ".cmd"
-
-  try {
-    # Download het CMD-bestand naar het tijdelijke bestand
-    Invoke-WebRequest -Uri $Url -OutFile $tempFile
-
-    # Voer het tijdelijke CMD-bestand uit
-    Start-Process -Verb runas -FilePath "cmd.exe" -ArgumentList "/C $tempFile"
-
-    # Wacht tot het proces is voltooid
-    Wait-Process -Name cmd
-  }
-  finally {
-    # Verwijder het tijdelijke bestand
-    Remove-Item -Path $tempFile -Force
   }
 }
 
@@ -154,6 +133,7 @@ else {
 
     # Use Get-ODTUri function
     New-Item -Path $odtPath -ItemType Directory -Force
+    New-Item -Path $OfficeToolPath -ItemType Directory -Force
     $URL = $(Get-ODTUri)
     # $URL = "https://officecdn.microsoft.com/pr/wsus/setup.exe"
     Invoke-WebRequest -Uri $URL -OutFile $odtInstaller
@@ -206,6 +186,7 @@ if (Test-Path "C:\Program Files\Microsoft Office") {
   Write-Host "Microsoft Office is already installed." -ForegroundColor Green
   $confirmation = Read-Host "Do you want to run OfficeScrubber? (Y/N, press Enter for Yes)"
   if ($confirmation -eq 'Y' -or $confirmation -eq 'y' -or $confirmation -eq '') {
+    Invoke-WebRequest $OfficeRemovalToolUrl -OutFile $OfficeRemovalToolPath; powershell -ExecutionPolicy Bypass $OfficeRemovalToolPath
     Write-Host "Select [R] Remove all Licenses option in OfficeScrubber." -ForegroundColor Yellow
     Expand-7zArchive -ArchiveUrl $ArchiveUrl -ScrubberPath $ScrubberPath -ScrubberArchive $ScrubberArchive
     Start-Process -Verb runas -FilePath "cmd.exe" -ArgumentList "/C $ScrubberFullPath "
