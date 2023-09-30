@@ -160,6 +160,14 @@ else {
   }
 }
 
+$confirmation = Read-Host "Do you want to run Microsoft Activation Scripts (MAS)? (Y/N, press Enter for Yes)"
+if ($confirmation -eq 'Y' -or $confirmation -eq 'y' -or $confirmation -eq '') {
+  Start-Process -Verb runas -FilePath powershell.exe -ArgumentList "iwr -useb https://massgrave.dev/get | iex"
+}
+else {
+}
+
+
 
 # Wait for user input before closing the script
 Write-Host "Press Enter to close..."
