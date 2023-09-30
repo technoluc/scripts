@@ -218,11 +218,10 @@ foreach ($fileInfo in $requiredFiles) {
       else {
         Write-Host ("You chose not to download $($fileInfo.PrettyName).") -ForegroundColor Red
       }
-    }
     else {
       Write-Host ("$($fileInfo.PrettyName) is already present.") -ForegroundColor Green
     }
-  }
+  }}
 }
 
 
