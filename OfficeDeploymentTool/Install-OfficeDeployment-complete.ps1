@@ -51,23 +51,30 @@ if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]:
 
 function ScriptMenu {
   Write-Host "1. Microsoft Activation Scripts"
-  Write-Host "2. OfficeRemovalTool"
-  Write-Host "3. OfficeScrubber"
+  Write-Host "2. OfficeRemovalTool SaRa Method"
+  Write-Host "3. OfficeRemovalTool SetupRemoval Method"
+  Write-Host "4. OfficeScrubber"
   Write-Host "Q. Exit" -ForegroundColor Red
   $key = $host.UI.RawUI.ReadKey("IncludeKeyDown,NoEcho")
 
   # Controleer de ingevoerde toets
   switch ($key.Character) {
     '1' {
-      Start-Process -Verb runas -FilePath powershell.exe -ArgumentList "Invoke-WebRequest -useb https://massgrave.dev/get | Invoke-Expression"
+      Start-Process -Verb runas -FilePath powershell.exe -ArgumentList "Invoke-WebRequest -useb https://massgrave.dev/get | Invoke-Expression" -Wait
     }
     '2' {
       if (-not (Test-Path -Path $OfficeUtilPath -PathType Container)) {
         New-Item -Path $OfficeUtilPath -ItemType Directory
       }    
-      Start-Process -FilePath powershell.exe -ArgumentList "Invoke-WebRequest $OfficeRemovalToolUrl -OutFile $OfficeRemovalToolPath; powershell -ExecutionPolicy Bypass $OfficeRemovalToolPath"
+      Start-Process -FilePath powershell.exe -ArgumentList "Invoke-WebRequest $OfficeRemovalToolUrl -OutFile $OfficeRemovalToolPath; powershell -ExecutionPolicy Bypass $OfficeRemovalToolPath -Force -SuppressReboot"
     }
     '3' {
+      if (-not (Test-Path -Path $OfficeUtilPath -PathType Container)) {
+        New-Item -Path $OfficeUtilPath -ItemType Directory
+      }    
+      Start-Process -FilePath powershell.exe -ArgumentList "Invoke-WebRequest $OfficeRemovalToolUrl -OutFile $OfficeRemovalToolPath; powershell -ExecutionPolicy Bypass $OfficeRemovalToolPath -Force -SuppressReboot -UseSetupRemoval"
+    }
+    '4' {
       Write-Host "Select [R] Remove all Licenses option in OfficeScrubber." -ForegroundColor Yellow
       Expand-7zArchive -ArchiveUrl $ArchiveUrl -ScrubberPath $ScrubberPath -ScrubberArchive $ScrubberArchive
       Start-Process -Verb runas -FilePath "cmd.exe" -ArgumentList "/C $ScrubberFullPath "
@@ -230,6 +237,8 @@ if (Test-Path "C:\Program Files\Microsoft Office") {
     # break
   }
   else {
+    Write-Host "No Actions ." -ForegroundColor Red
+    exit
   }
 }
 else {
