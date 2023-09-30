@@ -64,15 +64,15 @@ function ScriptMenu {
     }
     '2' {
       if (-not (Test-Path -Path $OfficeUtilPath -PathType Container)) {
-        New-Item -Path $OfficeUtilPath -ItemType Directory
+        New-Item -Path $OfficeUtilPath -ItemType Directory ;
       }    
-      Start-Process -FilePath powershell.exe -ArgumentList "Invoke-WebRequest $OfficeRemovalToolUrl -OutFile $OfficeRemovalToolPath; powershell -ExecutionPolicy Bypass $OfficeRemovalToolPath -Force -SuppressReboot"
+      Start-Process -FilePath powershell.exe -ArgumentList "Invoke-WebRequest $OfficeRemovalToolUrl -OutFile $OfficeRemovalToolPath; powershell -ExecutionPolicy Bypass $OfficeRemovalToolPath -SuppressReboot" -Wait
     }
     '3' {
       if (-not (Test-Path -Path $OfficeUtilPath -PathType Container)) {
-        New-Item -Path $OfficeUtilPath -ItemType Directory
+        New-Item -Path $OfficeUtilPath -ItemType Directory ;
       }    
-      Start-Process -FilePath powershell.exe -ArgumentList "Invoke-WebRequest $OfficeRemovalToolUrl -OutFile $OfficeRemovalToolPath; powershell -ExecutionPolicy Bypass $OfficeRemovalToolPath -Force -SuppressReboot -UseSetupRemoval"
+      Start-Process -FilePath powershell.exe -ArgumentList "Invoke-WebRequest $OfficeRemovalToolUrl -OutFile $OfficeRemovalToolPath; powershell -ExecutionPolicy Bypass $OfficeRemovalToolPath -SuppressReboot -UseSetupRemoval" -Wait
     }
     '4' {
       Write-Host "Select [R] Remove all Licenses option in OfficeScrubber." -ForegroundColor Yellow
@@ -133,7 +133,7 @@ function Expand-7zArchive {
 
   # Maak de map als deze nog niet bestaat
   if (-not (Test-Path -Path $ScrubberPath -PathType Container)) {
-    New-Item -Path $ScrubberPath -ItemType Directory
+    New-Item -Path $ScrubberPath -ItemType Directory ;
   }
 
   try {
@@ -164,8 +164,9 @@ if (Test-Path -Path $setupExe -PathType Leaf) {
   Write-Host "Microsoft OfficeDeploymentTool is already installed." -ForegroundColor Green
 }
 else {
-  Write-Host "Microsoft OfficeDeploymentTool is not installed."
-  $confirmation = Read-Host "Do you want to install Microsoft OfficeDeploymentTool? (Y/N, press Enter for Yes)"
+  Write-Host "Microsoft OfficeDeploymentTool is not installed." -ForegroundColor Yellow
+  Write-Host "Do you want to install Microsoft OfficeDeploymentTool?" -ForegroundColor Yellow
+  $confirmation = Read-Host "Y/N, press Enter for Yes"
   if ($confirmation -eq 'Y' -or $confirmation -eq 'y' -or $confirmation -eq '') {
   
     Write-Host "Installing Microsoft OfficeDeploymentTool..."
@@ -173,8 +174,8 @@ else {
     # winget install -h Microsoft.OfficeDeploymentTool
 
     # Use Get-ODTUri function
-    New-Item -Path $odtPath -ItemType Directory -Force
-    New-Item -Path $OfficeUtilPath -ItemType Directory -Force
+    New-Item -Path $odtPath -ItemType Directory -Force ;
+    New-Item -Path $OfficeUtilPath -ItemType Directory -Force ;
     $URL = $(Get-ODTUri)
     # $URL = "https://officecdn.microsoft.com/pr/wsus/setup.exe"
     Invoke-WebRequest -Uri $URL -OutFile $odtInstaller
@@ -204,18 +205,16 @@ foreach ($fileInfo in $requiredFiles) {
   $filePath = Join-Path -Path $odtPath -ChildPath $fileInfo.Name
   
   #Step 4: Test full path of the required files
-  if (-not (Test-Path -Path $filePath -PathType Leaf)) {
-    
-    if (-not (Test-Path -Path $odtPath -PathType Container)) {
-      try{
-        New-Item -Path $odtPath -ItemType Directory
-      }
-      catch{}
-    }
     # Remove-Item -Force "$($filePath)" Doens't make sense here but WIP
     $confirmation = Read-Host "Do you want to download $($fileInfo.PrettyName)? (Y/N, press Enter for Yes)"
     if ($confirmation -eq 'Y' -or $confirmation -eq 'y' -or $confirmation -eq '') {
-      
+      if (-not (Test-Path -Path $odtPath -PathType Container)) {
+        try {
+          New-Item -Path $odtPath -ItemType Directory | Out-Null ;
+        }
+        catch {
+          <#Do this if a terminating exception happens#>
+        }
       Write-Host ("Downloading $($fileInfo.PrettyName)...") -ForegroundColor Cyan
       $downloadUrl = $fileInfo.Url
       Invoke-WebRequest -Uri $downloadUrl -OutFile $filePath
