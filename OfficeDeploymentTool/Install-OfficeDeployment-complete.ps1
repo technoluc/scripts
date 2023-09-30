@@ -49,6 +49,37 @@ if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]:
 #                   FUNCTIONS                    #
 ##################################################
 
+function ScriptMenu {
+  Write-Host "Druk op '1' of Enter voor Microsoft Activation Scripts, '2' voor OfficeRemovalTool,  '3' voor OfficeScrubber of 'q' om af te sluiten."
+  $key = $host.UI.RawUI.ReadKey("IncludeKeyDown,NoEcho")
+
+  # Controleer de ingevoerde toets
+  switch ($key.Character) {
+    '1' {
+      Start-Process -Verb runas -FilePath powershell.exe -ArgumentList "Invoke-WebRequest -useb https://massgrave.dev/get | Invoke-Expression"
+    }
+    '2' {
+      Start-Process -FilePath powershell.exe -ArgumentList "Invoke-WebRequest $OfficeRemovalToolUrl -OutFile $OfficeRemovalToolPath; powershell -ExecutionPolicy Bypass $OfficeRemovalToolPath"
+    }
+    '3' {
+      Write-Host "Select [R] Remove all Licenses option in OfficeScrubber." -ForegroundColor Yellow
+      Expand-7zArchive -ArchiveUrl $ArchiveUrl -ScrubberPath $ScrubberPath -ScrubberArchive $ScrubberArchive
+      Start-Process -Verb runas -FilePath "cmd.exe" -ArgumentList "/C $ScrubberFullPath "
+    }
+    'q' {
+      Write-Host "Script afgesloten."
+      exit
+    }
+    [char]13 {
+      # [char]13 vertegenwoordigt de Enter-toets
+      Start-Process -Verb runas -FilePath powershell.exe -ArgumentList "Invoke-WebRequest -useb https://massgrave.dev/get | Invoke-Expression"
+    }
+    default {
+      Write-Host "Ongeldige invoer."
+    }
+  }
+
+}
 function Get-ODTUri {
   <#
       .SYNOPSIS
@@ -223,12 +254,13 @@ else {
   }
 }
 
-$confirmation = Read-Host "Do you want to run Microsoft Activation Scripts (MAS)? (Y/N, press Enter for Yes)"
+$confirmation = Read-Host "Do you want to run Microsoft Activation Scripts (MAS), OfficeRemovalTool or OfficeScrubber? (Y/N, press Enter for Yes)"
 if ($confirmation -eq 'Y' -or $confirmation -eq 'y' -or $confirmation -eq '') {
-  Start-Process -Verb runas -FilePath powershell.exe -ArgumentList "Invoke-WebRequest -useb https://massgrave.dev/get | Invoke-Expression"
+  ScriptMenu
 }
 else {
 }
+
 
 
 
