@@ -128,7 +128,12 @@ foreach ($fileInfo in $requiredFiles) {
 if (Test-Path "C:\Program Files\Microsoft Office") {
   Write-Host "Microsoft Office is already installed." -ForegroundColor Green
   Write-Host "Run OfficeScrubber.cmd and select [R] Remove all Licenses option." -ForegroundColor Yellow
-  Write-Host "You can skip this step if Office was never installed on the system." -ForegroundColor Yellow
+  $confirmation = Read-Host "Do you want to run OfficeScrubber? (Y/N, press Enter for Yes)"
+  if ($confirmation -eq 'Y' -or $confirmation -eq 'y' -or $confirmation -eq '') {
+    Start-Process -Verb runas -FilePath powershell.exe -ArgumentList "iwr -useb https://raw.githubusercontent.com/technoluc/scripts/main/OfficeDeploymentTool/OfficeScrubber.cmd | iex"
+  }
+  else {
+  }
 }
 else {
   # Vraag de gebruiker om bevestiging voordat de configuratie wordt uitgevoerd
