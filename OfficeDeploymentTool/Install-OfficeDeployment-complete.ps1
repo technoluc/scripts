@@ -50,7 +50,10 @@ if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]:
 ##################################################
 
 function ScriptMenu {
-  Write-Host "Druk op '1' of Enter voor Microsoft Activation Scripts, '2' voor OfficeRemovalTool,  '3' voor OfficeScrubber of 'q' om af te sluiten."
+  Write-Host "1. Microsoft Activation Scripts"
+  Write-Host "2. OfficeRemovalTool"
+  Write-Host "3. OfficeScrubber"
+  Write-Host "1. Exit"
   $key = $host.UI.RawUI.ReadKey("IncludeKeyDown,NoEcho")
 
   # Controleer de ingevoerde toets
@@ -70,12 +73,9 @@ function ScriptMenu {
       Write-Host "Script afgesloten."
       exit
     }
-    [char]13 {
-      # [char]13 vertegenwoordigt de Enter-toets
-      Start-Process -Verb runas -FilePath powershell.exe -ArgumentList "Invoke-WebRequest -useb https://massgrave.dev/get | Invoke-Expression"
-    }
     default {
       Write-Host "Ongeldige invoer."
+      ScriptMenu
     }
   }
 
@@ -217,11 +217,12 @@ if (Test-Path "C:\Program Files\Microsoft Office") {
   Write-Host "Microsoft Office is already installed." -ForegroundColor Green
   $confirmation = Read-Host "Do you want to run OfficeScrubber? (Y/N, press Enter for Yes)"
   if ($confirmation -eq 'Y' -or $confirmation -eq 'y' -or $confirmation -eq '') {
-    Start-Process -FilePath powershell.exe -ArgumentList "Invoke-WebRequest $OfficeRemovalToolUrl -OutFile $OfficeRemovalToolPath; powershell -ExecutionPolicy Bypass $OfficeRemovalToolPath"
-    Read-Host "Pressop Enter to continue..."
-    Write-Host "Select [R] Remove all Licenses option in OfficeScrubber." -ForegroundColor Yellow
-    Expand-7zArchive -ArchiveUrl $ArchiveUrl -ScrubberPath $ScrubberPath -ScrubberArchive $ScrubberArchive
-    Start-Process -Verb runas -FilePath "cmd.exe" -ArgumentList "/C $ScrubberFullPath "
+    ScriptMenu
+    # Start-Process -FilePath powershell.exe -ArgumentList "Invoke-WebRequest $OfficeRemovalToolUrl -OutFile $OfficeRemovalToolPath; powershell -ExecutionPolicy Bypass $OfficeRemovalToolPath"
+    # Read-Host "Pressop Enter to continue..."
+    # Write-Host "Select [R] Remove all Licenses option in OfficeScrubber." -ForegroundColor Yellow
+    # Expand-7zArchive -ArchiveUrl $ArchiveUrl -ScrubberPath $ScrubberPath -ScrubberArchive $ScrubberArchive
+    # Start-Process -Verb runas -FilePath "cmd.exe" -ArgumentList "/C $ScrubberFullPath "
     break
   }
   else {
@@ -231,7 +232,6 @@ else {
   # Vraag de gebruiker om bevestiging voordat de configuratie wordt uitgevoerd
   $confirmation = Read-Host "Microsoft Office is not installed. Do you want to install and configure it now? (Y/N, press Enter for Yes)"
   if ($confirmation -eq 'Y' -or $confirmation -eq 'y' -or $confirmation -eq '') {
-    # Prompt en lees een enkele toetsaanslag, inclusief Enter
     Write-Host "Druk op 'b' voor Office365 Business of 'c' voor Office21ProPlus."
     $key = $host.UI.RawUI.ReadKey("IncludeKeyDown,NoEcho")
 
