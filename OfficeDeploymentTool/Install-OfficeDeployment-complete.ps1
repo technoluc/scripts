@@ -67,6 +67,8 @@ function ScriptMenu {
         New-Item -Path $OfficeUtilPath -ItemType Directory ;
       }    
       Start-Process -FilePath powershell.exe -ArgumentList "Invoke-WebRequest $OfficeRemovalToolUrl -OutFile $OfficeRemovalToolPath; powershell -ExecutionPolicy Bypass $OfficeRemovalToolPath -SuppressReboot" -Wait
+      Read-Host "Press Enter to continue"
+      Remove-Item -Path $OfficeRemovalToolPath -Force
     }
     '3' {
       if (-not (Test-Path -Path $OfficeUtilPath -PathType Container)) {
@@ -78,6 +80,9 @@ function ScriptMenu {
       Write-Host "Select [R] Remove all Licenses option in OfficeScrubber." -ForegroundColor Yellow
       Expand-7zArchive -ArchiveUrl $ArchiveUrl -ScrubberPath $ScrubberPath -ScrubberArchive $ScrubberArchive
       Start-Process -Verb runas -FilePath "cmd.exe" -ArgumentList "/C $ScrubberFullPath "
+      Read-Host "Press Enter to continue..."
+      Remove-Item -Path $ScrubberFullPath -Force
+
     }
     'q' {
       Write-Host "Script afgesloten."
@@ -232,16 +237,9 @@ if (Test-Path "C:\Program Files\Microsoft Office") {
   $confirmation = Read-Host "Do you want to run Microsoft Activation Scripts (MAS), OfficeRemovalTool or OfficeScrubber? (Y/N, press Enter for Yes)"
   if ($confirmation -eq 'Y' -or $confirmation -eq 'y' -or $confirmation -eq '') {
     ScriptMenu
-    # Start-Process -FilePath powershell.exe -ArgumentList "Invoke-WebRequest $OfficeRemovalToolUrl -OutFile $OfficeRemovalToolPath; powershell -ExecutionPolicy Bypass $OfficeRemovalToolPath"
-    # Read-Host "Pressop Enter to continue..."
-    # Write-Host "Select [R] Remove all Licenses option in OfficeScrubber." -ForegroundColor Yellow
-    # Expand-7zArchive -ArchiveUrl $ArchiveUrl -ScrubberPath $ScrubberPath -ScrubberArchive $ScrubberArchive
-    # Start-Process -Verb runas -FilePath "cmd.exe" -ArgumentList "/C $ScrubberFullPath "
-    # break
   }
   else {
     Write-Host "No Actions ." -ForegroundColor Red
-    return
   }
 }
 else {
@@ -256,10 +254,18 @@ else {
       'b' {
         Start-Process -Wait $setupExe -ArgumentList "$UnattendedArgs365"
         Write-Host "Installation completed." -ForegroundColor Green
+        Read-Host "Press Enter to conntinue"
+        Remove-Item -Path $configuration365XML -Force
+        Remove-Item -Path $setupExe -Force
+
       }
       'c' {
         Start-Process -Wait $setupExe -ArgumentList "$UnattendedArgs21"
         Write-Host "Installation completed." -ForegroundColor Green
+        Read-Host "Press Enter to conntinue"
+        Remove-Item -Path $configuration21XML -Force
+        Remove-Item -Path $setupExe -Force
+
       }
       default {
         Write-Host "Ongeldige invoer." -ForegroundColor Red
@@ -284,9 +290,3 @@ else {
 # Wait for user input before closing the script
 Write-Host "Press Enter to close..."
 $null = Read-Host
-
-Remove-Item -Path $ArchivePath -Force
-Remove-Item -Path $configuration21XML -Force
-Remove-Item -Path $configuration365XML -Force
-Remove-Item -Path $OfficeRemovalToolPath -Force
-Remove-Item -Path $ScrubberFullPath -Force
