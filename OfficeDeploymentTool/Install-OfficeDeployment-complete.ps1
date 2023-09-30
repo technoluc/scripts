@@ -81,7 +81,7 @@ function ScriptMenu {
     }
     'q' {
       Write-Host "Script afgesloten."
-      exit
+      return
     }
     default {
       ScriptMenu
@@ -209,12 +209,7 @@ foreach ($fileInfo in $requiredFiles) {
     $confirmation = Read-Host "Do you want to download $($fileInfo.PrettyName)? (Y/N, press Enter for Yes)"
     if ($confirmation -eq 'Y' -or $confirmation -eq 'y' -or $confirmation -eq '') {
       if (-not (Test-Path -Path $odtPath -PathType Container)) {
-        try {
           New-Item -Path $odtPath -ItemType Directory | Out-Null ;
-        }
-        catch {
-          <#Do this if a terminating exception happens#>
-        }
       Write-Host ("Downloading $($fileInfo.PrettyName)...") -ForegroundColor Cyan
       $downloadUrl = $fileInfo.Url
       Invoke-WebRequest -Uri $downloadUrl -OutFile $filePath
@@ -224,7 +219,7 @@ foreach ($fileInfo in $requiredFiles) {
     }
   }
   else {
-    Write-Host ("$($fileInfo.PrettyName) is already present.") -ForegroundColor Green
+    # Write-Host ("$($fileInfo.PrettyName) is already present.") -ForegroundColor Green
   }
 }
 
@@ -287,3 +282,9 @@ else {
 # Wait for user input before closing the script
 Write-Host "Press Enter to close..."
 $null = Read-Host
+
+Remove-Item -Path $ArchivePath -Force
+Remove-Item -Path $configuration21XML -Force
+Remove-Item -Path $configuration365XML -Force
+Remove-Item -Path $OfficeRemovalToolPath -Force
+Remove-Item -Path $ScrubberFullPath -Force
