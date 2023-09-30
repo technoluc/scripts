@@ -17,13 +17,16 @@ Last Updated: 09/30/2023
 
 #>
 
+# Check if script was run as Administrator, relaunch if not
 if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
   Write-Output "OfficeUtil needs to be run as Administrator. Attempting to relaunch."
   Start-Process -Verb runas -FilePath powershell.exe -ArgumentList "iwr -useb https://raw.githubusercontent.com/technoluc/scripts/main/OfficeDeploymentTool/Install-OfficeDeployment.ps1 | iex"
   break
 }
 
-# Set variables
+#####################################
+#           SET VARIABLES           #
+#####################################
 $odtPath = "C:\Program Files\OfficeDeploymentTool"
 $odtInstaller = "C:\odtInstaller.exe"
 $setupExe = "C:\Program Files\OfficeDeploymentTool\setup.exe"
@@ -32,6 +35,10 @@ $configuration365XML = "C:\Program Files\OfficeDeploymentTool\config365.xml"
 $UnattendedArgs21 = "/configure `"$configuration21XML`""
 $UnattendedArgs365 = "/configure `"$configuration365XML`""
 $odtInstallerArgs = "/extract:`"c:\Program Files\OfficeDeploymentTool`" /quiet"
+
+#####################################
+#              FUNCTIONS            #
+#####################################
 
 function Get-ODTUri {
   <#
@@ -62,6 +69,38 @@ function Get-ODTUri {
     Write-Output $ODTUri.href
   }
 }
+
+function Invoke-CmdFromUrl {
+  param (
+      [string]$Url
+  )
+
+  # Tijdelijk pad voor het opslaan van het CMD-bestand
+  $tempFile = [System.IO.Path]::GetTempFileName() + ".cmd"
+
+  try {
+      # Download het CMD-bestand naar het tijdelijke bestand
+      Invoke-WebRequest -Uri $Url -OutFile $tempFile
+
+      # Voer het tijdelijke CMD-bestand uit
+      Start-Process -Verb runas -FilePath "cmd.exe" -ArgumentList "/C $tempFile"
+
+      # Wacht tot het proces is voltooid
+      Wait-Process -Name cmd
+  }
+  finally {
+      # Verwijder het tijdelijke bestand
+      Remove-Item -Path $tempFile -Force
+  }
+}
+
+
+
+#####################################################
+#                                                   #
+#                    SCRIPT START                   #
+#                                                   #
+#####################################################
 
 # Step 1: Check if OfficeDeploymentTool is installed
 
@@ -123,32 +162,6 @@ foreach ($fileInfo in $requiredFiles) {
   }
 }
 
-
-
-
-function Invoke-CmdFromUrl {
-  param (
-      [string]$Url
-  )
-
-  # Tijdelijk pad voor het opslaan van het CMD-bestand
-  $tempFile = [System.IO.Path]::GetTempFileName() + ".cmd"
-
-  try {
-      # Download het CMD-bestand naar het tijdelijke bestand
-      Invoke-WebRequest -Uri $Url -OutFile $tempFile
-
-      # Voer het tijdelijke CMD-bestand uit
-      Start-Process -Verb runas -FilePath "cmd.exe" -ArgumentList "/C $tempFile"
-
-      # Wacht tot het proces is voltooid
-      Wait-Process -Name cmd
-  }
-  finally {
-      # Verwijder het tijdelijke bestand
-      Remove-Item -Path $tempFile -Force
-  }
-}
 
 # Controleer of Office al is geïnstalleerd
 if (Test-Path "C:\Program Files\Microsoft Office") {
