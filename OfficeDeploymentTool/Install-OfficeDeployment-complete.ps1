@@ -205,6 +205,7 @@ foreach ($fileInfo in $requiredFiles) {
   $filePath = Join-Path -Path $odtPath -ChildPath $fileInfo.Name
   
   #Step 4: Test full path of the required files
+  if (-not (Test-Path -Path $filePath -PathType Leaf)) {
     # Remove-Item -Force "$($filePath)" Doens't make sense here but WIP
     $confirmation = Read-Host "Do you want to download $($fileInfo.PrettyName)? (Y/N, press Enter for Yes)"
     if ($confirmation -eq 'Y' -or $confirmation -eq 'y' -or $confirmation -eq '') {
@@ -219,7 +220,7 @@ foreach ($fileInfo in $requiredFiles) {
     }
   }
   else {
-    # Write-Host ("$($fileInfo.PrettyName) is already present.") -ForegroundColor Green
+    Write-Host ("$($fileInfo.PrettyName) is already present.") -ForegroundColor Green
   }
 }
 
@@ -239,7 +240,7 @@ if (Test-Path "C:\Program Files\Microsoft Office") {
   }
   else {
     Write-Host "No Actions ." -ForegroundColor Red
-    exit
+    return
   }
 }
 else {
