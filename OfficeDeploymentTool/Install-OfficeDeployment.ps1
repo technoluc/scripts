@@ -70,7 +70,10 @@ function Get-ODTUri {
 }
 
 # Step 1: Check if OfficeDeploymentTool is installed
-if (Test-Path -Path $odtPath -PathType Container) {
+
+if (Test-Path -Path $setupExe -PathType Leaf) {
+
+# if (Test-Path -Path $odtPath -PathType Container) {
   Write-Host "Microsoft OfficeDeploymentTool is already installed." -ForegroundColor Green
 }
 else {
