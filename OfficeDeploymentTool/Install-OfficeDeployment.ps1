@@ -88,7 +88,8 @@ else {
 
     # Use Get-ODTUri function
     New-Item -Path $odtPath -ItemType Directory -Force
-    $URL = $(Get-ODTUri)
+    # $URL = $(Get-ODTUri)
+    $URL = "https://officecdn.microsoft.com/pr/wsus/setup.exe"
     Invoke-WebRequest -Uri $URL -OutFile $setupExe    
   }
   else {
