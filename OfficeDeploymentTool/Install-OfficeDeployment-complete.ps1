@@ -194,7 +194,8 @@ foreach ($fileInfo in $requiredFiles) {
   $filePath = Join-Path -Path $odtPath -ChildPath $fileInfo.Name
   
   #Step 4: Test full path of the required files
-  if (-not (Test-Path -Path $filePath -PathType Leaf)) {    
+  if (-not (Test-Path -Path $filePath -PathType Leaf)) {
+    Remove-Item -Force "$($filePath)"
     $confirmation = Read-Host "Do you want to download $($fileInfo.PrettyName)? (Y/N, press Enter for Yes)"
     if ($confirmation -eq 'Y' -or $confirmation -eq 'y' -or $confirmation -eq '') {
       
