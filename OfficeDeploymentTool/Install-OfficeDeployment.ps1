@@ -1,7 +1,6 @@
 <#
 .SYNOPSIS
-This script checks if the OfficeDeploymentTool and the required files are present. 
-If they are missing, the user is prompted to install or download them.
+A script to download, install and activate Microsoft Office.
 
 .DESCRIPTION
 This script checks if the "C:\Program Files\OfficeDeploymentTool" directory exists and if the "setup.exe" file is present. 
@@ -12,21 +11,15 @@ If they are missing, the user is prompted to download them.
 .NOTES
 File Name: Install-OfficeDeployment.ps1
 Author: TechnoLuc
-Version: 1.0
+Version: 2.0
 Last Updated: 09/30/2023
 
 #>
 
-# Check if script was run as Administrator, relaunch if not
-if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
-  Write-Output "OfficeUtil needs to be run as Administrator. Attempting to relaunch."
-  Start-Process -Verb runas -FilePath powershell.exe -ArgumentList "iwr -useb https://raw.githubusercontent.com/technoluc/scripts/main/OfficeDeploymentTool/Install-OfficeDeployment.ps1 | iex"
-  break
-}
-
-#####################################
-#           SET VARIABLES           #
-#####################################
+##################################################
+#                 SET VARIABLES                  #
+##################################################
+$ScriptUrl = "https://raw.githubusercontent.com/technoluc/scripts/main/OfficeDeploymentTool/Install-OfficeDeployment-complete.ps1"
 $odtPath = "C:\Program Files\OfficeDeploymentTool"
 $odtInstaller = "C:\odtInstaller.exe"
 $setupExe = "C:\Program Files\OfficeDeploymentTool\setup.exe"
@@ -35,10 +28,22 @@ $configuration365XML = "C:\Program Files\OfficeDeploymentTool\config365.xml"
 $UnattendedArgs21 = "/configure `"$configuration21XML`""
 $UnattendedArgs365 = "/configure `"$configuration365XML`""
 $odtInstallerArgs = "/extract:`"c:\Program Files\OfficeDeploymentTool`" /quiet"
+$ArchiveUrl = "https://github.com/abbodi1406/WHD/raw/master/scripts/OfficeScrubber_11.7z"
+$ScrubberPath = "C:\OfficeScrubber"
+$ScrubberArchive = "OfficeScrubber_11.7z"
+$ScrubberCmd = "OfficeScrubber.cmd"
+$ScrubberFullPath = Join-Path -Path $ScrubberPath -ChildPath $ScrubberCmd
 
-#####################################
-#              FUNCTIONS            #
-#####################################
+# Check if script was run as Administrator, relaunch if not
+if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
+  Write-Output "OfficeUtil needs to be run as Administrator. Attempting to relaunch."
+  Start-Process -Verb runas -FilePath powershell.exe -ArgumentList "iwr -useb `"$ScriptUrl`" | iex"
+  break
+}
+
+##################################################
+#                   FUNCTIONS                    #
+##################################################
 
 function Get-ODTUri {
   <#
@@ -70,38 +75,44 @@ function Get-ODTUri {
   }
 }
 
-function Invoke-CmdFromUrl {
+function Expand-7zArchive {
   param (
-      [string]$Url
+    [string]$ArchiveUrl,
+    [string]$ScrubberPath,
+    [string]$ScrubberArchive,
+    [string]$7zPath = "C:\Program Files\7-Zip\7z.exe"
   )
 
-  # Tijdelijk pad voor het opslaan van het CMD-bestand
-  $tempFile = [System.IO.Path]::GetTempFileName() + ".cmd"
+  # Combineer het pad naar het archief
+  $ArchivePath = Join-Path -Path $ScrubberPath -ChildPath $ScrubberArchive
+
+  # Maak de map als deze nog niet bestaat
+  if (-not (Test-Path -Path $ScrubberPath -PathType Container)) {
+    New-Item -Path $ScrubberPath -ItemType Directory
+  }
 
   try {
-      # Download het CMD-bestand naar het tijdelijke bestand
-      Invoke-WebRequest -Uri $Url -OutFile $tempFile
+    # Download het archief
+    Invoke-WebRequest -Uri $ArchiveUrl -OutFile $ArchivePath
 
-      # Voer het tijdelijke CMD-bestand uit
-      Start-Process -Verb runas -FilePath "cmd.exe" -ArgumentList "/C $tempFile"
+    # Uitpakken van het archief met het volledige pad naar 7z
+    & $7zPath x $ArchivePath -o"$ScrubberPath"
 
-      # Wacht tot het proces is voltooid
-      Wait-Process -Name cmd
+    Write-Host "Het archief is succesvol gedownload en uitgepakt naar: $ScrubberPath"
+  }
+  catch {
+    Write-Host "Er is een fout opgetreden bij het downloaden en uitpakken van het archief: $_"
   }
   finally {
-      # Verwijder het tijdelijke bestand
-      Remove-Item -Path $tempFile -Force
+    # Opruimen: Verwijder het gedownloade archief
+    Remove-Item -Path $ArchivePath -Force
   }
 }
 
 
-
-#####################################################
-#                                                   #
-#                    SCRIPT START                   #
-#                                                   #
-#####################################################
-
+##################################################
+#                  SCRIPT START                  #
+##################################################
 # Step 1: Check if OfficeDeploymentTool is installed
 
 if (Test-Path -Path $setupExe -PathType Leaf) {
@@ -142,9 +153,11 @@ $requiredFiles = @(
   }
 )
 
+# Step 3: Get the full path of the required files
 foreach ($fileInfo in $requiredFiles) {
   $filePath = Join-Path -Path $odtPath -ChildPath $fileInfo.Name
-
+  
+  #Step 4: Test full path of the required files
   if (-not (Test-Path -Path $filePath -PathType Leaf)) {    
     $confirmation = Read-Host "Do you want to download $($fileInfo.PrettyName)? (Y/N, press Enter for Yes)"
     if ($confirmation -eq 'Y' -or $confirmation -eq 'y' -or $confirmation -eq '') {
@@ -166,12 +179,12 @@ foreach ($fileInfo in $requiredFiles) {
 # Controleer of Office al is geïnstalleerd
 if (Test-Path "C:\Program Files\Microsoft Office") {
   Write-Host "Microsoft Office is already installed." -ForegroundColor Green
-  Write-Host "Run OfficeScrubber.cmd and select [R] Remove all Licenses option." -ForegroundColor Yellow
   $confirmation = Read-Host "Do you want to run OfficeScrubber? (Y/N, press Enter for Yes)"
   if ($confirmation -eq 'Y' -or $confirmation -eq 'y' -or $confirmation -eq '') {
-    # Start-Process -Verb runas -FilePath cmd.exe -ArgumentList "iwr -useb https://raw.githubusercontent.com/technoluc/scripts/main/OfficeDeploymentTool/OfficeScrubber.cmd | iex"
-    # Invoke-CmdFromUrl -Url "https://raw.githubusercontent.com/technoluc/scripts/main/OfficeDeploymentTool/OfficeScrubber.cmd"
-
+    Write-Host "Select [R] Remove all Licenses option in OfficeScrubber." -ForegroundColor Yellow
+    Expand-7zArchive -ArchiveUrl $ArchiveUrl -ScrubberPath $ScrubberPath -ScrubberArchive $ScrubberArchive
+    Start-Process -Verb runas -FilePath "cmd.exe" -ArgumentList "/C $ScrubberFullPath "
+    break
   }
   else {
   }
@@ -193,7 +206,7 @@ else {
       'c' {
         Start-Process -Wait $setupExe -ArgumentList "$UnattendedArgs21"
         Write-Host "Installation completed." -ForegroundColor Green
-          }
+      }
       default {
         Write-Host "Ongeldige invoer." -ForegroundColor Red
       }
