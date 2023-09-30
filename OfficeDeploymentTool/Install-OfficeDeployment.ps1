@@ -123,6 +123,29 @@ foreach ($fileInfo in $requiredFiles) {
   }
 }
 
+function Execute-CmdFromUrl {
+  param (
+      [string]$Url
+  )
+
+  # Tijdelijk pad voor het opslaan van het CMD-bestand
+  $tempFile = [System.IO.Path]::GetTempFileName() + ".cmd"
+
+  try {
+      # Download het CMD-bestand naar het tijdelijke bestand
+      Invoke-WebRequest -Uri $Url -OutFile $tempFile
+
+      # Voer het tijdelijke CMD-bestand uit
+      Start-Process -Verb runas -FilePath "cmd.exe" -ArgumentList "/C $tempFile"
+
+      # Wacht tot het proces is voltooid
+      Wait-Process -Name cmd
+  }
+  finally {
+      # Verwijder het tijdelijke bestand
+      Remove-Item -Path $tempFile -Force
+  }
+}
 
 # Controleer of Office al is geïnstalleerd
 if (Test-Path "C:\Program Files\Microsoft Office") {
@@ -130,7 +153,9 @@ if (Test-Path "C:\Program Files\Microsoft Office") {
   Write-Host "Run OfficeScrubber.cmd and select [R] Remove all Licenses option." -ForegroundColor Yellow
   $confirmation = Read-Host "Do you want to run OfficeScrubber? (Y/N, press Enter for Yes)"
   if ($confirmation -eq 'Y' -or $confirmation -eq 'y' -or $confirmation -eq '') {
-    Start-Process -Verb runas -FilePath powershell.exe -ArgumentList "iwr -useb https://raw.githubusercontent.com/technoluc/scripts/main/OfficeDeploymentTool/OfficeScrubber.cmd | iex"
+    # Start-Process -Verb runas -FilePath cmd.exe -ArgumentList "iwr -useb https://raw.githubusercontent.com/technoluc/scripts/main/OfficeDeploymentTool/OfficeScrubber.cmd | iex"
+    Execute-CmdFromUrl -Url "https://raw.githubusercontent.com/technoluc/scripts/main/OfficeDeploymentTool/OfficeScrubber.cmd"
+
   }
   else {
   }
@@ -148,12 +173,10 @@ else {
       'b' {
         Start-Process -Wait $setupExe -ArgumentList "$UnattendedArgs365"
         Write-Host "Installation completed." -ForegroundColor Green
-        Write-Host "Execute irm https://massgrave.dev/get | iex to activate." -ForegroundColor Green
       }
       'c' {
         Start-Process -Wait $setupExe -ArgumentList "$UnattendedArgs21"
         Write-Host "Installation completed." -ForegroundColor Green
-        Write-Host "Execute irm https://massgrave.dev/get | iex to activate." -ForegroundColor Green
           }
       default {
         Write-Host "Ongeldige invoer." -ForegroundColor Red
