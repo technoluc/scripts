@@ -53,7 +53,7 @@ function ScriptMenu {
   Write-Host "1. Microsoft Activation Scripts"
   Write-Host "2. OfficeRemovalTool"
   Write-Host "3. OfficeScrubber"
-  Write-Host "1. Exit"
+  Write-Host "Q. Exit" -ForegroundColor Red
   $key = $host.UI.RawUI.ReadKey("IncludeKeyDown,NoEcho")
 
   # Controleer de ingevoerde toets
@@ -74,8 +74,8 @@ function ScriptMenu {
       exit
     }
     default {
-      Write-Host "Ongeldige invoer."
       ScriptMenu
+      Write-Host "Ongeldige invoer. Probeer opnieuw"
     }
   }
 
@@ -215,7 +215,7 @@ foreach ($fileInfo in $requiredFiles) {
 # Controleer of Office al is geïnstalleerd
 if (Test-Path "C:\Program Files\Microsoft Office") {
   Write-Host "Microsoft Office is already installed." -ForegroundColor Green
-  $confirmation = Read-Host "Do you want to run OfficeScrubber? (Y/N, press Enter for Yes)"
+  $confirmation = Read-Host "Do you want to run Microsoft Activation Scripts (MAS), OfficeRemovalTool or OfficeScrubber? (Y/N, press Enter for Yes)"
   if ($confirmation -eq 'Y' -or $confirmation -eq 'y' -or $confirmation -eq '') {
     ScriptMenu
     # Start-Process -FilePath powershell.exe -ArgumentList "Invoke-WebRequest $OfficeRemovalToolUrl -OutFile $OfficeRemovalToolPath; powershell -ExecutionPolicy Bypass $OfficeRemovalToolPath"
@@ -223,7 +223,7 @@ if (Test-Path "C:\Program Files\Microsoft Office") {
     # Write-Host "Select [R] Remove all Licenses option in OfficeScrubber." -ForegroundColor Yellow
     # Expand-7zArchive -ArchiveUrl $ArchiveUrl -ScrubberPath $ScrubberPath -ScrubberArchive $ScrubberArchive
     # Start-Process -Verb runas -FilePath "cmd.exe" -ArgumentList "/C $ScrubberFullPath "
-    break
+    # break
   }
   else {
   }
