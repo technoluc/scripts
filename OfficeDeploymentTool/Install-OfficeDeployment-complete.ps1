@@ -205,6 +205,10 @@ foreach ($fileInfo in $requiredFiles) {
   
   #Step 4: Test full path of the required files
   if (-not (Test-Path -Path $filePath -PathType Leaf)) {
+    
+    if (-not (Test-Path -Path $odtPath -PathType Container)) {
+      New-Item -Path $odtPath -ItemType Directory
+    }
     # Remove-Item -Force "$($filePath)" Doens't make sense here but WIP
     $confirmation = Read-Host "Do you want to download $($fileInfo.PrettyName)? (Y/N, press Enter for Yes)"
     if ($confirmation -eq 'Y' -or $confirmation -eq 'y' -or $confirmation -eq '') {
