@@ -210,17 +210,18 @@ foreach ($fileInfo in $requiredFiles) {
     $confirmation = Read-Host "Do you want to download $($fileInfo.PrettyName)? (Y/N, press Enter for Yes)"
     if ($confirmation -eq 'Y' -or $confirmation -eq 'y' -or $confirmation -eq '') {
       if (-not (Test-Path -Path $odtPath -PathType Container)) {
-          New-Item -Path $odtPath -ItemType Directory | Out-Null ;
-      Write-Host ("Downloading $($fileInfo.PrettyName)...") -ForegroundColor Cyan
-      $downloadUrl = $fileInfo.Url
-      Invoke-WebRequest -Uri $downloadUrl -OutFile $filePath
+        New-Item -Path $odtPath -ItemType Directory | Out-Null ;
+        Write-Host ("Downloading $($fileInfo.PrettyName)...") -ForegroundColor Cyan
+        $downloadUrl = $fileInfo.Url
+        Invoke-WebRequest -Uri $downloadUrl -OutFile $filePath
+      }
+      else {
+        Write-Host ("You chose not to download $($fileInfo.PrettyName).") -ForegroundColor Red
+      }
     }
     else {
-      Write-Host ("You chose not to download $($fileInfo.PrettyName).") -ForegroundColor Red
+      Write-Host ("$($fileInfo.PrettyName) is already present.") -ForegroundColor Green
     }
-  }
-  else {
-    Write-Host ("$($fileInfo.PrettyName) is already present.") -ForegroundColor Green
   }
 }
 
