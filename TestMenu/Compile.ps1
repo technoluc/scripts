@@ -22,3 +22,4 @@ Get-ChildItem .\functions -Recurse -File | ForEach-Object {
 }
 
 Get-Content .\scripts\main.ps1 | Out-File ./$scriptname -Append -Encoding ascii
+Get-Content .\MainMenu.ps1 | Out-File ./$scriptname -Append -Encoding ascii

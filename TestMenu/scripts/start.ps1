@@ -1,6 +1,9 @@
-# variable to sync between runspaces
-$sync = [Hashtable]::Synchronized(@{})
+Start-Transcript $ENV:TEMP\testmenu.log -Append
+
+#Load DLLs
+Add-Type -AssemblyName System.Windows.Forms
+
+
 $sync.PSScriptRoot = $PSScriptRoot
 $sync.version = "#{replaceme}"
-$sync.configs = @{}
-$sync.ProcessRunning = $false
+
