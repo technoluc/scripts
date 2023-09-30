@@ -5,8 +5,8 @@ If they are missing, the user is prompted to install or download them.
 
 .DESCRIPTION
 This script checks if the "C:\Program Files\OfficeDeploymentTool" directory exists and if the "setup.exe" file is present. 
-If not, the user is prompted to install Microsoft OfficeDeploymentTool using winget. 
-Then it checks if the "activate.cmd," "config.xml," and "install.cmd" files are present. 
+If not, the user is prompted to download and install Microsoft OfficeDeploymentTool. 
+Then it checks if the "config21.xml," and "config365.xml" files are present. 
 If they are missing, the user is prompted to download them.
 
 .NOTES
@@ -27,7 +27,7 @@ if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]:
 $odtPath = "C:\Program Files\OfficeDeploymentTool"
 $odtInstaller = "C:\odtInstaller.exe"
 $setupExe = "C:\Program Files\OfficeDeploymentTool\setup.exe"
-$configuration21XML = "C:\Program Files\OfficeDeploymentTool\config.xml"
+$configuration21XML = "C:\Program Files\OfficeDeploymentTool\config21.xml"
 $configuration365XML = "C:\Program Files\OfficeDeploymentTool\config365.xml"
 $UnattendedArgs21 = "/configure `"$configuration21XML`""
 $UnattendedArgs365 = "/configure `"$configuration365XML`""
@@ -92,19 +92,14 @@ else {
 # Step 2: Check if required files are present
 $requiredFiles = @(
   @{
-    Name       = "activate.cmd";
-    PrettyName = "Activate Office Script";
-    Url        = "https://github.com/technoluc/winutil/raw/main-custom/office/ActivateOffice21.cmd"
-  },
-  @{
     Name       = "config365.xml";
     PrettyName = "365 Business Configuration File";
     Url        = "https://github.com/technoluc/winutil/raw/main-custom/office/config365.xml"
   },
   @{
-    Name       = "config.xml";
+    Name       = "config21.xml";
     PrettyName = "Office Configuration File";
-    Url        = "https://github.com/technoluc/winutil/raw/main-custom/office/deploymentconfig.xml"
+    Url        = "https://github.com/technoluc/winutil/raw/main-custom/office/config21.xml"
   }
 )
 
