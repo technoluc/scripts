@@ -19,9 +19,10 @@ Last Updated: 09/30/2023
 ##################################################
 #                 SET VARIABLES                  #
 ##################################################
-$ScriptUrl = "https://raw.githubusercontent.com/technoluc/scripts/main/OfficeDeploymentTool/Install-OfficeDeployment.ps1"
+$ScriptUrl = "https://raw.githubusercontent.com/technoluc/scripts/main/OfficeDeploymentTool/Install-OfficeDeployment-complete.ps1"
 $odtPath = "C:\Program Files\OfficeDeploymentTool"
-$odtInstaller = "C:\odtInstaller.exe"
+$OfficeUtilPath = "C:\OfficeUtil"
+$odtInstaller = "C:\OfficeUtil\odtInstaller.exe"
 $setupExe = "C:\Program Files\OfficeDeploymentTool\setup.exe"
 $configuration21XML = "C:\Program Files\OfficeDeploymentTool\config21.xml"
 $configuration365XML = "C:\Program Files\OfficeDeploymentTool\config365.xml"
@@ -29,15 +30,18 @@ $UnattendedArgs21 = "/configure `"$configuration21XML`""
 $UnattendedArgs365 = "/configure `"$configuration365XML`""
 $odtInstallerArgs = "/extract:`"c:\Program Files\OfficeDeploymentTool`" /quiet"
 $ArchiveUrl = "https://github.com/abbodi1406/WHD/raw/master/scripts/OfficeScrubber_11.7z"
-$ScrubberPath = "C:\OfficeScrubber"
+$ScrubberPath = "C:\OfficeUtil\OfficeScrubber"
 $ScrubberArchive = "OfficeScrubber_11.7z"
 $ScrubberCmd = "OfficeScrubber.cmd"
 $ScrubberFullPath = Join-Path -Path $ScrubberPath -ChildPath $ScrubberCmd
+$OfficeRemovalToolUrl = "https://raw.githubusercontent.com/technoluc/msoffice-removal-tool/main/msoffice-removal-tool.ps1"
+$OfficeRemovalTool = "msoffice-removal-tool.ps1"
+$OfficeRemovalToolPath = Join-Path -Path $OfficeUtilPath -ChildPath $OfficeRemovalTool
 
 # Check if script was run as Administrator, relaunch if not
 if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
   Write-Output "OfficeUtil needs to be run as Administrator. Attempting to relaunch."
-  Start-Process -Verb runas -FilePath powershell.exe -ArgumentList "iwr -useb `"$ScriptUrl`" | iex"
+  Start-Process -Verb runas -FilePath powershell.exe -ArgumentList "Invoke-WebRequest -UseBasicParsing `"$ScriptUrl`" | Invoke-Expression"
   break
 }
 
@@ -45,6 +49,40 @@ if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]:
 #                   FUNCTIONS                    #
 ##################################################
 
+function ScriptMenu {
+  Write-Host "1. Microsoft Activation Scripts"
+  Write-Host "2. OfficeRemovalTool"
+  Write-Host "3. OfficeScrubber"
+  Write-Host "Q. Exit" -ForegroundColor Red
+  $key = $host.UI.RawUI.ReadKey("IncludeKeyDown,NoEcho")
+
+  # Controleer de ingevoerde toets
+  switch ($key.Character) {
+    '1' {
+      Start-Process -Verb runas -FilePath powershell.exe -ArgumentList "Invoke-WebRequest -useb https://massgrave.dev/get | Invoke-Expression"
+    }
+    '2' {
+      if (-not (Test-Path -Path $OfficeUtilPath -PathType Container)) {
+        New-Item -Path $OfficeUtilPath -ItemType Directory
+      }    
+      Start-Process -FilePath powershell.exe -ArgumentList "Invoke-WebRequest $OfficeRemovalToolUrl -OutFile $OfficeRemovalToolPath; powershell -ExecutionPolicy Bypass $OfficeRemovalToolPath"
+    }
+    '3' {
+      Write-Host "Select [R] Remove all Licenses option in OfficeScrubber." -ForegroundColor Yellow
+      Expand-7zArchive -ArchiveUrl $ArchiveUrl -ScrubberPath $ScrubberPath -ScrubberArchive $ScrubberArchive
+      Start-Process -Verb runas -FilePath "cmd.exe" -ArgumentList "/C $ScrubberFullPath "
+    }
+    'q' {
+      Write-Host "Script afgesloten."
+      exit
+    }
+    default {
+      ScriptMenu
+      Write-Host "Ongeldige invoer. Probeer opnieuw"
+    }
+  }
+
+}
 function Get-ODTUri {
   <#
       .SYNOPSIS
@@ -129,6 +167,7 @@ else {
 
     # Use Get-ODTUri function
     New-Item -Path $odtPath -ItemType Directory -Force
+    New-Item -Path $OfficeUtilPath -ItemType Directory -Force
     $URL = $(Get-ODTUri)
     # $URL = "https://officecdn.microsoft.com/pr/wsus/setup.exe"
     Invoke-WebRequest -Uri $URL -OutFile $odtInstaller
@@ -158,7 +197,8 @@ foreach ($fileInfo in $requiredFiles) {
   $filePath = Join-Path -Path $odtPath -ChildPath $fileInfo.Name
   
   #Step 4: Test full path of the required files
-  if (-not (Test-Path -Path $filePath -PathType Leaf)) {    
+  if (-not (Test-Path -Path $filePath -PathType Leaf)) {
+    # Remove-Item -Force "$($filePath)" Doens't make sense here but WIP
     $confirmation = Read-Host "Do you want to download $($fileInfo.PrettyName)? (Y/N, press Enter for Yes)"
     if ($confirmation -eq 'Y' -or $confirmation -eq 'y' -or $confirmation -eq '') {
       
@@ -179,12 +219,15 @@ foreach ($fileInfo in $requiredFiles) {
 # Controleer of Office al is geïnstalleerd
 if (Test-Path "C:\Program Files\Microsoft Office") {
   Write-Host "Microsoft Office is already installed." -ForegroundColor Green
-  $confirmation = Read-Host "Do you want to run OfficeScrubber? (Y/N, press Enter for Yes)"
+  $confirmation = Read-Host "Do you want to run Microsoft Activation Scripts (MAS), OfficeRemovalTool or OfficeScrubber? (Y/N, press Enter for Yes)"
   if ($confirmation -eq 'Y' -or $confirmation -eq 'y' -or $confirmation -eq '') {
-    Write-Host "Select [R] Remove all Licenses option in OfficeScrubber." -ForegroundColor Yellow
-    Expand-7zArchive -ArchiveUrl $ArchiveUrl -ScrubberPath $ScrubberPath -ScrubberArchive $ScrubberArchive
-    Start-Process -Verb runas -FilePath "cmd.exe" -ArgumentList "/C $ScrubberFullPath "
-    break
+    ScriptMenu
+    # Start-Process -FilePath powershell.exe -ArgumentList "Invoke-WebRequest $OfficeRemovalToolUrl -OutFile $OfficeRemovalToolPath; powershell -ExecutionPolicy Bypass $OfficeRemovalToolPath"
+    # Read-Host "Pressop Enter to continue..."
+    # Write-Host "Select [R] Remove all Licenses option in OfficeScrubber." -ForegroundColor Yellow
+    # Expand-7zArchive -ArchiveUrl $ArchiveUrl -ScrubberPath $ScrubberPath -ScrubberArchive $ScrubberArchive
+    # Start-Process -Verb runas -FilePath "cmd.exe" -ArgumentList "/C $ScrubberFullPath "
+    # break
   }
   else {
   }
@@ -193,7 +236,6 @@ else {
   # Vraag de gebruiker om bevestiging voordat de configuratie wordt uitgevoerd
   $confirmation = Read-Host "Microsoft Office is not installed. Do you want to install and configure it now? (Y/N, press Enter for Yes)"
   if ($confirmation -eq 'Y' -or $confirmation -eq 'y' -or $confirmation -eq '') {
-    # Prompt en lees een enkele toetsaanslag, inclusief Enter
     Write-Host "Druk op 'b' voor Office365 Business of 'c' voor Office21ProPlus."
     $key = $host.UI.RawUI.ReadKey("IncludeKeyDown,NoEcho")
 
@@ -217,12 +259,13 @@ else {
   }
 }
 
-$confirmation = Read-Host "Do you want to run Microsoft Activation Scripts (MAS)? (Y/N, press Enter for Yes)"
+$confirmation = Read-Host "Do you want to run Microsoft Activation Scripts (MAS), OfficeRemovalTool or OfficeScrubber? (Y/N, press Enter for Yes)"
 if ($confirmation -eq 'Y' -or $confirmation -eq 'y' -or $confirmation -eq '') {
-  Start-Process -Verb runas -FilePath powershell.exe -ArgumentList "iwr -useb https://massgrave.dev/get | iex"
+  ScriptMenu
 }
 else {
 }
+
 
 
 
