@@ -13,14 +13,7 @@ If they are missing, the user is prompted to download them.
 File Name: Install-OfficeDeployment.ps1
 Author: TechnoLuc
 Version: 1.0
-Last Updated: 09/29/2023
-
-.PARAMETER InstallODT
-Enable this parameter to perform the installation of Microsoft OfficeDeploymentTool.
-
-param (
-    [switch]$InstallODT
-)
+Last Updated: 09/30/2023
 
 #>
 
@@ -73,18 +66,15 @@ function Get-ODTUri {
 # Step 1: Check if OfficeDeploymentTool is installed
 
 if (Test-Path -Path $setupExe -PathType Leaf) {
-
-# if (Test-Path -Path $odtPath -PathType Container) {
   Write-Host "Microsoft OfficeDeploymentTool is already installed." -ForegroundColor Green
 }
 else {
   Write-Host "Microsoft OfficeDeploymentTool is not installed."
-  #$defaultValue = 'Y'
-  #if (($result = Read-Host "Do you want to install Microsoft OfficeDeploymentTool? (Y/N, default is $defaultValue)").Trim().ToUpper() -eq '' -or $result -eq 'Y') {
   $confirmation = Read-Host "Do you want to install Microsoft OfficeDeploymentTool? (Y/N, press Enter for Yes)"
   if ($confirmation -eq 'Y' -or $confirmation -eq 'y' -or $confirmation -eq '') {
   
     Write-Host "Installing Microsoft OfficeDeploymentTool..."
+    # Use Winget (problematic)
     # winget install -h Microsoft.OfficeDeploymentTool
 
     # Use Get-ODTUri function
@@ -121,11 +111,7 @@ $requiredFiles = @(
 foreach ($fileInfo in $requiredFiles) {
   $filePath = Join-Path -Path $odtPath -ChildPath $fileInfo.Name
 
-  if (-not (Test-Path -Path $filePath -PathType Leaf)) {
-    #$defaultValue = 'Y'
-    #$result = Read-Host -Prompt ("Do you want to download $($fileInfo.PrettyName)? (Y/N, default is $defaultValue)").Trim().ToUpper()
-    #if ($result -eq 'Y' -or $result -eq '') {
-    
+  if (-not (Test-Path -Path $filePath -PathType Leaf)) {    
     $confirmation = Read-Host "Do you want to download $($fileInfo.PrettyName)? (Y/N, press Enter for Yes)"
     if ($confirmation -eq 'Y' -or $confirmation -eq 'y' -or $confirmation -eq '') {
       
@@ -149,18 +135,6 @@ if (Test-Path "C:\Program Files\Microsoft Office") {
   Write-Host "Run OfficeScrubber.cmd and select [R] Remove all Licenses option." -ForegroundColor Yellow
   Write-Host "You can skip this step if Office was never installed on the system." -ForegroundColor Yellow
 }
-# else {
-#     # Vraag de gebruiker om bevestiging voordat de configuratie wordt uitgevoerd
-#     $confirmation = Read-Host "Microsoft Office is not installed. Do you want to install and configure it now? (Y/N, press Enter for Yes)"
-#     if ($confirmation -eq 'Y' -or $confirmation -eq 'y' -or $confirmation -eq '') {
-#         # Voer de configuratie uit als de gebruiker bevestigt of Enter indrukt
-#         Start-Process -Wait $setupExe -ArgumentList "/configure `"$configurationXML`""
-#         Write-Host "Installation completed, execute irm https://massgrave.dev/get | iex to activate." -ForegroundColor Green
-#     }
-#     else {
-#         Write-Host "You chose not to install and configure Microsoft Office. Exiting." -ForegroundColor Red
-#     }
-# }
 else {
   # Vraag de gebruiker om bevestiging voordat de configuratie wordt uitgevoerd
   $confirmation = Read-Host "Microsoft Office is not installed. Do you want to install and configure it now? (Y/N, press Enter for Yes)"
@@ -185,10 +159,6 @@ else {
         Write-Host "Ongeldige invoer." -ForegroundColor Red
       }
     }
-
-    # Voer de configuratie uit als de gebruiker bevestigt of Enter indrukt
-    # Start-Process -Wait $setupExe -ArgumentList "/configure `"$configurationXML`""
-    # Write-Host "Installation completed, execute irm https://massgrave.dev/get | iex to activate." -ForegroundColor Green
   }
   else {
     Write-Host "You chose not to install and configure Microsoft Office. Exiting." -ForegroundColor Red
