@@ -8,5 +8,5 @@ Function Invoke-WPFFormVariables {
     Write-Host "  |____| \___  >\___  >___|  /___|  /\____/|_______ \____/  \___  > "
     Write-Host "             \/     \/     \/     \/               \/           \/  "
     Write-Host ""
-    Write-Host "                      TechnoLuc's Office Toolbox                    "
+    Write-Host "                      TechnoLuc's Office Utility                    "
 }
