@@ -37,7 +37,7 @@ $setupExe = "C:\Program Files\OfficeDeploymentTool\setup.exe"
 $configuration21XML = "C:\Program Files\OfficeDeploymentTool\config.xml"
 $configuration365XML = "C:\Program Files\OfficeDeploymentTool\config365.xml"
 $UnattendedArgs21 = "/configure $configuration21XML"
-$UnattendedArgs365 = "/configure $configuration365XML"
+$UnattendedArgs365 = "/configure `"$configuration365XML`""
 $odtInstallerArgs = "/extract:`"c:\Program Files\OfficeDeploymentTool`" /quiet"
 
 function Get-ODTUri {
@@ -172,7 +172,7 @@ else {
     # Controleer de ingevoerde toets
     switch ($key.Character) {
       'b' {
-        Start-Process -Wait $setupExe -ArgumentList $UnattendedArgs365
+        Start-Process -Wait $setupExe -ArgumentList "$UnattendedArgs365"
         Write-Host "Installation completed." -ForegroundColor Green
         Write-Host "Execute irm https://massgrave.dev/get | iex to activate." -ForegroundColor Green
       }
