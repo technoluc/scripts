@@ -20,7 +20,7 @@ Last Updated: 09/30/2023
 ##################################################
 #                 SET VARIABLES                  #
 ##################################################
-$ScriptUrl = "https://raw.githubusercontent.com/technoluc/scripts/main/OfficeDeploymentTool/Install-OfficeDeployment.ps1"
+$ScriptUrl = "https://raw.githubusercontent.com/technoluc/scripts/main/OfficeDeploymentTool/Install-OfficeDeployment-complete.ps1"
 $odtPath = "C:\Program Files\OfficeDeploymentTool"
 $odtInstaller = "C:\odtInstaller.exe"
 $setupExe = "C:\Program Files\OfficeDeploymentTool\setup.exe"
