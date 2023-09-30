@@ -203,25 +203,26 @@ $requiredFiles = @(
 # Step 3: Get the full path of the required files
 foreach ($fileInfo in $requiredFiles) {
   $filePath = Join-Path -Path $odtPath -ChildPath $fileInfo.Name
-  
-  #Step 4: Test full path of the required files
+
+  # Step 4: Test if the required file exists
   if (-not (Test-Path -Path $filePath -PathType Leaf)) {
-    # Remove-Item -Force "$($filePath)" Doens't make sense here but WIP
     $confirmation = Read-Host "Do you want to download $($fileInfo.PrettyName)? (Y/N, press Enter for Yes)"
     if ($confirmation -eq 'Y' -or $confirmation -eq 'y' -or $confirmation -eq '') {
       if (-not (Test-Path -Path $odtPath -PathType Container)) {
         New-Item -Path $odtPath -ItemType Directory | Out-Null ;
-        Write-Host ("Downloading $($fileInfo.PrettyName)...") -ForegroundColor Cyan
-        $downloadUrl = $fileInfo.Url
-        Invoke-WebRequest -Uri $downloadUrl -OutFile $filePath
       }
-      else {
-        Write-Host ("You chose not to download $($fileInfo.PrettyName).") -ForegroundColor Red
-      }
-    else {
-      Write-Host ("$($fileInfo.PrettyName) is already present.") -ForegroundColor Green
+
+      Write-Host ("Downloading $($fileInfo.PrettyName)...") -ForegroundColor Cyan
+      $downloadUrl = $fileInfo.Url
+      Invoke-WebRequest -Uri $downloadUrl -OutFile $filePath
     }
-  }}
+    else {
+      Write-Host ("You chose not to download $($fileInfo.PrettyName).") -ForegroundColor Red
+    }
+  }
+  else {
+    Write-Host ("$($fileInfo.PrettyName) is already present.") -ForegroundColor Green
+  }
 }
 
 
