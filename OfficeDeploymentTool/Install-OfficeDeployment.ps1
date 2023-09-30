@@ -32,12 +32,13 @@ if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]:
 
 # Set variables
 $odtPath = "C:\Program Files\OfficeDeploymentTool"
+$odtInstaller = "C:\odtInstaller.exe"
 $setupExe = "C:\Program Files\OfficeDeploymentTool\setup.exe"
 $configuration21XML = "C:\Program Files\OfficeDeploymentTool\config.xml"
 $configuration365XML = "config365.xml"
-$UnattendedArgs21 = "/download $configuration21XML"
+$UnattendedArgs21 = "/configure $configuration21XML"
 $UnattendedArgs365 = "/configure $configuration365XML"
-
+$odtInstallerArgs = "/extract:`"c:\Program Files\OfficeDeploymentTool`" /quiet"
 
 function Get-ODTUri {
   <#
@@ -88,9 +89,10 @@ else {
 
     # Use Get-ODTUri function
     New-Item -Path $odtPath -ItemType Directory -Force
-    # $URL = $(Get-ODTUri)
-    $URL = "https://officecdn.microsoft.com/pr/wsus/setup.exe"
-    Invoke-WebRequest -Uri $URL -OutFile $setupExe    
+    $URL = $(Get-ODTUri)
+    # $URL = "https://officecdn.microsoft.com/pr/wsus/setup.exe"
+    Invoke-WebRequest -Uri $URL -OutFile $odtInstaller
+    Start-Process -Wait $odtInstaller -ArgumentList $odtInstallerArgs
   }
   else {
     Write-Host "You chose not to install Microsoft OfficeDeploymentTool. Proceed to step 2."
