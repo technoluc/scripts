@@ -1,4 +1,4 @@
-function Process-Choice {
+function Process-MainMenu-Choice {
   param (
       [string]$choice
   )

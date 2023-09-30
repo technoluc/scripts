@@ -15,5 +15,5 @@ function Show-MainMenu {
   Write-Host "0. Afsluiten"
   Write-Host ""
   $choice = Read-Host "Selecteer een optie (0-9)"
-  Process-Choice $choice
+  Process-MainMenu-Choice $choice
 }
