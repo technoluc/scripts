@@ -41,7 +41,7 @@ $OfficeRemovalToolPath = Join-Path -Path $OfficeToolPath -ChildPath $OfficeRemov
 # Check if script was run as Administrator, relaunch if not
 if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
   Write-Output "OfficeUtil needs to be run as Administrator. Attempting to relaunch."
-  Start-Process -Verb runas -FilePath powershell.exe -ArgumentList "iwr -useb `"$ScriptUrl`" | iex"
+  Start-Process -Verb runas -FilePath powershell.exe -ArgumentList "Invoke-WebRequest -UseBasicParsing `"$ScriptUrl`" | Invoke-Expression"
   break
 }
 
@@ -186,7 +186,7 @@ if (Test-Path "C:\Program Files\Microsoft Office") {
   Write-Host "Microsoft Office is already installed." -ForegroundColor Green
   $confirmation = Read-Host "Do you want to run OfficeScrubber? (Y/N, press Enter for Yes)"
   if ($confirmation -eq 'Y' -or $confirmation -eq 'y' -or $confirmation -eq '') {
-    Invoke-WebRequest $OfficeRemovalToolUrl -OutFile $OfficeRemovalToolPath; powershell -ExecutionPolicy Bypass $OfficeRemovalToolPath
+    Start-Process -FilePath powershell.exe -ArgumentList "Invoke-WebRequest $OfficeRemovalToolUrl -OutFile $OfficeRemovalToolPath; powershell -ExecutionPolicy Bypass $OfficeRemovalToolPath"
     Write-Host "Select [R] Remove all Licenses option in OfficeScrubber." -ForegroundColor Yellow
     Expand-7zArchive -ArchiveUrl $ArchiveUrl -ScrubberPath $ScrubberPath -ScrubberArchive $ScrubberArchive
     Start-Process -Verb runas -FilePath "cmd.exe" -ArgumentList "/C $ScrubberFullPath "
@@ -225,7 +225,7 @@ else {
 
 $confirmation = Read-Host "Do you want to run Microsoft Activation Scripts (MAS)? (Y/N, press Enter for Yes)"
 if ($confirmation -eq 'Y' -or $confirmation -eq 'y' -or $confirmation -eq '') {
-  Start-Process -Verb runas -FilePath powershell.exe -ArgumentList "iwr -useb https://massgrave.dev/get | iex"
+  Start-Process -Verb runas -FilePath powershell.exe -ArgumentList "Invoke-WebRequest -useb https://massgrave.dev/get | Invoke-Expression"
 }
 else {
 }
