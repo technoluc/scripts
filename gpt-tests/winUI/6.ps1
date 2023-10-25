@@ -1,9 +1,9 @@
 Add-Type -AssemblyName PresentationCore, PresentationFramework
 
 # Define actual values for variables used in XAML
-$MainBackgroundColor = "Black"  # Replace with your desired color
-$ButtonInstallBackgroundColor = "Blue"
-$ButtonInstallForegroundColor = "White"
+$MainBackgroundColor = "LightGray"  # Replace with your desired color
+$ButtonInstallBackgroundColor = "Green"
+$ButtonInstallForegroundColor = "Yellow"
 # XAML definition for the window
 $xaml = @"
 <Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
