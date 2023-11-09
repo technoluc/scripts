@@ -16,14 +16,12 @@ echo -e "\n Loading..."~
 
 # Keuzemenu voor Debian of Ubuntu
 if (whiptail --backtitle "Proxmox VE Helper Scripts" --title "Choose OS" --yesno "Do you want to create a Debian or Ubuntu VM?" --yes-button "Debian 12" --no-button "Ubuntu 22.04" 10 58); then
-  echo -e "${RD}Continuing with Debian 12${CL}"
   OS="Debian 12"
   URL="https://cloud.debian.org/images/cloud/bookworm/20231013-1532/debian-12-nocloud-amd64-20231013-1532.qcow2"
   DEFAULT_HOSTNAME="debian"
   DEFAULT_USERNAME="debian"
 
 else
-  echo -e "${RD}Continuing with Ubuntu 22.04${CL}"
   OS="Ubuntu 22.04"
   URL="https://cloud-images.ubuntu.com/focal/current/focal-server-cloudimg-amd64.img"
   DEFAULT_HOSTNAME="ubuntu"
@@ -31,8 +29,7 @@ else
 
 fi
 
-echo -e "Selected OS: $OS"
-
+echo -e "${DGN}Selected OS: ${BGN}$OS${CL}"
 
 GEN_MAC=02:$(openssl rand -hex 5 | awk '{print toupper($0)}' | sed 's/\(..\)/\1:/g; s/.$//')
 NEXTID=$(pvesh get /cluster/nextid)
