@@ -23,7 +23,7 @@ if (whiptail --backtitle "Proxmox VE Helper Scripts" --title "Choose OS" --yesno
 
 else
   OS="Ubuntu 22.04"
-  URL="https://cloud-images.ubuntu.com/focal/current/focal-server-cloudimg-amd64.img"
+  URL="https://cloud-images.ubuntu.com/jammy/current/jammy-server-cloudimg-amd64.img"
   DEFAULT_HOSTNAME="ubuntu"
   DEFAULT_USERNAME="ubuntu"  
 
@@ -33,8 +33,6 @@ echo -e "${DGN}Selected OS: ${BGN}$OS${CL}"
 
 GEN_MAC=02:$(openssl rand -hex 5 | awk '{print toupper($0)}' | sed 's/\(..\)/\1:/g; s/.$//')
 NEXTID=$(pvesh get /cluster/nextid)
-
-URL=https://cloud.debian.org/images/cloud/bookworm/20231013-1532/debian-12-nocloud-amd64-20231013-1532.qcow2
 
 YW=$(echo "\033[33m")
 BL=$(echo "\033[36m")
@@ -75,7 +73,7 @@ function cleanup() {
 
 TEMP_DIR=$(mktemp -d)
 pushd $TEMP_DIR >/dev/null
-if whiptail --backtitle "Proxmox VE Helper Scripts" --title "Debian 12 VM" --yesno "This will create a New Debian 12 VM. Proceed?" 10 58; then
+if whiptail --backtitle "Proxmox VE Helper Scripts" --title "$OS VM" --yesno "This will create a new $OS VM. Proceed?" 10 58; then
   :
 else
   header_info && echo -e "⚠ User exited script \n" && exit
