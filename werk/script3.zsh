@@ -15,7 +15,6 @@ print_yellow() {
   echo -e "\033[33m$1\033[0m"
 }
 
-
 # Functie om de Microsoft Office 365 Business te installeren
 install_office365() {
   print_green "Microsoft Office 365 Business wordt geïnstalleerd..."
@@ -26,9 +25,9 @@ install_office365() {
   sleep 2
   # Controleer of de installatie is geslaagd
   if [ $? -eq 0 ]; then
-      print_green "Office 365 Business is succesvol geïnstalleerd."
+    print_green "Office 365 Business is succesvol geïnstalleerd."
   else
-      print_red "Er is een fout opgetreden tijdens de installatie van Office 365 Business."
+    print_red "Er is een fout opgetreden tijdens de installatie van Office 365 Business."
   fi
   # Verwijder het installatiepakket
   rm "O365BusinessPro.pkg"
@@ -45,9 +44,9 @@ install_office365_rootless() {
   sleep 2
   # Controleer of de installatie is geslaagd
   if [ $? -eq 0 ]; then
-      print_green "Office 365 Business is succesvol geïnstalleerd."
+    print_green "Office 365 Business is succesvol geïnstalleerd."
   else
-      print_red "Er is een fout opgetreden tijdens de installatie van Office 365 Business."
+    print_red "Er is een fout opgetreden tijdens de installatie van Office 365 Business."
   fi
   # Verwijder het installatiepakket
   rm "O365BusinessPro.pkg"
@@ -60,10 +59,10 @@ install_adobecc() {
   curl -OL https://github.com/Installomator/Installomator/raw/main/Installomator.sh && sudo zsh ./Installomator.sh adobecreativeclouddesktop DEBUG=0
   sleep 2
   if [ $? -eq 0 ]; then
-      print_green "Adobe Creative Cloud is succesvol geïnstalleerd."
+    print_green "Adobe Creative Cloud is succesvol geïnstalleerd."
   else
-      print_red "Er is een fout opgetreden tijdens de installatie van Adobe Creative Cloud."
-    fi
+    print_red "Er is een fout opgetreden tijdens de installatie van Adobe Creative Cloud."
+  fi
 }
 
 # Functie om Handoff-functies van iCloud uit te schakelen
@@ -85,14 +84,14 @@ show_extensions=$(defaults read NSGlobalDomain AppleShowAllExtensions)
 
 # Functie om alle bestandsextensies in Finder te laten zien
 show_all_extensions() {
-    defaults write NSGlobalDomain AppleShowAllExtensions -bool true
-    print_green "Alle bestandsextensies worden nu weergegeven in Finder."
+  defaults write NSGlobalDomain AppleShowAllExtensions -bool true
+  print_green "Alle bestandsextensies worden nu weergegeven in Finder."
 }
 
 # Functie om alle bestandsextensies in Finder te verbergen
 hide_all_extensions() {
-    defaults write NSGlobalDomain AppleShowAllExtensions -bool false
-    print_green "Alle bestandsextensies worden nu verborgen in Finder."
+  defaults write NSGlobalDomain AppleShowAllExtensions -bool false
+  print_green "Alle bestandsextensies worden nu verborgen in Finder."
 }
 
 # Weergave van het menu
@@ -120,41 +119,41 @@ while true; do
   display_menu
 
   echo -n "Voer de gewenste optie in: "
-  read choice   
+  read choice
 
   case $choice in
-    1)
-      install_office365
-      ;;
-    2)
-      install_office365_rootless
-      ;;
-    3)
-      install_adobecc
-      ;;
-    4)
-      disable_handoff
-      ;;
-    5)
-      disable_boot_sound
-      ;;
-    6)
-      if [ "$show_extensions" -eq 1 ]; then
-        hide_all_extensions
-      else
-        show_all_extensions
-      fi
-      ;;
-    *)
-      if [[ $choice =~ ^[1-6]$ ]]; then
-        print_red "Ongeldige optie. Probeer opnieuw."
-      elif [[ $choice == 9 ]]; then
-        print_red "Het script wordt gestopt."
-        break
-      else
-        print_red "Ongeldige invoer. Voer een nummer in van 1 tot 5 of 9 om te stoppen."
-      fi
-      ;;
+  1)
+    install_office365
+    ;;
+  2)
+    install_office365_rootless
+    ;;
+  3)
+    install_adobecc
+    ;;
+  4)
+    disable_handoff
+    ;;
+  5)
+    disable_boot_sound
+    ;;
+  6)
+    if [ "$show_extensions" -eq 1 ]; then
+      hide_all_extensions
+    else
+      show_all_extensions
+    fi
+    ;;
+  *)
+    if [[ $choice =~ ^[1-6]$ ]]; then
+      print_red "Ongeldige optie. Probeer opnieuw."
+    elif [[ $choice == 9 ]]; then
+      print_red "Het script wordt gestopt."
+      break
+    else
+      print_red "Ongeldige invoer. Voer een nummer in van 1 tot 5 of 9 om te stoppen."
+    fi
+    ;;
   esac
 
   sleep 1
