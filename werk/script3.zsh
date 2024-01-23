@@ -35,6 +35,25 @@ install_office365() {
   sleep 1
 }
 
+# Functie om de Microsoft Office 365 Business te installeren WITHOUT ROOT ACCESS
+install_office365_rootless() {
+  print_green "Microsoft Office 365 Business wordt geïnstalleerd..."
+  # Download de nieuwste versie van Office 365 Business
+  /usr/bin/curl --location --silent "https://go.microsoft.com/fwlink/?linkid=2009112" -o "O365BusinessPro.pkg"
+  # Installeer Office 365 Business
+  /usr/sbin/installer -pkg "O365BusinessPro.pkg" -target CurrentUserHomeDirectory
+  sleep 2
+  # Controleer of de installatie is geslaagd
+  if [ $? -eq 0 ]; then
+      print_green "Office 365 Business is succesvol geïnstalleerd."
+  else
+      print_red "Er is een fout opgetreden tijdens de installatie van Office 365 Business."
+  fi
+  # Verwijder het installatiepakket
+  rm "O365BusinessPro.pkg"
+  sleep 1
+}
+
 # Functie om Adobe Creative Cloud te installeren
 install_adobecc() {
   print_green "Adobe Creative Cloud wordt geïnstalleerd..."
@@ -108,15 +127,18 @@ while true; do
       install_office365
       ;;
     2)
-      install_adobecc
+      install_office365_rootless
       ;;
     3)
-      disable_handoff
+      install_adobecc
       ;;
     4)
-      disable_boot_sound
+      disable_handoff
       ;;
     5)
+      disable_boot_sound
+      ;;
+    6)
       if [ "$show_extensions" -eq 1 ]; then
         hide_all_extensions
       else
@@ -124,7 +146,7 @@ while true; do
       fi
       ;;
     *)
-      if [[ $choice =~ ^[1-5]$ ]]; then
+      if [[ $choice =~ ^[1-6]$ ]]; then
         print_red "Ongeldige optie. Probeer opnieuw."
       elif [[ $choice == 9 ]]; then
         print_red "Het script wordt gestopt."
