@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+
+    <title>__MSG_pageTitleOptions__</title>
+
+    <link rel="stylesheet" href="/css/lib/bootstrap.v3.3.7.css" />
+    <link rel="stylesheet" type="text/css" href="css/table.options.css" />
+
+    <!-- CA$H -->
+    <script type="text/javascript" src="js/GMikePaymentsManager.js"></script>
+    <script type="text/javascript" src="js/UpgradeManager.js"></script>
+
+    <!-- Options management -->
+    <script type="text/javascript" src="js/BigSyncStorage.js"></script>
+    <script type="text/javascript" src="js/BrowserEnv.js"></script>
+    <script type="text/javascript" src="js/Config.js"></script>
+    <script type="text/javascript" src="js/ExtensionUtils.js"></script>
+    <script type="text/javascript" src="js/GMikeAPI.js"></script>
+    <script type="text/javascript" src="js/OptionsChrome.js"></script>
+    <script type="text/javascript" src="js/OptionsManager.js"></script>
+    <script type="text/javascript" src="js/OptionsUtils.js"></script>
+    <script type="text/javascript" src="js/options.js"></script>
+    <script type="text/javascript" src="js/app/localize.js"></script>
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button
+            type="button"
+            class="navbar-toggle collapsed"
+            data-toggle="collapse"
+            data-target="#navbar"
+            aria-expanded="false"
+            aria-controls="navbar"
+          >
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/options.html">
+            <img src="/images/icon.png" />
+            <span>Table Capture</span>
+          </a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="account"><a href="/account.html">Account</a></li>
+            <li class="options"><a href="/options.html">Options</a></li>
+            <li class="activity"><a href="/activity.html">Activity</a></li>
+            <li class="recipes"><a href="/recipes.html">Recipes</a></li>
+            <li class="support"><a href="/support.html">Support</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container page-content">
+      <section class="flashes">
+        <noscript>
+          <div class="alert alert-danger">
+            JavaScript is disabled. That's a problem.
+          </div>
+        </noscript>
+
+        <div
+          class="alert alert-success alert-save-worked"
+          role="alert"
+          style="display: none"
+        >
+          <strong>Options Saved</strong>
+        </div>
+        <div class="error-wrapper global-errors"></div>
+      </section>
+
+      <section class="just-installed hidden">
+        <div class="alert alert-info refresh-beg-plz">
+          You can skip the below, but
+          <strong>make sure to refresh any existing tabs</strong> before trying
+          to use <span class="_tc-ext">Table Capture</span> on them. You may
+          even want to close them and reopen them if you find the extension
+          doesn't work.
+
+          <div class="no-pro-activate hidden">
+            <hr />
+            <p>Table Capture requires a license to be activated.</p>
+            <a class="btn btn-default btn-lg btn-success" href="/activate.html"
+              >Activate Table Capture</a
+            >
+          </div>
+        </div>
+
+        <div class="title">Welcome!</div>
+        <p>
+          The best way to use <span class="_tc-ext">Table Capture</span> is to:
+        </p>
+        <ol class="steps">
+          <li>
+            Highlight any text within the table you're interested in and
+            <span class="vis-osx">control click</span
+            ><span class="vis-os-other">right-click</span>. This tells the
+            extension which table you care about.
+            <div class="sub-text">
+              Note: Sometimes highlighting text is disabled. Usually the
+              extension can still figure out which page element you're
+              interested in from where you click.
+            </div>
+          </li>
+          <li>
+            <div>
+              Select:
+              <strong>Table Capture - Launch workshop for selection</strong>
+              from the context menu.
+            </div>
+            <div class="screenshot-wrapper big">
+              <img
+                class="thumbnail"
+                src="/images/help.screenshot.contextmenu.png"
+              />
+            </div>
+            <div>
+              Note: If you can't highlight text, it's okay. A
+              <span class="vis-osx">control click</span
+              ><span class="vis-os-other">right-click</span> will give you these
+              options. Use the Workshop! Click:
+              <strong>Table Capture - Launch workshop</strong>.
+            </div>
+            <div class="screenshot-wrapper big">
+              <img
+                class="thumbnail"
+                src="/images/help.screenshot.contextmenu.b.png"
+              />
+            </div>
+          </li>
+          <li>
+            <div>The Workshop will open and highlight your table.</div>
+            <div class="screenshot-wrapper max">
+              <img
+                class="thumbnail"
+                src="/images/help.screenshot.workshop.png"
+              />
+            </div>
+          </li>
+        </ol>
+        <p>
+          Sometimes there are lots of
+          <span class="mono">&lt;table&gt;</span> elements on a page. Also,
+          sometimes tabular data is displayed in HTML that isn't structured as a
+          <span class="mono">&lt;table&gt;</span>. The
+          <span class="_tc-ext">Table Capture Workshop</span>
+          helps you extract tabular data however it's rendered and even allows
+          capturing paged tables and dynamic tables.
+        </p>
+        <hr />
+        <div class="title">
+          For tables that aren't created with
+          <span class="mono">&lt;table&gt;</span> elements:
+        </div>
+        <p>
+          You may select some text within a table and find that the
+          <span class="_tc-ext">Table Capture</span>
+          Workshop is only highlighting a cell or a row of the table and it
+          presenting you with these buttons:
+        </p>
+        <div class="screenshot-wrapper max">
+          <img class="thumbnail" src="/images/help.screenshot.div.tables.png" />
+        </div>
+        <p>
+          You'll need to use the <strong>Select parent element</strong> and
+          <strong>Select child element</strong>
+          buttons to find the page element that wraps all the repeating elements
+          of the table or list.
+        </p>
+        <p>
+          You can see how this is done with this tutorial video:
+          <a href="https://www.youtube.com/watch?v=_ZQsXgGfOTM" target="_blank"
+            >https://www.youtube.com/watch?v=_ZQsXgGfOTM</a
+          >
+        </p>
+        <hr />
+        <div class="title">Also you can...</div>
+        <p>
+          Use <span class="_tc-ext">Table Capture</span> on a page to see and
+          capture multiple tables at a time:
+        </p>
+        <ol>
+          <li>
+            Click the <img src="/images/icon.addressbar.19.gif" /> icon to the
+            right of the URL bar or in the settings menu:
+            <div class="screenshot-wrapper">
+              <img
+                src="/images/help.screenshot.icons.png"
+                class="thumbnail screenshot-icons"
+              />
+              <img
+                src="/images/help.screenshot.menu.png"
+                class="thumbnail screenshot-menu"
+              />
+            </div>
+          </li>
+          <li>
+            You'll see this <img src="/images/icon.addressbar.19.gif" /> icon
+            when <span class="mono">&lt;table&gt;</span> elements have been
+            discovered or this
+            <img src="/images/icon.addressbar.19.grey.gif" /> icon when they
+            haven't.
+          </li>
+        </ol>
+        <p>
+          If you have any questions at all, please email
+          <a class="link-email">our support team</a>.
+        </p>
+        <hr />
+        <div class="onboard-on-options-page-next-steps-wrapper">
+          <div class="title">Next steps:</div>
+          <div class="first-steps no-pro-activate hidden">
+            <a class="btn btn-default btn-lg btn-success" href="/activate.html"
+              >Activate Table Capture</a
+            >
+          </div>
+          <div class="first-steps no-pro-upgrade hidden">
+            <a
+              class="btn btn-default btn-lg"
+              href="https://www.georgemike.com/tablecapture/test/"
+              target="_blank"
+              >Try Table Capture on our test page</a
+            >
+            <a class="btn btn-default btn-lg" href="/options.html"
+              >Fiddle with the options</a
+            >
+            <a class="btn btn-default btn-lg btn-success" href="/upgrade.html"
+              >Upgrade to Pro</a
+            >
+          </div>
+          <hr />
+        </div>
+      </section>
+
+      <section class="options-wrapper hidden">
+        <div class="former-sidebar">
+          <div
+            class="sidebar-upgrade-wrapper alert alert-success hidden no-pro no-pro-upgrade"
+          >
+            <div class="_tc18n title">__MSG_upgradeToProCTA__</div>
+            <p class="documentation _tc18nHTML">__MSG_upgradeToProSubtitle__</p>
+            <a href="/upgrade.html" class="btn btn-default btn-lg _tc18nHTML"
+              >__MSG_upgradeToProButtonText__</a
+            >
+            <div class="disclaimer _tc18nHTML has-trial">
+              __MSG_trialPeriodInfo__
+            </div>
+          </div>
+          <div
+            class="sidebar-upgrade-wrapper alert alert-success hidden no-pro no-pro-activate"
+          >
+            <div class="title">Activate Table Capture</div>
+            <p class="documentation">
+              Purchase a license to activate the extension.
+            </p>
+            <a href="/activate.html" class="btn btn-default">
+              Activate <span class="_tc-ext">Table Capture</span>
+            </a>
+            <div class="disclaimer _tc18nHTML has-trial">
+              __MSG_trialPeriodInfo__
+            </div>
+          </div>
+          <div
+            class="upgrade-status alert alert-success hidden only-just-upgraded-pro"
+          >
+            <div class="title">You're a Pro.</div>
+            <p class="documentation">
+              Thanks for your support; we appreciate it! If you ever want to
+              manage your subscription, you can do so from
+              <a href="/account.html">the account page</a>.
+            </p>
+          </div>
+        </div>
+        <div class="header-with-actions">
+          <h3>Options</h3>
+          <div class="actions">
+            <input
+              type="button"
+              class="btn btn-primary btn-lg btn-save"
+              value="Save"
+            />
+            <div class="dropdown">
+              <button
+                class="btn btn-default btn-lg dropdown-toggle"
+                type="button"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="true"
+              >
+                More
+                <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu">
+                <li><a href="onboard/onboard.html">Take the Tour</a></li>
+                <li><a href="pdf-extract.html">PDF Extractor</a></li>
+                <li><a href="json-extract.html">JSON Extractor</a></li>
+                <li role="separator" class="divider"></li>
+                <li>
+                  <a href="#" class="more-action-wipe"
+                    >Reset Options &amp; Clear All Data</a
+                  >
+                </li>
+                <li class="hidden">
+                  <a href="/watchers.html" class="goto-watchers">Watchers</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <form class="extension-options">
+          <div class="options-settings-grouping">
+            <div class="grouping-heading">Extraction Content</div>
+            <div class="form-group checkbox-group">
+              <label>
+                <input type="checkbox" class="get-links-checkbox" /> Extract
+                Link URLs From Table Cells
+              </label>
+              <div class="form-docs">
+                <p class="documentation">
+                  If selected, when
+                  <span class="_tc-ext">Table Capture</span> encounters a link,
+                  it will extract the text along with the URL in parentheses.
+                  For example:
+                  <strong
+                    >Link test (http://www.the-link-referred-to.com)</strong
+                  >
+                </p>
+              </div>
+            </div>
+            <div class="form-group checkbox-group">
+              <label>
+                <input type="checkbox" class="new-lines-for-paras-checkbox" />
+                Add Special Characters for Line Breaks
+              </label>
+              <div class="form-docs">
+                <p class="documentation">
+                  We'll insert a pipe character (&nbsp;|&nbsp;) after text in
+                  paragraph <span class="mono">&lt;p&gt;</span> tags and for
+                  <span class="mono">&lt;br&gt;</span> tags.
+                </p>
+                <p class="documentation">
+                  For <span class="mono">&lt;pre&gt;</span> and
+                  <span class="mono">&lt;code&gt;</span> tags, we'll add this
+                  little umbrella character (&nbsp;☂&nbsp;) for line breaks,
+                  which will allow you to do a find/replace and tweak
+                  accordingly. It's a little silly, but it works...
+                </p>
+              </div>
+            </div>
+            <div class="form-group checkbox-group">
+              <label>
+                <input type="checkbox" class="delete-empty-rows-checkbox" />
+                Delete Empty Rows
+              </label>
+              <div class="form-docs">
+                <p class="documentation">
+                  If selected, empty table rows will be excluded from the
+                  captured output.
+                </p>
+              </div>
+            </div>
+            <div class="form-group checkbox-group">
+              <label>
+                <input type="checkbox" class="ignore-hidden-checkbox" /> Ignore
+                Hidden Page Elements
+              </label>
+              <div class="form-docs">
+                <p class="documentation">
+                  When selected, only visible page elements will be extracted.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="options-settings-grouping image-extraction-wrapper">
+            <div class="grouping-heading">Image Extraction</div>
+            <div class="two-halves-wrapper">
+              <div class="left-opt ignore-images disabled">
+                <div class="form-group checkbox-group">
+                  <label>
+                    <input type="checkbox" class="ignore-images-checkbox" />
+                    Ignore Images Completely
+                    <div class="form-docs">
+                      <p class="documentation">
+                        If selected, when
+                        <span class="_tc-ext">Table Capture</span> encounters an
+                        image, nothing will be extracted. If a table cell
+                        contains only an image, the cell will be empty when the
+                        table is captured.
+                      </p>
+                    </div>
+                  </label>
+                </div>
+              </div>
+              <div class="right-opt extract-images disabled">
+                <div class="form-group checkbox-group">
+                  <label>
+                    <input type="checkbox" class="img-src-checkbox" />
+                    Extract Image and Icon Attributes
+                    <div class="form-docs">
+                      <p class="documentation">
+                        If selected, when
+                        <span class="_tc-ext">Table Capture</span> encounters an
+                        image, it will extract the alt text along with the src
+                        in parentheses. For example:
+                        <strong
+                          >Logo
+                          (https://www.georgemike.com/images/port.tablecapture.icon.png)</strong
+                        >
+                      </p>
+                      <p class="documentation">
+                        Additionally, if selected,
+                        <span class="_tc-ext">Table Capture</span> will extract
+                        icon attributes to help discern between icon-based cell
+                        values.
+                      </p>
+                    </div>
+                  </label>
+                </div>
+                <div class="form-group checkbox-group">
+                  <label>
+                    <input
+                      type="checkbox"
+                      class="inline-images-gsheets-checkbox"
+                    />
+                    Display Images Inline in Google Sheets
+                    <div class="form-docs">
+                      <p class="documentation">
+                        If selected, when
+                        <span class="_tc-ext">Table Capture</span> encounters a
+                        cell that is entirely an image, it will display the
+                        image inline in Google Sheets.
+                      </p>
+                      <a
+                        href="https://www.youtube.com/watch?v=IA90rX8YYB8"
+                        target="_blank"
+                        class="demo-link"
+                        >Demo</a
+                      >
+                    </div>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="options-settings-grouping">
+            <div class="grouping-heading">
+              Excel &amp; CSV Exports <span class="pro-flag"></span>
+            </div>
+            <div class="form-group">
+              <label for="csv-delimiter">CSV Delimiter</label>
+              <input
+                type="text"
+                class="form-control small-text"
+                name="csv-delimiter"
+                id="csv-delimiter"
+                placeholder="CSV Delimiter"
+              />
+            </div>
+            <div class="form-group text-group">
+              <label for="filename-template">Filename Template</label>
+              <input
+                type="text"
+                class="form-control med-text"
+                name="filename-template"
+                id="filename-template"
+                placeholder="Filename Template"
+              />
+              <div class="form-docs">
+                <p class="documentation">
+                  You can customize how your Excel &amp; CSV files are named
+                  using a template above. Variables available:
+                  <span class="mono">$NAME, $DATE, $DOMAIN</span>
+                </p>
+                <p class="documentation">
+                  For a table on georgemike.com ($DOMAIN) listed as "(4 x 5)
+                  name-table" ($NAME):
+                  <span class="mono">$NAME.$DATE-heart-$DOMAIN</span> &rarr;
+                  <span class="template-example"
+                    >4_x_5_name-table.<span class="date-var"></span
+                    >-heart-georgemike.csv</span
+                  >
+                </p>
+              </div>
+            </div>
+            <div class="form-group checkbox-group">
+              <label>
+                <input type="checkbox" class="single-sheet-excel-checkbox" />
+                Batch Export Tables to a Single Excel Sheet
+              </label>
+              <div class="form-docs">
+                <p class="documentation">
+                  The default behavior is to put each table from a batch in its
+                  own sheet. With the above enabled, each table will be placed
+                  in a single sheet with a blank row separating each table.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="options-settings-grouping">
+            <div class="grouping-heading">
+              Numbers &amp; Internationalization
+            </div>
+            <div class="form-group checkbox-group">
+              <label>
+                <input type="checkbox" class="number-as-number-checkbox" />
+                Convert All Number Values to Plain Numbers
+              </label>
+              <div class="form-docs">
+                <p class="documentation">
+                  If selected, when your cell values contain numeric values, the
+                  extension will extract those values as plain numbers.
+                </p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>
+                <input type="checkbox" class="money-number-checkbox" /> Convert
+                Money Values to Plain Numbers
+              </label>
+              <div class="form-docs">
+                <p class="documentation">
+                  If selected, when your cell values contain money values, the
+                  extension will extract those values as plain numbers. For
+                  example: <strong>$1,249.99</strong> &rarr;
+                  <strong>1249.99</strong>
+                </p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="num-decimal-char">Decimal Separator</label>
+              <input
+                type="text"
+                class="form-control small-text"
+                name="num-decimal-char"
+                id="num-decimal-char"
+                placeholder="The character that denotes the decimal part of a number in your locale."
+              />
+            </div>
+            <div class="form-group">
+              <label for="num-thousand-char">Thousands Separator</label>
+              <input
+                type="text"
+                class="form-control small-text"
+                name="num-thousand-char"
+                id="num-thousand-char"
+                placeholder="The character that separates groups of thousands in your locale."
+              />
+            </div>
+          </div>
+          <div class="options-settings-grouping">
+            <div class="grouping-heading">Google Sheets</div>
+            <div class="form-group checkbox-group">
+              <label>
+                <input type="checkbox" class="enable-paste-prompt-checkbox" />
+                Display a Reminder to Paste Within Google Sheets
+              </label>
+              <div class="form-docs">
+                <p class="documentation">
+                  Pasting into Google Sheets is an action you'll always need to
+                  take. For new users, it's helpful to have a reminder. You may
+                  want to turn this reminder off once you get the hang of
+                  things.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="options-settings-grouping">
+            <div class="grouping-heading">Popup Window</div>
+            <div class="form-group checkbox-group">
+              <label>
+                <input type="checkbox" class="row-preview-checkbox" /> Preview
+                First Table Row
+              </label>
+              <div class="form-docs">
+                <p class="documentation">
+                  If selected, we'll show a preview of the first row of the
+                  table and its headers.
+                </p>
+              </div>
+            </div>
+            <div class="form-group checkbox-group">
+              <label>
+                <input type="checkbox" class="ignore-hidden-tables-checkbox" />
+                Ignore Hidden Tables
+              </label>
+              <div class="form-docs">
+                <p class="documentation">
+                  When selected, only visible tables will be listed in the popup
+                  window's table list.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="options-settings-grouping">
+            <div class="grouping-heading">DIV-based Tables</div>
+            <div class="form-group checkbox-group">
+              <label>
+                <input
+                  type="checkbox"
+                  class="always-allow-columnify-checkbox"
+                />
+                Always Enable Column-Breaking
+              </label>
+              <div class="form-docs">
+                <p class="documentation">
+                  You'll sometimes see a "break columns" action available when
+                  interacting with DIV-based tables. Table Capture will
+                  typically only show the action when it detects that your data
+                  is all lumped into one column. If you'd like to always see the
+                  action, check this box.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="options-settings-grouping">
+            <div class="grouping-heading">
+              Screenshotting <span class="pro-flag"></span>
+            </div>
+            <div class="form-group checkbox-group">
+              <label>
+                <input type="checkbox" class="copy-images-to-clip-checkbox" />
+                Copy Table Images to Clipboard
+              </label>
+            </div>
+          </div>
+          <div class="options-settings-grouping">
+            <div class="grouping-heading">Experimental Features</div>
+            <div class="form-group checkbox-group">
+              <label>
+                <input type="checkbox" class="enable-gdrive-write-checkbox" />
+                Enable Writing Data to Google Drive
+                <span class="beta-flag">CLOUD BETA</span>
+              </label>
+              <div class="form-docs">
+                <p class="documentation">
+                  When enabled, <span class="_tc-ext">Table Capture</span> will
+                  request permission to write directly to Google Drive. This
+                  means you won't have to manually paste in data from the
+                  clipboard. This also means, you can choose to overwrite an
+                  existing sheet.
+                </p>
+                <p class="documentation">
+                  You can manage your sheets
+                  <a href="/manage-sheets.html">here</a>.
+                </p>
+              </div>
+            </div>
+            <div class="form-group checkbox-group hidden">
+              <label>
+                <input type="checkbox" class="use-unified-paging-checkbox" />
+                Enable Unified Paging &amp; Dynamic Tables Toggle
+                <span class="pro-flag"></span>
+              </label>
+              <div class="form-docs">
+                <p class="documentation">
+                  When enabled, there will no longer be two toggles for paging
+                  and dynamic tables.
+                </p>
+              </div>
+            </div>
+            <div class="form-group checkbox-group">
+              <label>
+                <input
+                  type="checkbox"
+                  class="enable-url-based-auto-paging-checkbox"
+                />
+                Enable URL-based Auto-Paging
+              </label>
+              <div class="form-docs">
+                <p class="documentation">
+                  When enabled, <span class="_tc-ext">Table Capture</span> will
+                  look for page numbers in URLs when the auto-paging toggle is
+                  on. If a page number is found in the URL, you'll be prompted
+                  to use that to navigate to the next page.
+                </p>
+              </div>
+            </div>
+            <div class="form-group checkbox-group">
+              <label>
+                <input
+                  type="checkbox"
+                  class="enable-developer-options-checkbox"
+                />
+                Enable Developer Options
+              </label>
+              <div class="form-docs">
+                <p class="documentation">
+                  When enabled, functionality that developers can make use of to
+                  get more from
+                  <span class="_tc-ext">Table Capture</span> will be available
+                  from within the extension.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="options-settings-grouping">
+            <div class="grouping-heading">
+              Advanced <span class="pro-flag"></span>
+            </div>
+            <div class="alert alert-warning">
+              We do not recommend enabling these as there may be a performance
+              hit when using them on large datasets. Use sparingly.
+            </div>
+            <div class="form-group checkbox-group">
+              <label>
+                <input type="checkbox" class="remove-strikethroughs-checkbox" />
+                Remove Strikethrough Text from Exported Data
+              </label>
+              <div class="form-docs">
+                <p class="documentation">
+                  When enabled, "<span style="text-decoration: line-through"
+                    >not</span
+                  >
+                  cool" is exported as "cool".
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="options-settings-grouping">
+            <div class="grouping-heading">
+              Time Configuration <span class="pro-flag"></span>
+            </div>
+            <div class="alert alert-info">
+              <strong>Note:</strong>
+              250ms is the lowest value you can set for these intervals/delays.
+            </div>
+            <div class="timeouts-table">
+              <table class="table">
+                <thead>
+                  <th>Interval or Delay</th>
+                  <th>Table Capture Default (milliseconds)</th>
+                  <th>User Default (milliseconds)</th>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="options-form-actions">
+            <input
+              type="button"
+              class="btn btn-primary btn-lg btn-save"
+              value="Save"
+            />
+          </div>
+        </form>
+      </section>
+    </div>
+
+    <footer class="footer">
+      <div class="container">
+        <a class="footer-link link-review">Leave a Review</a>
+        <span>&middot;</span>
+        <a class="footer-link link-roadmap">Development Roadmap</a>
+        <span>&middot;</span>
+        <a class="footer-link link-email">Email Support</a>
+        <span>&middot;</span>
+        <a class="footer-link link-discord">Discord</a>
+        <span>&middot;</span>
+        <a class="footer-link link-newsletter">Join the Newsletter</a>
+        <span>&middot;</span>
+        <a class="footer-link" href="thanks.html">Thanks</a>
+        <p class="text-muted">
+          <span class="text-tc-version"></span>
+          <span>&middot;</span>
+          <span>Copyright 2023, GeorgeMike.com</span>
+        </p>
+      </div>
+    </footer>
+
+    <script type="text/javascript" src="js/lib/jquery.min.js"></script>
+    <script
+      type="text/javascript"
+      src="js/lib/bootstrap.v3.3.7.min.js"
+    ></script>
+  </body>
+</html>

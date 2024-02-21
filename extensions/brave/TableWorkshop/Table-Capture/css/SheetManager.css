@@ -1,0 +1,42 @@
+.sheet-list-item {
+  border-bottom: 1px solid #ccc;
+  display: flex;
+  flex-direction: row;
+  padding-top: 16px;
+  padding-bottom: 16px;
+
+  margin-bottom: 16px;
+  justify-content: space-between;
+}
+
+.sheet-list-item:last-child {
+  border: 0;
+}
+
+.sheet-list-item .actions .btn {
+  margin-left: 16px;
+}
+
+.sheet-list-item .metadata {
+  margin-top: 8px;
+}
+
+.sheet-list-item.ignored .remove-btn,
+.sheet-list-item.ignored .show-btn,
+.sheet-list-item .hide-btn {
+  display: inline-block;
+}
+
+.sheet-list-item .remove-btn,
+.sheet-list-item.ignored .save-btn,
+.sheet-list-item .show-btn,
+.sheet-list-item.ignored .hide-btn {
+  display: none;
+}
+
+.bottom-action {
+  margin-top: 16px;
+  background-color: var(--bg-color-secondary);
+  border-radius: 4px;
+  padding: 16px;
+}

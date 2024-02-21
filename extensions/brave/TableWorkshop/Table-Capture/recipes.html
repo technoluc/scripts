@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+
+    <title>Recipes | Table Capture</title>
+
+    <link rel="stylesheet" href="/css/lib/bootstrap.v3.3.7.css" />
+    <link rel="stylesheet" type="text/css" href="css/table.options.css" />
+    <link rel="stylesheet" type="text/css" href="css/table.recipes.css" />
+
+    <script type="text/javascript" src="js/lib/Blob.js"></script>
+    <script
+      type="text/javascript"
+      src="js/lib/FileSaver.v2.0.4.min.js"
+    ></script>
+
+    <script type="text/javascript" src="js/BigSyncStorage.js"></script>
+    <script type="text/javascript" src="js/BrowserEnv.js"></script>
+    <script type="text/javascript" src="js/Config.js"></script>
+    <script type="text/javascript" src="js/ExtensionUtils.js"></script>
+    <script type="text/javascript" src="js/OptionsChrome.js"></script>
+    <script type="text/javascript" src="js/OptionsPageUtils.js"></script>
+    <script type="text/javascript" src="js/RecipeImporter.js"></script>
+    <script type="text/javascript" src="js/RecipeManager.js"></script>
+    <script type="text/javascript" src="js/TableUtil.js"></script>
+    <script type="text/javascript" src="js/recipes.js"></script>
+    <script type="text/javascript" src="js/app/localize.js"></script>
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button
+            type="button"
+            class="navbar-toggle collapsed"
+            data-toggle="collapse"
+            data-target="#navbar"
+            aria-expanded="false"
+            aria-controls="navbar"
+          >
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/options.html">
+            <img src="/images/icon.png" />
+            <span>Table Capture</span>
+          </a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="account"><a href="/account.html">Account</a></li>
+            <li class="options"><a href="/options.html">Options</a></li>
+            <li class="activity"><a href="/activity.html">Activity</a></li>
+            <li class="recipes"><a href="/recipes.html">Recipes</a></li>
+            <li class="support"><a href="/support.html">Support</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container page-content">
+      <section class="flashes">
+        <noscript>
+          <div class="alert alert-danger">
+            JavaScript is disabled. That's a problem.
+          </div>
+        </noscript>
+        <div class="error-wrapper global-errors"></div>
+      </section>
+      <section class="recipe-wrapper">
+        <h3 class="header-with-actions">
+          <span>Recipes</span>
+          <div class="right-actions">
+            <input
+              type="button"
+              value="New"
+              class="btn btn-primary btn-new-recipe"
+            />
+            <input
+              type="button"
+              value="Delete All"
+              class="btn btn-danger btn-clear-all"
+            />
+            <span class="action-separator"></span>
+            <a class="btn btn-default btn-view-clips" href="/clips.html"
+              >View Clips</a
+            >
+          </div>
+        </h3>
+        <hr />
+        <div class="recipes"></div>
+        <div class="dropzone-mask">
+          <span class="message"
+            >You can drop in exported recipe files here.</span
+          >
+        </div>
+        <hr />
+        <p class="documentation">
+          <strong>FYI:</strong> You can learn about how Recipes work
+          <a class="link-recipes-doc" target="_blank">here</a>. If you think you
+          want to cook one up, you should email George (or contact a web
+          developer).
+        </p>
+      </section>
+    </div>
+
+    <footer class="footer">
+      <div class="container">
+        <a class="footer-link link-review">Leave a Review</a>
+        <span>&middot;</span>
+        <a class="footer-link link-roadmap">Development Roadmap</a>
+        <span>&middot;</span>
+        <a class="footer-link link-email">Email Support</a>
+        <span>&middot;</span>
+        <a class="footer-link link-discord">Discord</a>
+        <span>&middot;</span>
+        <a class="footer-link link-newsletter">Join the Newsletter</a>
+        <span>&middot;</span>
+        <a class="footer-link" href="thanks.html">Thanks</a>
+        <p class="text-muted">
+          <span class="text-tc-version"></span>
+          <span>&middot;</span>
+          <span>Copyright 2023, GeorgeMike.com</span>
+        </p>
+      </div>
+    </footer>
+
+    <script type="text/javascript" src="js/lib/jquery.min.js"></script>
+    <script
+      type="text/javascript"
+      src="js/lib/bootstrap.v3.3.7.min.js"
+    ></script>
+  </body>
+</html>

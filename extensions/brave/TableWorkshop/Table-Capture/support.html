@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Support | Table Capture</title>
+    <link rel="stylesheet" href="/css/lib/bootstrap.v3.3.7.css" />
+    <link rel="stylesheet" type="text/css" href="css/table.options.css" />
+    <link rel="stylesheet" type="text/css" href="css/VideoCarousel.css" />
+    <script type="text/javascript" src="js/BrowserEnv.js"></script>
+    <script type="text/javascript" src="js/Config.js"></script>
+    <script type="text/javascript" src="js/OptionsChrome.js"></script>
+    <script type="text/javascript" src="js/VideoCarousel.js"></script>
+    <script type="text/javascript" src="js/support.js"></script>
+
+    <style>
+      .sidebar-section {
+        border-radius: 10px;
+        padding: 24px;
+        background-color: var(--bg-color-secondary);
+        margin-top: 20px;
+      }
+
+      .sidebar-section > h3 {
+        margin-top: 0;
+        padding-top: 0;
+        margin-bottom: 20px;
+      }
+
+      /*** FAQ **/
+
+      .faq-wrapper {
+        margin: 24px 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .faq-wrapper li {
+        margin: 0 0 32px 0;
+        padding: 0;
+      }
+
+      .faq-wrapper li h5 {
+        margin-bottom: 4px;
+        font-size: 19px;
+        font-weight: 500;
+      }
+
+      .faq-wrapper li p {
+        font-size: 15px;
+        font-weight: normal;
+        color: var(--text-body);
+      }
+
+      /*** ***/
+      .functionality-box {
+        margin: 24px 0 0 0;
+      }
+
+      .functionality-box .functionality-tag {
+        display: inline-block;
+        padding: 8px 12px;
+        background-color: var(--bg-color-kinda-loud);
+        border-radius: 4px;
+        font-size: 15px;
+        font-weight: 500;
+        margin-bottom: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button
+            type="button"
+            class="navbar-toggle collapsed"
+            data-toggle="collapse"
+            data-target="#navbar"
+            aria-expanded="false"
+            aria-controls="navbar"
+          >
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/options.html">
+            <img src="/images/icon.png" />
+            <span>Table Capture</span>
+          </a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="account"><a href="/account.html">Account</a></li>
+            <li class="options"><a href="/options.html">Options</a></li>
+            <li class="activity"><a href="/activity.html">Activity</a></li>
+            <li class="recipes"><a href="/recipes.html">Recipes</a></li>
+            <li class="support"><a href="/support.html">Support</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container page-content">
+      <div class="row">
+        <div class="col-lg-8">
+          <div>
+            <h3>Documentation</h3>
+            <p>
+              To learn about how to use the extension effectively, I highly
+              recommend testing it on
+              <a
+                href="https://www.georgemike.com/tablecapture/test/"
+                target="_blank"
+                >this page</a
+              >, which explains the ins and outs of it all. Also, the demo
+              videos are probably an easy way to get started.
+            </p>
+            <p>
+              <a
+                class="btn btn-success"
+                href="https://www.georgemike.com/tablecapture/test/"
+                target="_blank"
+              >
+                Open the recommended test page
+              </a>
+              <a class="btn btn-default link-email" target="_blank">
+                Email George
+              </a>
+            </p>
+            <div class="functionality-box">
+              <div class="functionality-tag">Keyboard Shortcuts</div>
+              <div>
+                You can customize the keyboard shortcut that opens the popup
+                window here:
+                <a class="ext-keyboard-shortcuts" href="#"
+                  >chrome://extensions/shortcuts</a
+                >
+              </div>
+            </div>
+            <div class="functionality-box">
+              <div class="functionality-tag">Local HTML Files</div>
+              <div>
+                You can use the extension on local files, but first you'll need
+                to navigate to the Chrome Extension management page (<a
+                  class="ext-chrome-home"
+                  href="#"
+                  >chrome://extensions</a
+                >), click the <span class="mono">"Details"</span> button for
+                <span class="_tc-ext">Table Capture</span> and then enable the
+                <span class="mono">"Allow access to file URLs"</span> toggle.
+              </div>
+            </div>
+            <div class="functionality-box">
+              <div class="functionality-tag">Demo Videos</div>
+              <div
+                id="vid-carousel-1"
+                class="carousel slide youtube-carousel"
+                data-ride="carousel"
+                data-interval="false"
+              >
+                <div class="carousel-inner"></div>
+                <div class="controls">
+                  <a
+                    class="left carousel-control"
+                    href="#vid-carousel-1"
+                    data-slide="prev"
+                  >
+                    <div class="left-button">
+                      <div class="glyphicon glyphicon-chevron-left"></div>
+                    </div>
+                  </a>
+                  <a
+                    class="right carousel-control"
+                    href="#vid-carousel-1"
+                    data-slide="next"
+                  >
+                    <div class="right-button">
+                      <div class="glyphicon glyphicon-chevron-right"></div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr />
+          <h3>Frequently Asked Questions</h3>
+          <ul class="faq-wrapper">
+            <li>
+              <h5>Why does my data have a lot of links in it?</h5>
+              <p>
+                You can disable link (web address) extraction in the
+                <a href="/options.html">options page</a>.
+              </p>
+            </li>
+            <li>
+              <h5>Can I copy multiple tables at the same time?</h5>
+              <p>
+                Yes you can! From the
+                <span class="_tc-ext">Table Capture</span> popup window, select
+                the tables you'd like to copy and then use the corresponding
+                action buttons.
+              </p>
+            </li>
+            <li>
+              <h5>I can't see my table - what do I do?</h5>
+              <p>
+                Try highlighting some text in your table, right-clicking and
+                opening the <span class="_tc-ext">Table Capture</span> Workshop.
+              </p>
+            </li>
+            <li>
+              <h5>Are you available for 1:1 training sessions?</h5>
+              <p>
+                Yup! Just email me and we can schedule a session where I can
+                walk you through the extension, help you get the most from it.
+              </p>
+            </li>
+          </ul>
+        </div>
+        <div class="col-lg-4">
+          <div class="sidebar-section">
+            <h3>A letter from the developer</h3>
+            <p>
+              <span class="_tc-ext">Table Capture</span> is a side project of
+              mine. It's maintained by just me in my spare time. Please be
+              patient with me as I fix bugs, add features and address your
+              concerns.
+            </p>
+            <p>
+              That being said, I'm all about adding features that will add value
+              to the extension. Don't hesitate to e-mail me with issues or
+              questions. I'll do my best to respond in a timely fashion.
+            </p>
+            <p>
+              Lastly - if you find that the extension isn't working, just email
+              me and I'll respond that day. If you don't complain when it's not
+              working, I can't make the extension better! And that's all I
+              really care about.
+            </p>
+            <p>Thanks,<br />George<br /></p>
+            <p>
+              PS. If you're thinking about uninstalling because you can't get
+              the extension to work,
+              <a class="link-email" target="_blank">email me!</a> I bet I can
+              help you figure it out in 15 minutes or less.
+            </p>
+          </div>
+          <div class="sidebar-section">
+            <h3>More Productivity Tools</h3>
+            <p>
+              If you're interested in finding out about more productivity tools
+              like <span class="_tc-ext">Table Capture</span>,
+              <a class="link-newsletter">join our newsletter!</a> We don't send
+              many e-mails, but those we do send are full of worthwhile
+              productivity tools that can save you time and help you work
+              smarter, better.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <div class="container">
+        <a class="footer-link link-review">Leave a Review</a>
+        <span>&middot;</span>
+        <a class="footer-link link-roadmap">Development Roadmap</a>
+        <span>&middot;</span>
+        <a class="footer-link link-email">Email Support</a>
+        <span>&middot;</span>
+        <a class="footer-link link-discord">Discord</a>
+        <span>&middot;</span>
+        <a class="footer-link link-newsletter">Join the Newsletter</a>
+        <span>&middot;</span>
+        <a class="footer-link" href="thanks.html">Thanks</a>
+        <p class="text-muted">
+          <span class="text-tc-version"></span>
+          <span>&middot;</span>
+          <span>Copyright 2023, GeorgeMike.com</span>
+        </p>
+      </div>
+    </footer>
+
+    <script type="text/javascript" src="js/lib/jquery.min.js"></script>
+    <script
+      type="text/javascript"
+      src="js/lib/bootstrap.v3.3.7.min.js"
+    ></script>
+  </body>
+</html>

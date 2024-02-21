@@ -15,11 +15,11 @@ Write-output '
 ################################################################################################################
 ' | Out-File ./$scriptname -Append -Encoding ascii
 
-(Get-Content .\TestMenu\scripts\start.ps1).replace('#{replaceme}',"$(get-date -format yy.MM.dd)") | Out-File ./$scriptname -Append -Encoding ascii
+(Get-Content .\gpt-tests\TestMenu\scripts\start.ps1).replace('#{replaceme}',"$(get-date -format yy.MM.dd)") | Out-File ./$scriptname -Append -Encoding ascii
 
-Get-ChildItem .\TestMenu\functions -Recurse -File | ForEach-Object {
+Get-ChildItem .\gpt-tests\TestMenu\functions -Recurse -File | ForEach-Object {
     Get-Content $psitem.FullName | Out-File ./$scriptname -Append -Encoding ascii
 }
 
-Get-Content .\TestMenu\scripts\main.ps1 | Out-File ./$scriptname -Append -Encoding ascii
-Get-Content .\TestMenu\MainMenu.ps1 | Out-File ./$scriptname -Append -Encoding ascii
+Get-Content .\gpt-tests\TestMenu\scripts\main.ps1 | Out-File ./$scriptname -Append -Encoding ascii
+Get-Content .\gpt-tests\TestMenu\MainMenu.ps1 | Out-File ./$scriptname -Append -Encoding ascii

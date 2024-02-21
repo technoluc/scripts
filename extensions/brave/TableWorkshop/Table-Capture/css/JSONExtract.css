@@ -1,0 +1,55 @@
+a.example {
+  cursor: pointer;
+  margin-top: 4px;
+  font-size: 13px;
+}
+
+.entry-preview-wrapper,
+.json-preview-wrapper {
+  margin-bottom: 32px;
+}
+
+.entry-preview-wrapper textarea,
+.json-preview-wrapper textarea {
+  font-size: 14px;
+  font-family: monospace;
+  min-height: 300px;
+}
+
+.sheet-preview {
+  margin-bottom: 32px;
+}
+
+.sheet-preview .alert-no-cols {
+  display: none;
+}
+
+.sheet-preview.no-cols .alert-no-cols {
+  display: block;
+}
+
+.sheet-preview .metadata {
+  margin-bottom: 16px;
+}
+
+.sheet-preview .title-with-actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.sheet-preview .metadata div {
+  display: inline-flex;
+  background-color: var(--bg-color-kinda-loud);
+  padding: 6px 8px;
+  border-radius: 2px;
+}
+
+.sheet-preview table {
+  margin-top: 16px;
+}
+
+p.instructions {
+  font-size: 13px;
+  margin-top: 4px;
+  color: var(--text-color-caption);
+}

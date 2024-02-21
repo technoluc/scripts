@@ -1,0 +1,116 @@
+.main-app-content {
+  overflow: auto;
+}
+
+.main-app-content canvas {
+  border: 1px solid black;
+  direction: ltr;
+  width: 100%;
+}
+
+.main-app-content .page-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 32px;
+}
+
+.preview-wrapper {
+  margin-top: 16px;
+  padding: 16px;
+  background-color: var(--bg-color-secondary);
+}
+
+.preview-wrapper .data-preview {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.preview-wrapper .data-preview .data-preview-cell {
+  border: 1px solid #ccc;
+  padding: 4px 8px;
+  font-family: monospace;
+  margin-right: 4px;
+  margin-bottom: 4px;
+}
+
+.preview-wrapper p.caption {
+  margin: 8px 0 0 0;
+  font-size: 13px;
+  color: #333333cc;
+}
+
+.direction-actions {
+  display: block;
+  overflow: auto;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.text-search-results a {
+  cursor: pointer;
+  display: inline-block;
+  margin-right: 4px;
+  margin-top: 8px;
+}
+
+.feedback-wrapper {
+  margin-top: 16px;
+}
+
+.feedback-wrapper .small-heading {
+  font-size: 17px;
+  font-weight: 400;
+  border-top: 1px solid #eee;
+  padding-top: 8px;
+  margin-bottom: 4px;
+}
+
+.feedback-wrapper .next-steps {
+  margin-top: 8px;
+}
+
+.feedback-wrapper .next-steps .alert {
+  margin-bottom: 8px;
+}
+
+.feedback-wrapper .report-wrapper {
+  display: none;
+}
+
+.feedback-wrapper.show-report-button .report-wrapper {
+  display: block;
+}
+
+/*** DRAG AND DROP ***/
+
+body .dropzone-mask {
+  transition: all 250ms ease-in-out;
+  border: 2px dashed #999;
+  margin-top: 16px;
+  margin-bottom: 32px;
+  padding: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 21px;
+  font-weight: 300;
+  cursor: pointer;
+}
+
+body .dropzone-mask:hover,
+body.file-drag-over .dropzone-mask {
+  background-color: var(--accent-background-color);
+}
+
+/*** EXPLANATION ***/
+
+.explanation {
+  clear: both;
+  margin: 32px 0 64px;
+}
+
+.explanation p,
+.explanation ul {
+  max-width: 720px;
+  font-size: 15px;
+}

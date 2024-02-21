@@ -1,0 +1,99 @@
+.header-with-actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.header-with-actions .right-actions .btn {
+  margin-left: 16px;
+}
+
+.recipe-wrapper form {
+  background-color: #e9e9e9;
+  border: 1px solid #e9e9e9;
+  padding: 16px;
+  margin-top: 16px;
+  transition: all 250ms ease-in-out;
+}
+
+.recipe-wrapper form.collapsed .form-group,
+.recipe-wrapper form.collapsed .form-actions,
+.recipe-wrapper form.collapsed .errors,
+.recipe-wrapper form .collapsed-header {
+  display: none;
+}
+
+.recipe-wrapper form .form-group,
+.recipe-wrapper form.collapsed .collapsed-header {
+  display: block;
+}
+
+.recipe-wrapper form.collapsed .collapsed-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  flex-direction: row;
+}
+
+.recipe-wrapper form.collapsed .collapsed-header .recipe-metadata {
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+.recipe-wrapper form.collapsed .collapsed-header .recipe-metadata span,
+.recipe-wrapper form.collapsed .collapsed-header .recipe-metadata a {
+  display: inline-block;
+  margin-right: 4px;
+  border-bottom: 1px solid #ccc;
+  text-decoration: none;
+}
+
+.recipe-wrapper form.collapsed.form-disabled {
+  background-color: #fff;
+}
+
+.recipe-wrapper form.collapsed .ro-recipe-name {
+  font-size: 23px;
+}
+
+.recipe-wrapper form.collapsed.form-disabled .btn-toggle-clipping,
+.recipe-wrapper form.collapsed.form-disabled .btn.btn-edit {
+  display: none;
+}
+
+.recipe-wrapper form.collapsed .collapsed-header .btn.btn-toggle-status {
+  margin-left: 16px;
+}
+
+.recipe-wrapper form.success {
+  background-color: var(--bg-color-kinda-loud);
+}
+
+.recipe-wrapper form .form-actions input {
+  margin-right: 8px;
+}
+
+.recipe-wrapper form .form-actions .divider {
+  border-left: 1px solid #ccc;
+  margin-right: 10px;
+}
+
+/*** DRAG AND DROP ***/
+
+body .dropzone-mask {
+  transition: all 250ms ease-in-out;
+  border: 2px dashed #999;
+  margin-top: 32px;
+  margin-bottom: 32px;
+  padding: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 21px;
+  font-weight: 300;
+  cursor: pointer;
+}
+
+body .dropzone-mask:hover,
+body.file-drag-over .dropzone-mask {
+  background-color: aliceblue;
+}

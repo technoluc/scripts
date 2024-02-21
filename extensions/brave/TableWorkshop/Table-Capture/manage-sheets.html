@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Manage Google Sheets | Table Capture</title>
+    <link rel="stylesheet" href="/css/lib/bootstrap.v3.3.7.css" />
+    <link rel="stylesheet" type="text/css" href="css/SheetManager.css" />
+    <link rel="stylesheet" type="text/css" href="css/table.options.css" />
+
+    <script type="text/javascript" src="js/app/SheetManager.js"></script>
+    <script type="text/javascript" src="js/BrowserEnv.js"></script>
+    <script type="text/javascript" src="js/Config.js"></script>
+    <script type="text/javascript" src="js/MessageAction.js"></script>
+    <script type="text/javascript" src="js/OptionsChrome.js"></script>
+    <script type="text/javascript" src="js/SheetsSyncBridge.js"></script>
+    <script type="text/javascript" src="js/manage-sheets.js"></script>
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button
+            type="button"
+            class="navbar-toggle collapsed"
+            data-toggle="collapse"
+            data-target="#navbar"
+            aria-expanded="false"
+            aria-controls="navbar"
+          >
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/options.html">
+            <img src="/images/icon.png" />
+            <span>Table Capture</span>
+          </a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="account"><a href="/account.html">Account</a></li>
+            <li class="options"><a href="/options.html">Options</a></li>
+            <li class="activity"><a href="/activity.html">Activity</a></li>
+            <li class="recipes"><a href="/recipes.html">Recipes</a></li>
+            <li class="support"><a href="/support.html">Support</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container page-content">
+      <section class="flashes">
+        <noscript>
+          <div class="alert alert-danger">
+            JavaScript is disabled. That's a problem.
+          </div>
+        </noscript>
+        <div class="error-wrapper global-errors"></div>
+      </section>
+      <section class="activity-wrapper">
+        <h3 class="header-with-actions">
+          <span>Manage Google Sheets</span>
+          <div class="right-actions">
+            <input
+              type="button"
+              value="Reset"
+              class="btn btn-default btn-reset-all"
+              data-toggle="tooltip"
+              data-placement="top"
+              title="If you've removed a sheet you'd like to be displayed here, you can reset all state and reopen it."
+            />
+          </div>
+        </h3>
+        <div class="alert alert-warning alert-sheets-drive-writes">
+          <strong>FYI.</strong>
+          The sheets below will be available to you for automatic Google Drive
+          writes.
+        </div>
+        <hr />
+        <div class="sheet-list"></div>
+      </section>
+    </div>
+
+    <footer class="footer">
+      <div class="container">
+        <a class="footer-link link-review">Leave a Review</a>
+        <span>&middot;</span>
+        <a class="footer-link link-roadmap">Development Roadmap</a>
+        <span>&middot;</span>
+        <a class="footer-link link-email">Email Support</a>
+        <span>&middot;</span>
+        <a class="footer-link link-discord">Discord</a>
+        <span>&middot;</span>
+        <a class="footer-link link-newsletter">Join the Newsletter</a>
+        <span>&middot;</span>
+        <a class="footer-link" href="thanks.html">Thanks</a>
+        <p class="text-muted">
+          <span class="text-tc-version"></span>
+          <span>&middot;</span>
+          <span>Copyright 2023, GeorgeMike.com</span>
+        </p>
+      </div>
+    </footer>
+
+    <script type="text/javascript" src="js/lib/jquery.min.js"></script>
+    <script
+      type="text/javascript"
+      src="js/lib/bootstrap.v3.3.7.min.js"
+    ></script>
+  </body>
+</html>

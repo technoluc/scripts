@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Cloud | Table Capture</title>
+
+    <link rel="stylesheet" href="/css/lib/bootstrap.v3.3.7.css" />
+    <link rel="stylesheet" type="text/css" href="css/table.options.css" />
+    <link rel="stylesheet" type="text/css" href="css/Cloud.css" />
+
+    <script type="text/javascript" src="js/ActivityLogUtil.js"></script>
+    <script type="text/javascript" src="js/AuthWrapper.js"></script>
+    <script type="text/javascript" src="js/BigSyncStorage.js"></script>
+    <script type="text/javascript" src="js/BrowserEnv.js"></script>
+    <script type="text/javascript" src="js/CloudUpgradeManager.js"></script>
+    <script type="text/javascript" src="js/Config.js"></script>
+    <script type="text/javascript" src="js/ExtensionUtils.js"></script>
+    <script type="text/javascript" src="js/GMikeAPI.js"></script>
+    <script type="text/javascript" src="js/MessageAction.js"></script>
+    <script type="text/javascript" src="js/OptionsChrome.js"></script>
+    <script type="text/javascript" src="js/OptionsPageUtils.js"></script>
+    <script type="text/javascript" src="js/OutputFormat.js"></script>
+    <script type="text/javascript" src="js/TableUtil.js"></script>
+    <script type="text/javascript" src="js/cloud.js"></script>
+
+    <script type="text/javascript" src="js/app/localize.js"></script>
+  </head>
+  <body class="static-page">
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button
+            type="button"
+            class="navbar-toggle collapsed"
+            data-toggle="collapse"
+            data-target="#navbar"
+            aria-expanded="false"
+            aria-controls="navbar"
+          >
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/options.html">
+            <img src="/images/icon.png" />
+            <span>Table Capture</span>
+          </a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="account"><a href="/account.html">Account</a></li>
+            <li class="options"><a href="/options.html">Options</a></li>
+            <li class="activity"><a href="/activity.html">Activity</a></li>
+            <li class="recipes"><a href="/recipes.html">Recipes</a></li>
+            <li class="support"><a href="/support.html">Support</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container page-content">
+      <section class="flashes">
+        <noscript>
+          <div class="alert alert-danger">
+            JavaScript is disabled. That's a problem.
+          </div>
+        </noscript>
+        <div class="error-wrapper global-errors"></div>
+      </section>
+      <section>
+        <div class="main-page-title _tc-ext">Table Capture Cloud</div>
+        <p class="readable documentation">
+          Signing up for <span class="_tc-ext">Cloud</span> allows advanced
+          users to wrangle data on another level. Integration between your
+          browser extension and cloud backends gives you even more power to
+          capture data and decouple yourself from the process as much as
+          possible.
+        </p>
+      </section>
+      <div class="row">
+        <div class="actual-cloud-row">
+          <div class="col-lg-6 feature-points available">
+            <div class="feature-section">
+              <div class="icon-wrapper">
+                <img src="/images/icon.sync.png" />
+              </div>
+              <div class="value-add">
+                Live sync of dynamic data between any table and Google Sheets.
+                <div>
+                  <a
+                    class="demo-link"
+                    href="https://www.youtube.com/watch?v=BkRb_7BiKGQ"
+                    target="_blank"
+                    >Demo</a
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="feature-section">
+              <div class="icon-wrapper">
+                <img src="/images/icon.artificialintelligence.png" />
+              </div>
+              <div class="value-add">
+                Magic Columns: AI-enhanced data parsing and extraction.
+                <div>
+                  <a
+                    class="demo-link"
+                    href="https://www.youtube.com/watch?v=rDDVbxl8GyM"
+                    target="_blank"
+                    >Demo</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6 repro-summary">
+            <div class="inner alert alert-success">
+              <div class="thin-title header">Your Cloud Table.</div>
+              <div class="mono"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-12">
+          <div class="terms">
+            <p class="readable">
+              <span class="_tc-ext">Cloud</span> is free for your first 7 days.
+              Afterwards, it costs
+              <span class="_tc-ext _tc18n">__MSG_displayableCloudPrice__</span>
+              to save yourself hours every week.
+            </p>
+            <p class="readable">
+              Licenses auto-renew; cancel within your trial period and you won't
+              be charged anything.
+            </p>
+          </div>
+          <div class="main-actions">
+            <div class="caption">
+              Sign in with your <span class="emphasis">Google</span> account
+              below to get started.
+            </div>
+            <div class="btn-get-started">
+              <img
+                src="/images/google/btn_google_signin_dark_normal_web@2x.png"
+              />
+            </div>
+            <div class="caption">
+              Once you sign-in, you'll be taken to GeorgeMike.com to purchase
+              <span class="emphasis">Table Capture Cloud</span>
+            </div>
+          </div>
+          <div class="trial-started hidden">
+            <hr />
+            <input
+              type="button"
+              class="btn btn-success btn-lg refresh-page-button"
+              value="I started a Table Capture Cloud Trial"
+            />
+          </div>
+        </div>
+      </div>
+      <hr />
+      <div class="coming-soon-wrapper">
+        <div class="row">
+          <div class="col-lg-6 feature-points soon">
+            <div class="heading-2">
+              Everything described below is coming soon.
+            </div>
+            <p class="readable">
+              Join the <span class="brand">Table Capture Cloud</span> beta to
+              decouple yourself from your data extraction tasks.
+            </p>
+            <form class="signup-form">
+              <div class="input-group">
+                <input
+                  type="text"
+                  class="form-control email-addy"
+                  placeholder="Email Address"
+                />
+                <span class="input-group-btn">
+                  <button class="btn btn-primary" type="submit">
+                    Notify me when more features launch
+                  </button>
+                </span>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-6 feature-points">
+            <div class="feature-section">
+              <div class="icon-wrapper">
+                <img src="/images/icon.proxy.png" />
+              </div>
+              <div class="value-add">
+                Proxy data to Excel Power Query and Google Sheets.
+              </div>
+            </div>
+            <div class="feature-section">
+              <div class="icon-wrapper">
+                <img src="/images/icon.calendar.png" />
+              </div>
+              <div class="value-add">
+                Schedule data capture so that your data is waiting for you when
+                you're ready to use it.
+              </div>
+            </div>
+            <div class="feature-section">
+              <div class="icon-wrapper">
+                <img src="/images/icon.refresh.b.png" />
+              </div>
+              <div class="value-add">
+                Get access to data feeds that update in the background
+                periodically so that you're always operating on accurate data.
+              </div>
+            </div>
+            <div class="feature-section">
+              <div class="icon-wrapper">
+                <img src="/images/icon.notification.png" />
+              </div>
+              <div class="value-add">
+                Get notified when pages you care about change.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <div class="container">
+        <a class="footer-link link-review">Leave a Review</a>
+        <span>&middot;</span>
+        <a class="footer-link link-roadmap">Development Roadmap</a>
+        <span>&middot;</span>
+        <a class="footer-link link-email">Email Support</a>
+        <span>&middot;</span>
+        <a class="footer-link link-discord">Discord</a>
+        <span>&middot;</span>
+        <a class="footer-link link-newsletter">Join the Newsletter</a>
+        <span>&middot;</span>
+        <a class="footer-link" href="thanks.html">Thanks</a>
+        <p class="text-muted">
+          <span class="text-tc-version"></span>
+          <span>&middot;</span>
+          <span>Copyright 2023, GeorgeMike.com</span>
+        </p>
+      </div>
+    </footer>
+
+    <script type="text/javascript" src="js/lib/jquery.min.js"></script>
+    <script
+      type="text/javascript"
+      src="js/lib/bootstrap.v3.3.7.min.js"
+    ></script>
+  </body>
+</html>

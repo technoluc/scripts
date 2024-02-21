@@ -1,0 +1,79 @@
+body._tcap-page ._tc-switch,
+tc-workshop ._tc-switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+  margin-bottom: 0;
+}
+
+body._tcap-page label._tc-switch:after,
+tc-workshop label._tc-switch:after {
+  display: none;
+}
+
+body._tcap-page ._tc-switch label,
+tc-workshop ._tc-switch label {
+  all: initial;
+}
+
+body._tcap-page ._tc-switch input,
+tc-workshop ._tc-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+body._tcap-page ._tc-switch .tc-slider,
+tc-workshop ._tc-switch .tc-slider {
+  all: initial;
+
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  border-radius: 34px;
+}
+
+body._tcap-page ._tc-switch .tc-slider::before,
+tc-workshop ._tc-switch .tc-slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+body._tcap-page ._tc-switch:hover input:checked + .tc-slider,
+body._tcap-page ._tc-switch input:checked + .tc-slider,
+tc-workshop ._tc-switch:hover input:checked + .tc-slider,
+tc-workshop ._tc-switch input:checked + .tc-slider {
+  background-color: var(--tc-switch-color, #2196f3);
+}
+
+body._tcap-page ._tc-switch:hover input + .tc-slider,
+tc-workshop ._tc-switch:hover input + .tc-slider {
+  background-color: var(--tc-switch-hover-color, #2196f3);
+}
+
+body._tcap-page ._tc-switch input:focus + .tc-slider,
+tc-workshop ._tc-switch input:focus + .tc-slider {
+  box-shadow: 0 0 1px var(--tc-switch-color, #2196f3);
+}
+
+body._tcap-page ._tc-switch input:checked + .tc-slider:before,
+tc-workshop ._tc-switch input:checked + .tc-slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}

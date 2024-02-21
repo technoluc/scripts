@@ -1,0 +1,68 @@
+.readable.documentation {
+  font-size: 17px;
+}
+
+.main-account-info-wrapper section {
+  margin: 32px 0;
+}
+
+.main-account-info-wrapper section .pairs .pair {
+  display: inline-flex;
+  font-size: 17px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 8px;
+  margin-bottom: 8px;
+  margin-right: 6px;
+}
+
+.main-account-info-wrapper section .pairs .pair.clickable {
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.main-account-info-wrapper section .pairs .pair.clickable:hover {
+  background-color: var(--bg-color-secondary);
+}
+
+.main-account-info-wrapper section .pairs .pair .key {
+  font-weight: 500;
+  margin-right: 8px;
+}
+
+.main-account-info-wrapper section .pairs a.sub-action {
+  display: block;
+  margin-bottom: 4px;
+  cursor: pointer;
+}
+
+.licenses-wrapper table th {
+  background-color: var(--bg-color-secondary);
+}
+
+.cloud-auth-wrapper .btn-get-started {
+  width: 224px;
+  cursor: pointer;
+}
+
+.cloud-auth-wrapper .btn-get-started img {
+  width: 100%;
+}
+
+.loading-wrapper {
+  position: absolute;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}
+
+.loading-wrapper .lds-heart div,
+.loading-wrapper .lds-heart div:before,
+.loading-wrapper .lds-heart div:after {
+  background-color: var(--bg-color-kinda-loud);
+}

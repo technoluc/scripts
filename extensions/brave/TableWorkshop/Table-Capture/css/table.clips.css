@@ -1,0 +1,26 @@
+.collections .collection {
+  border: 1px solid #e9e9e9;
+  padding: 16px;
+  margin-top: 16px;
+  transition: all 250ms ease-in-out;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.collections .collection .collection-name {
+  font-size: 23px;
+}
+
+.collections .collection .metadata {
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+.collections .collection .metadata span,
+.collections .collection .metadata a {
+  display: inline-block;
+  margin-right: 4px;
+  border-bottom: 1px solid #ccc;
+  text-decoration: none;
+}

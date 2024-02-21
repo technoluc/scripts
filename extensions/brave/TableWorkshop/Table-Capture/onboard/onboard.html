@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Welcome to Table Capture</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/css/lib/progressjs.min.css" />
+    <link rel="stylesheet" href="/css/lib/bootstrap.v3.3.7.css" />
+    <link rel="stylesheet" type="text/css" href="onboard.css" />
+
+    <!-- TILES -->
+    <script type="text/javascript" src="./tiles/Tile.js"></script>
+    <script
+      type="text/javascript"
+      src="./tiles/AccountSelectionTile.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="./tiles/ActivateCloudLicenseTile.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="./tiles/ActivateLicenseTile.js"
+    ></script>
+    <script type="text/javascript" src="./tiles/SummaryTile.js"></script>
+    <script
+      type="text/javascript"
+      src="./tiles/TableCaptureExperienceTile.js"
+    ></script>
+    <script type="text/javascript" src="./tiles/TutorialTile.js"></script>
+    <script type="text/javascript" src="./tiles/UserTypeTile.js"></script>
+    <script type="text/javascript" src="./tiles/WelcomeTile.js"></script>
+
+    <!-- LICENSING -->
+    <script type="text/javascript" src="../js/GMikePaymentsManager.js"></script>
+    <script type="text/javascript" src="../js/GMikeAPI.js"></script>
+    <script type="text/javascript" src="../js/OptionsManager.js"></script>
+    <script type="text/javascript" src="../js/OptionsUtils.js"></script>
+
+    <script type="text/javascript" src="/js/lib/progress.min.js"></script>
+    <script type="text/javascript" src="/js/lib/trianglify.bundle.js"></script>
+
+    <script type="text/javascript" src="enums.js"></script>
+    <script type="text/javascript" src="exampleTables.js"></script>
+    <script type="text/javascript" src="HashChangeManager.js"></script>
+    <script type="text/javascript" src="OnboardManager.js"></script>
+    <script type="text/javascript" src="onboard.js"></script>
+    <script type="text/javascript" src="triangleUtils.js"></script>
+
+    <!-- CONTENT SCRIPTS: SHOULD REFLECT MANIFEST-->
+    <link rel="stylesheet" type="text/css" href="../css/content.css" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../css/SelectionWorkshop.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../css/ContentComponents.css"
+    />
+    <link rel="stylesheet" type="text/css" href="../css/Loading.css" />
+    <link rel="stylesheet" type="text/css" href="../css/Toggle.css" />
+    <script type="text/javascript" src="../js/lib/Blob.js"></script>
+    <script
+      type="text/javascript"
+      src="../js/lib/FileSaver.v2.0.4.min.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="../js/lib/xlsx.full.0.16.1.min.js"
+    ></script>
+    <script type="text/javascript" src="../js/lib/js.cookie.v2.2.0.js"></script>
+    <script type="text/javascript" src="../js/lib/clipboard.js"></script>
+    <script type="text/javascript" src="../js/lib/html2canvas.js"></script>
+    <script type="text/javascript" src="../js/lib/markdown-table.js"></script>
+    <script type="text/javascript" src="../js/DataProvider.js"></script>
+    <script type="text/javascript" src="../js/MessageAction.js"></script>
+    <script type="text/javascript" src="../js/OutputFormat.js"></script>
+    <script type="text/javascript" src="../js/MutationSnoop.js"></script>
+    <script type="text/javascript" src="../js/TableShow.js"></script>
+    <script type="text/javascript" src="../js/DetachedTableShow.js"></script>
+    <script type="text/javascript" src="../js/ElementWrapper.js"></script>
+    <script type="text/javascript" src="../js/TableWrapper.js"></script>
+    <script type="text/javascript" src="../js/SelectionWrapper.js"></script>
+    <script
+      type="text/javascript"
+      src="../js/SpecialCaseElementWrapper.js"
+    ></script>
+    <script type="text/javascript" src="../js/NotionTableWrapper.js"></script>
+    <script type="text/javascript" src="../js/RecipeTableWrapper.js"></script>
+
+    <!-- PAGING LISTENERS -->
+    <script type="text/javascript" src="../js/app/PagingListener.js"></script>
+    <script
+      type="text/javascript"
+      src="../js/app/DynamicPagingListener.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="../js/app/NavigationPagingListener.js"
+    ></script>
+
+    <script type="text/javascript" src="../js/app/AutoScroller.js"></script>
+    <script
+      type="text/javascript"
+      src="../js/app/ContentScriptUtil.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="../js/app/NextButtonListener.js"
+    ></script>
+    <script type="text/javascript" src="../js/app/Robot.js"></script>
+    <script type="text/javascript" src="../js/app/ContentModal.js"></script>
+    <script type="text/javascript" src="../js/app/WorkshopEvent.js"></script>
+    <script type="text/javascript" src="../js/app/WorkshopFrame.js"></script>
+    <script
+      type="text/javascript"
+      src="../js/app/SelectionWorkshop.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="../js/app/SelectionWorkshopDataManager.js"
+    ></script>
+    <script type="text/javascript" src="../js/BigSyncStorage.js"></script>
+    <script type="text/javascript" src="../js/BrowserEnv.js"></script>
+    <script type="text/javascript" src="../js/Config.js"></script>
+    <script type="text/javascript" src="../js/ExtensionUtils.js"></script>
+    <script type="text/javascript" src="../js/ExcelUtil.js"></script>
+    <script type="text/javascript" src="../js/TableActionLogger.js"></script>
+    <script type="text/javascript" src="../js/TableUtil.js"></script>
+    <script type="text/javascript" src="../js/ScreenshotUtil.js"></script>
+    <script type="text/javascript" src="../js/SheetsSyncBridge.js"></script>
+    <script type="text/javascript" src="../js/TableManager.js"></script>
+    <script type="text/javascript" src="../js/content.js"></script>
+  </head>
+  <body>
+    <div class="content-wrapper">
+      <div class="slide-stack"></div>
+      <div class="stack-footer offscreen"></div>
+    </div>
+
+    <div class="offscreen-tiles">
+      <!-- TUTORIAL INTRO -->
+      <div class="tutorial-content" id="tutorial-intro">
+        <div class="heading">Interactive tutorial</div>
+        <p>
+          In the next few steps you'll learn how to get as much from Table
+          Capture as possible.
+        </p>
+        <div class="placeholder-controls"></div>
+      </div>
+
+      <!-- MECHANICS -->
+      <div class="tutorial-content" id="mech">
+        <div class="heading">Basic Mechanics</div>
+        <p>There are two ways to invoke the extension.</p>
+        <div class="onboard-readable">
+          <strong>The Workshop</strong> is the panel that appears at the bottom
+          (or top if you choose to dock it there) of the page that houses all of
+          the newest <span class="tc ext">Table Capture</span> features.
+        </div>
+        <div class="onboard-readable">
+          <strong>The Popup Window</strong> is what appears when you click the
+          extension icon in the toolbar. It's best used for exporting multiple
+          tables on the page simultaneously.
+        </div>
+        <div class="placeholder-controls"></div>
+      </div>
+
+      <div class="tutorial-content" id="mech-workshop">
+        <div class="heading">
+          The <span class="brand">Table Capture</span> Workshop
+        </div>
+        <p>The Workshop is the preferred way to interact with the extension.</p>
+        <div class="placeholder" data-attr-table="basic"></div>
+        <div class="placeholder-controls"></div>
+        <div class="onboard-readable">
+          <div class="cta">
+            Highlight any text within the table you're interested in and
+            <span class="vis-osx">control click</span
+            ><span class="vis-os-other">right-click</span> it. Select
+            <strong>"Table Capture - Launch workshop for selection"</strong>.
+            This will launch the Workshop with the context it needs to know
+            which table you care about.
+          </div>
+        </div>
+      </div>
+
+      <div class="tutorial-content" id="mech-popup">
+        <div class="heading">
+          The <span class="brand">Table Capture</span> Popup Window
+        </div>
+        <div class="placeholder" data-attr-table="basic"></div>
+        <div class="placeholder" data-attr-table="basic-b"></div>
+        <div class="onboard-readable">
+          <span class="cta"
+            >Try opening the Popup Window, selecting all of the tables on this
+            page and exporting them to Google Sheets in one batch.</span
+          >
+        </div>
+        <div class="onboard-readable">
+          You can find the icon for the Popup Window in your browser's toolbar
+          or extension tray.
+        </div>
+        <div class="placeholder-controls"></div>
+      </div>
+
+      <!-- PAGING -->
+      <div class="tutorial-content" id="paging">
+        <div class="heading">Paged &amp; Dynamic Tables</div>
+        <p>There are...</p>
+        <div class="placeholder-controls"></div>
+      </div>
+
+      <div class="tutorial-content" id="paging-dynamic">
+        <div class="heading">Dynamic Tables</div>
+        <p>There are a handful of ways large datasets are displayed.</p>
+
+        <div class="placeholder" data-attr-table="dynamic-realtime"></div>
+        <p>In the table above values are constantly changing.</p>
+
+        <div class="placeholder-controls"></div>
+      </div>
+
+      <!-- DATA + EXTRACTION OPTIONS -->
+      <div class="tutorial-content" id="data-ext">
+        <div class="heading">Setting your extraction preferences</div>
+        <p>Table Capture lets you tweak things...</p>
+        <div class="placeholder-controls"></div>
+      </div>
+
+      <div class="tutorial-content" id="data-links">
+        <div class="heading">Extracting Links/URLs</div>
+        <p>
+          <span class="brand">Table Capture</span> has a setting to extract web
+          addresses (URLs) &amp; email addresses.
+        </p>
+
+        <div class="placeholder" data-attr-table="links"></div>
+        <div class="placeholder-controls"></div>
+        <p>
+          In the table above there are various numeric and money values. Try
+          capturing this table with and without turning on this setting:
+        </p>
+        <div class="options-wrapper">
+          <span class="option-tag">Extract link URLs from table cells</span>
+        </div>
+      </div>
+
+      <div class="tutorial-content" id="data-images">
+        <div class="heading">Extracting Images &amp; Image Attributes</div>
+        <p>
+          <span class="brand">Table Capture</span> has a few settings that
+          dictate how images will be handled.
+        </p>
+
+        <div class="placeholder" data-attr-table="images"></div>
+        <div class="placeholder-controls"></div>
+        <p>In the table above there are ...</p>
+        <div class="options-wrapper">
+          <span class="option-tag">Extract link URLs from table cells</span>
+        </div>
+      </div>
+
+      <div class="tutorial-content" id="data-numbers-money">
+        <div class="heading">Numbers &amp; Money</div>
+        <p>
+          <span class="brand">Table Capture</span> has a few settings to handle
+          numbers and money values better.
+        </p>
+
+        <div class="placeholder" data-attr-table="numbers"></div>
+        <div class="placeholder-controls"></div>
+        <p>
+          In the table above there are various numeric and money values. Try
+          capturing this table and summing columns with and without turning on
+          these two settings:
+        </p>
+        <div class="options-wrapper">
+          <span class="option-tag"
+            >Attempt to convert all number values to plain numbers</span
+          >
+          <span class="option-tag"
+            >Attempt to convert money values to plain numbers</span
+          >
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript" src="../../js/lib/jquery.min.js"></script>
+    <script
+      type="text/javascript"
+      src="../../js/lib/bootstrap.v3.3.7.min.js"
+    ></script>
+  </body>
+</html>

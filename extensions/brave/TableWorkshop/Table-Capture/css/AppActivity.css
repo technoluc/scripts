@@ -1,0 +1,144 @@
+.activity-wrapper .actions p {
+  margin-top: 16px;
+}
+
+.activity-wrapper ul {
+  list-style: none;
+  margin: 0 0 32px 0;
+  padding: 0;
+}
+
+.activity-wrapper ul li {
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  font-size: 15px;
+}
+
+.activity-wrapper ul li .title {
+  font-size: 21px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.activity-wrapper .page-elements {
+  margin: 8px 0;
+}
+
+.activity-wrapper .page-elements .page-element {
+  margin-bottom: 8px;
+  background-color: #f4f4f4;
+  border-radius: 4px;
+  padding: 8px;
+  transition: background-color 500ms ease-in-out;
+}
+
+.activity-wrapper .page-elements .page-element .header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.activity-wrapper .page-elements .page-element:last-child {
+  margin: 0;
+}
+
+.activity-wrapper .page-elements .page-element:hover {
+  background-color: var(--bg-color-kinda-loud);
+}
+
+.activity-wrapper .page-elements .page-element.copied {
+  background-color: antiquewhite;
+}
+
+.activity-wrapper .page-elements .page-element pre {
+  margin: 12px 0;
+}
+
+.activity-wrapper .page-elements .page-element .actions {
+  display: flex;
+  align-items: center;
+}
+
+.activity-wrapper .page-elements .page-element .actions button {
+  margin-right: 8px;
+}
+
+.activity-wrapper .page-elements .page-element .actions button.btn-image {
+  height: 34px;
+  padding: 6px 8px 2px;
+}
+
+.activity-wrapper .page-elements .page-element .actions button.btn-image img {
+  height: 100%;
+}
+
+.activity-wrapper .page-elements .page-element .left-side {
+  display: flex;
+  align-items: center;
+}
+
+.left-side .last-action-summary {
+  font-size: 13px;
+  color: #555;
+  margin-left: 16px;
+  display: inline-block;
+  border: 1px solid #999;
+  border-radius: 4px;
+  padding: 4px 8px;
+}
+
+.activity-wrapper .page-elements .page-element .left-side .page-element-name {
+  display: inline-block;
+  margin-left: 8px;
+}
+
+.activity-wrapper .page-elements .page-element .left-side .icon-toggle-btn {
+  cursor: pointer;
+  margin-right: 8px;
+  font-size: 16px;
+
+  border: 1px solid #ccc;
+  padding: 6px;
+  border-radius: 4px;
+}
+
+.activity-wrapper
+  .page-elements
+  .page-element
+  .left-side
+  .icon-toggle-btn.glyph-on,
+.activity-wrapper
+  .page-elements
+  .page-element
+  .left-side
+  .icon-toggle-btn.glyphicon-star {
+  color: coral;
+  border-color: coral;
+}
+
+.activity-wrapper
+  .page-elements
+  .page-element
+  .left-side
+  .domain-toggle-btn.glyph-on {
+  color: green;
+  border-color: green;
+}
+
+.activity-wrapper .error-wrapper .alert {
+  cursor: pointer;
+}
+
+/*** NO DATA ***/
+
+.activity-wrapper .alert-no-data,
+.activity-wrapper.no-data-recorded .alert-how-fetch-works,
+.activity-wrapper.no-data-recorded .actions,
+.activity-wrapper.no-data-recorded .documentation {
+  display: none;
+}
+
+.activity-wrapper.no-data-recorded .alert-no-data {
+  display: block;
+}

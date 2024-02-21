@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Activate | Table Capture</title>
+    <link rel="stylesheet" href="/css/lib/bootstrap.v3.3.7.css" />
+    <link rel="stylesheet" type="text/css" href="css/table.options.css" />
+
+    <script type="text/javascript" src="js/BigSyncStorage.js"></script>
+    <script type="text/javascript" src="js/BrowserEnv.js"></script>
+    <script type="text/javascript" src="js/Config.js"></script>
+    <script type="text/javascript" src="js/ExtensionUtils.js"></script>
+    <script type="text/javascript" src="js/GMikePaymentsManager.js"></script>
+    <script type="text/javascript" src="js/GMikeAPI.js"></script>
+    <script type="text/javascript" src="js/OptionsChrome.js"></script>
+    <script type="text/javascript" src="js/OptionsManager.js"></script>
+    <script type="text/javascript" src="js/OptionsUtils.js"></script>
+    <script type="text/javascript" src="js/UpgradeManager.js"></script>
+
+    <script type="text/javascript" src="js/activate.js"></script>
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button
+            type="button"
+            class="navbar-toggle collapsed"
+            data-toggle="collapse"
+            data-target="#navbar"
+            aria-expanded="false"
+            aria-controls="navbar"
+          >
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/options.html">
+            <img src="/images/icon.png" />
+            <span>Table Capture</span>
+          </a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="account"><a href="/account.html">Account</a></li>
+            <li class="options"><a href="/options.html">Options</a></li>
+            <li class="activity"><a href="/activity.html">Activity</a></li>
+            <li class="recipes"><a href="/recipes.html">Recipes</a></li>
+            <li class="support"><a href="/support.html">Support</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container page-content">
+      <section class="upgrade-wrapper">
+        <div class="error-wrapper global-errors"></div>
+        <div class="title _tc-ext">Activate Table Capture</div>
+        <div class="row">
+          <div class="col-lg-6">
+            <p class="documentation">
+              Purchasing a <span class="pro">Table Capture</span> license gives
+              you all the features below and everything we add going forward.
+              Additionally, you'll be helping to support the continued
+              maintenance of software that's trustworthy and dependable.
+            </p>
+            <div class="features">
+              <div class="subheading">Features</div>
+              <div class="feature">
+                Copy tables of every form to the clipboard with proper row and
+                column delimiters
+              </div>
+              <div class="feature">Capture dynamic and multi-page tables</div>
+              <div class="feature">
+                Download tables as Excel (.xlsx) files directly
+              </div>
+              <div class="feature">
+                Download tables as CSV (.csv) files directly
+              </div>
+              <div class="feature">
+                Export tables to Google Sheets, Office 365
+              </div>
+              <div class="feature">
+                Export tables from PDF files (locally and from the web)
+              </div>
+              <div class="feature">Copy tables as Markdown text</div>
+              <div class="feature">
+                Starred favorite tables &amp; action replay
+              </div>
+              <div class="feature">
+                Screenshot tables with a click; download as PNGs or copy the
+                image to your clipboard
+              </div>
+              <div class="feature">Recipes for hard-to-capture tables</div>
+              <div class="feature">Customize the CSV file delimiter</div>
+              <div class="feature">
+                Priority support (via email and screenshare)
+              </div>
+            </div>
+            <div class="purchase-info has-trial">
+              <p>
+                <span class="pro">Table Capture</span> is free for your first 14
+                days.
+              </p>
+              <p>
+                Afterwards, it's just <span class="pro">$12/year</span> to save
+                yourself <i>so much time</i> every single week.
+              </p>
+              <p>
+                Licenses auto-renew. Cancel within your two week trial and you
+                won't be charged anything.
+              </p>
+            </div>
+            <div class="purchase-info no-trial _tc18nHTML">
+              __MSG_proPurchaseInfoNoTrial__
+            </div>
+            <div class="actions">
+              <input
+                type="button"
+                class="btn btn-primary btn-lg btn-buy btn-show-activation"
+                value="Get started"
+              />
+              <a class="btn-show-activation"
+                >I already have a Table Capture Pro license.</a
+              >
+              <a class="support-cloud-only hidden" href="/cloud.html"
+                >I already have a Table Capture Cloud license.</a
+              >
+            </div>
+            <div class="activation-wrapper hidden">
+              <hr />
+              <form class="activation-form">
+                <div class="form-group form-group-lg">
+                  <input
+                    type="text"
+                    id="activation"
+                    name="activation"
+                    class="form-control input-lg text-activation"
+                    placeholder="Paste in your Table Capture Pro license code here."
+                  />
+                </div>
+                <input
+                  type="button"
+                  class="btn btn-success btn-lg btn-text-activation"
+                  value="Activate"
+                />
+              </form>
+              <div class="scroll-anchor">Love you guys.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <footer class="footer">
+      <div class="container">
+        <a class="footer-link link-review">Leave a Review</a>
+        <span>&middot;</span>
+        <a class="footer-link link-roadmap">Development Roadmap</a>
+        <span>&middot;</span>
+        <a class="footer-link link-email">Email Support</a>
+        <span>&middot;</span>
+        <a class="footer-link link-discord">Discord</a>
+        <span>&middot;</span>
+        <a class="footer-link link-newsletter">Join the Newsletter</a>
+        <span>&middot;</span>
+        <a class="footer-link" href="thanks.html">Thanks</a>
+        <p class="text-muted">
+          <span class="text-tc-version"></span>
+          <span>&middot;</span>
+          <span>Copyright 2023, GeorgeMike.com</span>
+        </p>
+      </div>
+    </footer>
+
+    <script type="text/javascript" src="js/lib/jquery.min.js"></script>
+    <script
+      type="text/javascript"
+      src="js/lib/bootstrap.v3.3.7.min.js"
+    ></script>
+  </body>
+</html>
