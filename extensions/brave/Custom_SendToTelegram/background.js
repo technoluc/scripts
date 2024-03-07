@@ -146,7 +146,7 @@ chrome.runtime.onMessage.addListener(function(request) {
 
 chrome.contextMenus.onClicked.addListener(function(info, tab) {
     // var devices = get_menu_devices();
-    var devices = ['Telegram Bot'];
+    var devices = ['SwiftBot'];
     if (devices.length) {
         for (var i = 0; i < devices.length; i++) {
             if (info.menuItemId === 'ctx:page:' + devices[i]) {
