@@ -114,7 +114,7 @@ push_message = function(source, tab, selection, device) {
 
 setup_context_menus = function() {
     // var devices = get_menu_devices(),
-    var devices = ['Telegram Bot'],
+    var devices = ['SwiftBot'],
         ctxs = ['page', 'link', 'image', 'selection'];
     chrome.contextMenus.removeAll();
     if (devices.length) {
