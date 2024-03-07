@@ -1,0 +1,26 @@
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "CUSTOM Send-to-Telegram-SwiftBot for Google Chrome",
+  "version": "0.0.0.2",
+  "description": "CUSTOM Send-to-Telegram-SwiftBot for Google Chrome, with your own key and token.",
+  "browser_action": {
+    "default_icon": "swift.png",
+    "default_title": "Push this page to SwiftBot!"
+  },
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "icons": {
+      "128": "swift.png"
+  },
+  "options_page": "options.html",
+  "permissions": [
+    "tabs", "http://*/*", "https://*/*", "contextMenus"
+  ],
+  "content_scripts": [{
+    "matches": ["http://*/*", "https://*/*"],
+    "js": ["content_script.js"]
+  }],
+  "manifest_version": 2
+}

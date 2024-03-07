@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+<head>
+    <title>CUSTOM Send-to-Telegram-SwiftBot</title>
+    <style type="text/css">
+        body {
+            background-color: white;
+            padding: 80px;
+            font-family: Helvetica, Arial, Serif;
+        }
+        input, button, select, option {
+            border-radius: 5px;
+            background-color: rgb(235, 235, 235);
+            padding: 5px;
+            font-weight: bold;
+            border: 1px solid rgb(12, 40, 99);
+        }
+        .input {
+            width: 300px;
+        }
+        select {
+            width: 310px;
+        }
+        td {
+            padding: 5px;
+        }
+        td:first-child {
+            text-align: right;
+            font-weight: bold;
+        }
+        #message {
+            font-size: 20px;
+            color: green;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>CUSTOM Send-to-Telegram-SwiftBot for Google Chrome</h1>
+    <table border="0">
+        <tr>
+            <td>
+            <td id='message'>&nbsp;
+        <!-- <tr>
+            <td>Get yours here:
+            <td><a href="https://pushover.net/" target=_blank>https://pushover.net</a> -->
+        <tr>
+            <td>API Key:
+            <td><input id='token' class="input">
+        <tr>
+            <td>User ID:
+            <td><input id='userkey' class="input">
+        <tr>
+        <!-- <tr>
+            <td>Sound:
+            <td><select id="sounds"></select> -->
+        <tr>
+            <td>
+            <td><button id='save'>Save</button>
+        <!-- <tr>
+            <td>Devices:
+            <td>
+        <tr>
+            <td>- badge:
+            <td id="devices_badge">-
+        <tr>
+            <td>- menu:
+            <td id="devices_menu">-
+        <tr>
+            <td>
+            <td><small>* De-selecting all devices will send notifications to every device!</small> -->
+    </table>
+    <script type="text/javascript" src="options.js"></script>
+</body>
+</html>
